@@ -1,0 +1,780 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="iOS," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="前言主要记录日常开发常用到得一些功能记录,包括URL Schemes,NSDictionary,UITableView等. NSDate获取时间戳:123NSDate *datenow = [NSDate date]; NSString *timeSp = [NSString stringWithFormat:@&quot;%ld&quot;, (long)[datenow timeIntervalSince1970">
+<meta name="keywords" content="iOS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS开发知识点小结">
+<meta property="og:url" content="http://qzcool.com/2016/06/20/ios-dev-note/index.html">
+<meta property="og:site_name" content="山语.咖啡时光">
+<meta property="og:description" content="前言主要记录日常开发常用到得一些功能记录,包括URL Schemes,NSDictionary,UITableView等. NSDate获取时间戳:123NSDate *datenow = [NSDate date]; NSString *timeSp = [NSString stringWithFormat:@&quot;%ld&quot;, (long)[datenow timeIntervalSince1970">
+<meta property="og:updated_time" content="2016-06-21T00:57:49.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS开发知识点小结">
+<meta name="twitter:description" content="前言主要记录日常开发常用到得一些功能记录,包括URL Schemes,NSDictionary,UITableView等. NSDate获取时间戳:123NSDate *datenow = [NSDate date]; NSString *timeSp = [NSString stringWithFormat:@&quot;%ld&quot;, (long)[datenow timeIntervalSince1970">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://qzcool.com/2016/06/20/ios-dev-note/"/>
+
+
+
+
+
+  <title>iOS开发知识点小结 | 山语.咖啡时光</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?6ca493ead9e34275c0dc9fecbcf5ede1";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">山语.咖啡时光</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">随手笔记 一个没技术含量的博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://qzcool.com/2016/06/20/ios-dev-note/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="fredliu">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="山语.咖啡时光">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">iOS开发知识点小结</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-06-20T11:01:01+08:00">
+                2016-06-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/iOS/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a class="cloud-tie-join-count" href="/2016/06/20/ios-dev-note/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count join-count" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>主要记录日常开发常用到得一些功能记录,包括URL Schemes,NSDictionary,UITableView等.</p>
+<h2 id="NSDate"><a href="#NSDate" class="headerlink" title="NSDate"></a>NSDate</h2><p>获取时间戳:<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NSDate</span> *datenow = [<span class="built_in">NSDate</span> date]; </div><div class="line"><span class="built_in">NSString</span> *timeSp = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"%ld"</span>, </div><div class="line">(<span class="keyword">long</span>)[datenow timeIntervalSince1970]];</div></pre></td></tr></table></figure></p>
+<h2 id="获取应用版本号"><a href="#获取应用版本号" class="headerlink" title="获取应用版本号"></a>获取应用版本号</h2><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">NSString</span> *app_Version = [[[<span class="built_in">NSBundle</span> mainBundle] infoDictionary]</div><div class="line">objectForKey:<span class="string">@"CFBundleShortVersionString"</span>]; </div><div class="line"> </div><div class="line"><span class="keyword">int</span> currentCode = [[[[<span class="built_in">NSBundle</span> mainBundle] infoDictionary]</div><div class="line">objectForKey:<span class="string">@"CFBundleVersion"</span>] intValue];</div></pre></td></tr></table></figure>
+<a id="more"></a>
+<h2 id="URL-Schemes"><a href="#URL-Schemes" class="headerlink" title="URL Schemes"></a>URL Schemes</h2><h3 id="适配ios9出现的问题：-canOpenURL-failed-for-URL"><a href="#适配ios9出现的问题：-canOpenURL-failed-for-URL" class="headerlink" title="适配ios9出现的问题：-canOpenURL: failed for URL"></a>适配ios9出现的问题：-canOpenURL: failed for URL</h3><p>除了要在项目info URL Types中设置URL Schemes，还需要在info.plist里面增加可信任的调用app，否则回报如下错误</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">-canOpenURL: failed <span class="keyword">for</span> URL: <span class="string">"wtloginmqq2://qzapp"</span> </div><div class="line">- error: <span class="string">"This app is not allowed to query for scheme wtloginmqq2"</span></div></pre></td></tr></table></figure>
+<p>info.plist加入</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;key&gt;LSApplicationQueriesSchemes&lt;/key&gt;</div><div class="line">&lt;array&gt;</div><div class="line">&lt;string&gt;urlscheme&lt;/string&gt;</div><div class="line">&lt;string&gt;urlscheme2&lt;/string&gt;</div><div class="line">&lt;string&gt;urlscheme3&lt;/string&gt; </div><div class="line">&lt;/array&gt;</div></pre></td></tr></table></figure>
+<h2 id="NSDictionary的使用"><a href="#NSDictionary的使用" class="headerlink" title="NSDictionary的使用"></a>NSDictionary的使用</h2><h3 id="用NSDictionary来解析Json数据"><a href="#用NSDictionary来解析Json数据" class="headerlink" title="用NSDictionary来解析Json数据"></a>用NSDictionary来解析Json数据</h3><p>假设json数据格式如下:</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">&#123;</div><div class="line">    <span class="attr">"value"</span>: [</div><div class="line">        &#123;</div><div class="line">            <span class="attr">"biz_code"</span>: <span class="string">"501100000228416"</span>,</div><div class="line">            <span class="attr">"biz_name"</span>: <span class="string">"圣湖东兴商住楼H"</span>,</div><div class="line">            <span class="attr">"biz_lng"</span>: <span class="string">"118.605877"</span>,</div><div class="line">            <span class="attr">"biz_lat"</span>: <span class="string">"24.903232"</span>,</div><div class="line">        &#125;,</div><div class="line"></div><div class="line">        &#123;</div><div class="line">            <span class="attr">"biz_code"</span>: <span class="string">"501100000625763"</span>,</div><div class="line">            <span class="attr">"biz_name"</span>: <span class="string">"丰泽圣湖家园"</span>,</div><div class="line">            <span class="attr">"biz_lng"</span>: <span class="string">"118.962019"</span>,</div><div class="line">            <span class="attr">"biz_lat"</span>: <span class="string">"24.964523"</span>,</div><div class="line">        &#125;],</div><div class="line">     <span class="attr">"code"</span>:<span class="number">10000</span>,</div><div class="line">     <span class="attr">"message"</span>:<span class="string">"获取数据成功"</span></div><div class="line"> &#125;</div></pre></td></tr></table></figure>
+<p>如何解析该数据呢?</p>
+<p>如果json是NSData数据类型,直接用NSJSONSerialization系列化,如果是NSString类型的,先转成NSData数据类型</p>
+<p>代码如下:</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="comment">//json数据</span></div><div class="line"></div><div class="line"><span class="built_in">NSString</span> *json = <span class="string">@"&#123;\"value\":[&#123;\"biz_code\":\"501100000228416\",...&#125;,...],"</span>code<span class="string">":10000,\"message\":\"获取数据成功\"&#125;"</span>;</div><div class="line"></div><div class="line"><span class="comment">//转成NSData</span></div><div class="line"></div><div class="line"><span class="built_in">NSData</span> *json_data =  [json dataUsingEncoding:<span class="built_in">NSUTF8StringEncoding</span>];</div><div class="line"></div><div class="line"><span class="comment">//转成字典 </span></div><div class="line"><span class="built_in">NSError</span> *error; </div><div class="line"><span class="built_in">NSDictionary</span> *jsonDic = [<span class="built_in">NSJSONSerialization</span> JSONObjectWithData:json_data options:<span class="built_in">NSJSONReadingMutableLeaves</span> error:&amp;error];</div><div class="line"></div><div class="line"><span class="built_in">NSArray</span>  *value      = [jsonDic objectForKey:<span class="string">@"value"</span>];  </div><div class="line"><span class="keyword">int</span>      code        = [[jsonDic objectForKey:<span class="string">@"code"</span>] intValue];</div><div class="line"><span class="built_in">NSString</span> *message    = [jsonDic objectForKey:<span class="string">@"message"</span>]; </div><div class="line"></div><div class="line"><span class="keyword">if</span>(code == <span class="number">10000</span>) </div><div class="line">&#123;    </div><div class="line">	<span class="keyword">for</span>(<span class="built_in">NSDictionary</span> *dicObj <span class="keyword">in</span> value)</div><div class="line">	&#123; </div><div class="line"></div><div class="line">    <span class="built_in">NSString</span> *biz_code = [dicObj objectForKey:<span class="string">@"biz_code"</span>];</div><div class="line">    <span class="built_in">NSString</span> *biz_name = [dicObj objectForKey:<span class="string">@"biz_name"</span>];</div><div class="line">    <span class="built_in">NSString</span> *biz_lng = [dicObj objectForKey:<span class="string">@"biz_lng"</span>];</div><div class="line">    <span class="built_in">NSString</span> *biz_lat=  [dicObj objectForKey:<span class="string">@"biz_lat"</span>]; </div><div class="line">     <span class="built_in">NSLog</span>(<span class="string">@"biz_code:%@ biz_name:%@ biz_lng:%@ biz_lat:%@"</span>,biz_code,biz_name,biz_lng,biz_lat);</div><div class="line"></div><div class="line"> &#125;  </div><div class="line"> &#125;</div></pre></td></tr></table></figure>
+<p>如果josn NSData 数据类型如果要转成NSString查看,用如下方法:</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="built_in">NSString</span> *strJson = [[<span class="built_in">NSString</span> alloc]initWithData:json_data encoding:<span class="built_in">NSUTF8StringEncoding</span>];</div><div class="line"><span class="built_in">NSLog</span>(<span class="string">@"json:%@"</span>,json);</div></pre></td></tr></table></figure>
+<h2 id="点击-UITableView-隐藏键盘"><a href="#点击-UITableView-隐藏键盘" class="headerlink" title="点击-UITableView-隐藏键盘"></a>点击-UITableView-隐藏键盘</h2><p>在 UITableView 上加手势</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="built_in">UITapGestureRecognizer</span> *gestureRecognizer = [[<span class="built_in">UITapGestureRecognizer</span> alloc] initWithTarget:<span class="keyword">self</span> action:<span class="keyword">@selector</span>(hideKeyboard)];</div><div class="line">[<span class="keyword">self</span>.tableView addGestureRecognizer:gestureRecognizer];</div></pre></td></tr></table></figure>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">- (<span class="keyword">void</span>) hideKeyboard &#123;</div><div class="line"></div><div class="line">    [textField1 resignFirstResponder];</div><div class="line"></div><div class="line">    [textField2 resignFirstResponder];</div><div class="line"></div><div class="line">    ...</div><div class="line"></div><div class="line">    ...</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>ps:加上这句不会影响你 tableview 上的 action (button,cell selected…)</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gestureRecognizer.cancelsTouchesInView = <span class="literal">NO</span>;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat-qcode.jpg" alt="fredliu wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎您扫一扫上面的微信公众号，订阅我的博客！</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/iOS/" rel="tag"># iOS</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/06/20/h5-send-sms/" rel="next" title="H5发送短信">
+                <i class="fa fa-chevron-left"></i> H5发送短信
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/06/21/mac-redis/" rel="prev" title="MAC下安装Redis">
+                MAC下安装Redis <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.png"
+               alt="fredliu" />
+          <p class="site-author-name" itemprop="name">fredliu</p>
+           
+              <p class="site-description motion-element" itemprop="description">80后,略懂PHP/Objc/.Net/VC++,目前主要负责iOS应用开发.</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/fredliu168" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NSDate"><span class="nav-number">2.</span> <span class="nav-text">NSDate</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#获取应用版本号"><span class="nav-number">3.</span> <span class="nav-text">获取应用版本号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#URL-Schemes"><span class="nav-number">4.</span> <span class="nav-text">URL Schemes</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#适配ios9出现的问题：-canOpenURL-failed-for-URL"><span class="nav-number">4.1.</span> <span class="nav-text">适配ios9出现的问题：-canOpenURL: failed for URL</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NSDictionary的使用"><span class="nav-number">5.</span> <span class="nav-text">NSDictionary的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#用NSDictionary来解析Json数据"><span class="nav-number">5.1.</span> <span class="nav-text">用NSDictionary来解析Json数据</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#点击-UITableView-隐藏键盘"><span class="nav-number">6.</span> <span class="nav-text">点击-UITableView-隐藏键盘</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">fredliu</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+    <script>
+      var cloudTieConfig = {
+        url: document.location.href, 
+        sourceId: "",
+        productKey: "00e40e1b96c84f698f96f4697049eb25",
+        target: "cloud-tie-wrapper"
+      };
+    </script>
+    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
