@@ -22,6 +22,8 @@ https://{username}:{password}@git.coding.net       //我这里用的是coding.ne
 ```
 针对 SSH 协议的方式， 配置SSH 公钥，使用 SSH 协议操作，具体见 SSH 公钥配置
 
+<!-- more -->
+
 对于 Https 协议
 
 首先在全局配置保存你的密码， ~/.git-credentials （没有就创建）内添加 https://{username}:{passwd}@git.coding.net
