@@ -1,0 +1,25 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> Git配置全局账号密码避免每次拉取、提交输入账号密码 · 瞎折腾</title><meta name="description" content="Git配置全局账号密码避免每次拉取、提交输入账号密码 - fredliu"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.ico"><link rel="stylesheet" href="/css/prontera.css"><link rel="search" type="application/opensearchdescription+xml" href="https://blog.qzcool.com/atom.xml" title="瞎折腾"></head><body><header class="feature-header"><nav class="component-nav"><ul><div class="logo-container"><a href="/"><h2 class="title">瞎折腾</h2></a></div><a href="/" target="_self" class="li component-nav-item"><p>INDEX</p></a><a href="/archives" target="_self" class="li component-nav-item"><p>ARCHIVES</p></a><ul class="shortcut-icons"><a href="https://github/fredliu168" target="_blank"><img src="/images/github.svg" class="icon"></a><a href="/atom.xml" target="_blank"><img src="/images/rss.svg" class="icon"></a></ul></ul></nav></header><main class="container"><div id="post-container"><div class="post"><article class="post-block"><h1 class="post-title">Git配置全局账号密码避免每次拉取、提交输入账号密码</h1><div class="post-info">Oct 30, 2019</div><div class="post-content"><blockquote>
+<p>前言</p>
+</blockquote>
+<pre><code>在大家使用github的过程中，一定会碰到这样一种情况，就是每次要push 和pull时总是要输入github的账号和密码，这样不仅浪费了大量的时间且降低了工作效率。在此背景下，本文在网上找了两种方法来避免这种状况，这些成果也是先人提出来的，在此只是做个总结。
+</code></pre><h2 id="1-方法一"><a href="#1-方法一" class="headerlink" title="1.方法一"></a>1.方法一</h2><h3 id="1-1-创建文件存储GIT用户名和密码"><a href="#1-1-创建文件存储GIT用户名和密码" class="headerlink" title="1.1 创建文件存储GIT用户名和密码"></a>1.1 创建文件存储GIT用户名和密码</h3><p>在%HOME%目录中，一般为C:\users\Administrator，也可以是你自己创建的系统用户名目录，反正都在C:\users\中。文件名为.git-credentials,由于在Window中不允许直接创建以”.”开头的文件，所以需要借助git bash进行，打开git bash客户端，进行%HOME%目录，然后用touch创建文件 .git-credentials, 用vim编辑此文件，输入内容格式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">touch .git-credentials</div><div class="line"></div><div class="line">vim .git-credentials</div><div class="line"></div><div class="line">https://&#123;username&#125;:&#123;password&#125;@git.coding.net       //我这里用的是coding.net域名</div></pre></td></tr></table></figure></p>
+<p>针对 SSH 协议的方式， 配置SSH 公钥，使用 SSH 协议操作，具体见 SSH 公钥配置</p>
+<a id="more"></a>
+<p>对于 Https 协议</p>
+<p>首先在全局配置保存你的密码， ~/.git-credentials （没有就创建）内添加 https://{username}:<a href="mailto:{passwd}@git.coding.net" target="_blank" rel="external">{passwd}@git.coding.net</a><br>然后配置 Git 命令存储认证，</p>
+<h3 id="1-2-添加Git-Config-内容"><a href="#1-2-添加Git-Config-内容" class="headerlink" title="1.2 添加Git Config 内容"></a>1.2 添加Git Config 内容</h3><p>进入git bash终端， 输入如下命令：</p>
+<p>git config –global credential.helper store</p>
+<p>执行完后查看%HOME%目录下的.gitconfig文件，会多了一项：</p>
+<pre><code>[credential]
+
+    helper = store
+</code></pre><p>重新开启git bash会发现git push时不用再输入用户名和密码</p>
+</div></article></div><div id="disqus_thread"></div></div><script>var disqus_shortname = 'fishman-1';
+var disqus_identifier = '2019/10/30/Git配置全局账号密码避免每次拉取、提交输入账号密码/';
+var disqus_title = 'Git配置全局账号密码避免每次拉取、提交输入账号密码';
+var disqus_url = 'https://blog.qzcool.com/2019/10/30/Git配置全局账号密码避免每次拉取、提交输入账号密码/';
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();</script><script id="dsq-count-scr" src="//fishman-1.disqus.com/count.js" async></script></main><footer class="footer-container"><div class="paginator"><a href="/2019/10/30/ssh-sftp无需输入密码设置/" class="prev">PREV</a><a href="/2019/10/30/Mac下制作加密的zip压缩包/" class="next">NEXT</a></div><div class="copyright"><p>© 2017 - 2019 <a href="https://blog.qzcool.com">fredliu</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/AngryPowman/hexo-theme-prontera" target="_blank">hexo-theme-prontera</a>.</p></div></footer><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"fishman",'auto');ga('send','pageview');</script></body></html>

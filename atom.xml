@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.qzcool.com/"/>
-  <updated>2019-10-30T05:32:52.256Z</updated>
+  <updated>2019-10-30T07:48:03.151Z</updated>
   <id>https://blog.qzcool.com/</id>
   
   <author>
@@ -15,6 +15,82 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>ssh/sftp无需输入密码设置</title>
+    <link href="https://blog.qzcool.com/2019/10/30/ssh-sftp%E6%97%A0%E9%9C%80%E8%BE%93%E5%85%A5%E5%AF%86%E7%A0%81%E8%AE%BE%E7%BD%AE/"/>
+    <id>https://blog.qzcool.com/2019/10/30/ssh-sftp无需输入密码设置/</id>
+    <published>2019-10-30T07:47:06.000Z</published>
+    <updated>2019-10-30T07:48:03.151Z</updated>
+    
+    <content type="html"><![CDATA[<p>Linux系统有一个钥匙环(keyring)的管理程序．钥匙环受到用户登录密码的保护．当你登录Linux系统时，会自动解开钥匙环的密码，从而可访问钥匙环．SSH的密钥和公钥也存储在钥匙环．所以初次使用SSH密钥登录远程Linux服务器时需要输入一次SSH密钥的密码．而将来使用SSH密钥登录时不再输入密码。Ubuntu的钥匙环程序是seahorse．<br>SSH密钥就好比是你的身份证明．远程Linux服务器用你生成的SSH公钥来加密一条消息，而只有你的SSH密钥可以解开这条消息．所以其他人如果没有你的SSH密钥，是无法解开加密消息的，从而也就无法登录你的Linux服务器．</p><p>检查一下你有没有 ssh key<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ls ~/.ssh</div></pre></td></tr></table></figure></p><p>如果有包含下面这两个文件，则说明你有ssh key<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">id_rsa id_rsa.pub</div></pre></td></tr></table></figure></p><a id="more"></a><p>有 .pub 后缀的是公钥，没有的是私钥。公钥可以让别人知道，私钥就像你的密码一样，不要给别人。</p><p>如果没有 ssh key，可以用 ssh-keygen -t rsa 命令 来生成<br>然后一路回车，就可以生成 ssh key 了</p><p>然后，再一个命令，把公钥上传到服务器<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh-copy-id username@remote-server</div></pre></td></tr></table></figure></p><p>这样公钥就会上传到服务器的 ~/.ssh/authorized_keys 位置中<br>大功告成，以后在本机不用输入密码就可以用ssh连接服务器了</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Linux系统有一个钥匙环(keyring)的管理程序．钥匙环受到用户登录密码的保护．当你登录Linux系统时，会自动解开钥匙环的密码，从而可访问钥匙环．SSH的密钥和公钥也存储在钥匙环．所以初次使用SSH密钥登录远程Linux服务器时需要输入一次SSH密钥的密码．而将来使用SSH密钥登录时不再输入密码。Ubuntu的钥匙环程序是seahorse．&lt;br&gt;SSH密钥就好比是你的身份证明．远程Linux服务器用你生成的SSH公钥来加密一条消息，而只有你的SSH密钥可以解开这条消息．所以其他人如果没有你的SSH密钥，是无法解开加密消息的，从而也就无法登录你的Linux服务器．&lt;/p&gt;
+&lt;p&gt;检查一下你有没有 ssh key&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;ls ~/.ssh&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;如果有包含下面这两个文件，则说明你有ssh key&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;id_rsa id_rsa.pub&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Git配置全局账号密码避免每次拉取、提交输入账号密码</title>
+    <link href="https://blog.qzcool.com/2019/10/30/Git%E9%85%8D%E7%BD%AE%E5%85%A8%E5%B1%80%E8%B4%A6%E5%8F%B7%E5%AF%86%E7%A0%81%E9%81%BF%E5%85%8D%E6%AF%8F%E6%AC%A1%E6%8B%89%E5%8F%96%E3%80%81%E6%8F%90%E4%BA%A4%E8%BE%93%E5%85%A5%E8%B4%A6%E5%8F%B7%E5%AF%86%E7%A0%81/"/>
+    <id>https://blog.qzcool.com/2019/10/30/Git配置全局账号密码避免每次拉取、提交输入账号密码/</id>
+    <published>2019-10-30T07:29:47.000Z</published>
+    <updated>2019-10-30T07:46:21.222Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>前言</p></blockquote><pre><code>在大家使用github的过程中，一定会碰到这样一种情况，就是每次要push 和pull时总是要输入github的账号和密码，这样不仅浪费了大量的时间且降低了工作效率。在此背景下，本文在网上找了两种方法来避免这种状况，这些成果也是先人提出来的，在此只是做个总结。</code></pre><h2 id="1-方法一"><a href="#1-方法一" class="headerlink" title="1.方法一"></a>1.方法一</h2><h3 id="1-1-创建文件存储GIT用户名和密码"><a href="#1-1-创建文件存储GIT用户名和密码" class="headerlink" title="1.1 创建文件存储GIT用户名和密码"></a>1.1 创建文件存储GIT用户名和密码</h3><p>在%HOME%目录中，一般为C:\users\Administrator，也可以是你自己创建的系统用户名目录，反正都在C:\users\中。文件名为.git-credentials,由于在Window中不允许直接创建以”.”开头的文件，所以需要借助git bash进行，打开git bash客户端，进行%HOME%目录，然后用touch创建文件 .git-credentials, 用vim编辑此文件，输入内容格式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">touch .git-credentials</div><div class="line"></div><div class="line">vim .git-credentials</div><div class="line"></div><div class="line">https://&#123;username&#125;:&#123;password&#125;@git.coding.net       //我这里用的是coding.net域名</div></pre></td></tr></table></figure></p><p>针对 SSH 协议的方式， 配置SSH 公钥，使用 SSH 协议操作，具体见 SSH 公钥配置</p><a id="more"></a><p>对于 Https 协议</p><p>首先在全局配置保存你的密码， ~/.git-credentials （没有就创建）内添加 https://{username}:<a href="mailto:{passwd}@git.coding.net" target="_blank" rel="external">{passwd}@git.coding.net</a><br>然后配置 Git 命令存储认证，</p><h3 id="1-2-添加Git-Config-内容"><a href="#1-2-添加Git-Config-内容" class="headerlink" title="1.2 添加Git Config 内容"></a>1.2 添加Git Config 内容</h3><p>进入git bash终端， 输入如下命令：</p><p>git config –global credential.helper store</p><p>执行完后查看%HOME%目录下的.gitconfig文件，会多了一项：</p><pre><code>[credential]    helper = store</code></pre><p>重新开启git bash会发现git push时不用再输入用户名和密码</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;前言&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;在大家使用github的过程中，一定会碰到这样一种情况，就是每次要push 和pull时总是要输入github的账号和密码，这样不仅浪费了大量的时间且降低了工作效率。在此背景下，本文在网上找了两种方法来避免这种状况，这些成果也是先人提出来的，在此只是做个总结。
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&quot;1-方法一&quot;&gt;&lt;a href=&quot;#1-方法一&quot; class=&quot;headerlink&quot; title=&quot;1.方法一&quot;&gt;&lt;/a&gt;1.方法一&lt;/h2&gt;&lt;h3 id=&quot;1-1-创建文件存储GIT用户名和密码&quot;&gt;&lt;a href=&quot;#1-1-创建文件存储GIT用户名和密码&quot; class=&quot;headerlink&quot; title=&quot;1.1 创建文件存储GIT用户名和密码&quot;&gt;&lt;/a&gt;1.1 创建文件存储GIT用户名和密码&lt;/h3&gt;&lt;p&gt;在%HOME%目录中，一般为C:\users\Administrator，也可以是你自己创建的系统用户名目录，反正都在C:\users\中。文件名为.git-credentials,由于在Window中不允许直接创建以”.”开头的文件，所以需要借助git bash进行，打开git bash客户端，进行%HOME%目录，然后用touch创建文件 .git-credentials, 用vim编辑此文件，输入内容格式：&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;touch .git-credentials&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;vim .git-credentials&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;https://&amp;#123;username&amp;#125;:&amp;#123;password&amp;#125;@git.coding.net       //我这里用的是coding.net域名&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;针对 SSH 协议的方式， 配置SSH 公钥，使用 SSH 协议操作，具体见 SSH 公钥配置&lt;/p&gt;
+    
+    </summary>
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Mac下制作加密的zip压缩包</title>
+    <link href="https://blog.qzcool.com/2019/10/30/Mac%E4%B8%8B%E5%88%B6%E4%BD%9C%E5%8A%A0%E5%AF%86%E7%9A%84zip%E5%8E%8B%E7%BC%A9%E5%8C%85/"/>
+    <id>https://blog.qzcool.com/2019/10/30/Mac下制作加密的zip压缩包/</id>
+    <published>2019-10-30T07:00:00.000Z</published>
+    <updated>2019-10-30T07:46:21.222Z</updated>
+    
+    <content type="html"><![CDATA[<p>Mac下创建加密的zip文件，无需第三方软件，直接在终端中 敲入几行命令就能搞定。<br>方法一： </p><p>选择压缩包保存路径：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ cd yourPath</div></pre></td></tr></table></figure></p><h3 id="1-只压缩单个文件"><a href="#1-只压缩单个文件" class="headerlink" title="1. 只压缩单个文件"></a>1. 只压缩单个文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">zip -e yourZipFileName.zip yourSourceFile</div></pre></td></tr></table></figure><p>回车 ，分别输入密码（回车）和确认密码（回车）就OK了。</p><h3 id="2-压缩文件夹"><a href="#2-压缩文件夹" class="headerlink" title="2. 压缩文件夹"></a>2. 压缩文件夹</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">zip -e -r yourZipFileName.zip yourSourceFileDir</div></pre></td></tr></table></figure><p>其余同上。(-r 表示将文件夹中所有的文件进行压缩)</p><h3 id="方法二：可以通过一行命令搞定"><a href="#方法二：可以通过一行命令搞定" class="headerlink" title="方法二：可以通过一行命令搞定"></a>方法二：可以通过一行命令搞定</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">zip -r -P yourPassword yourZipFileName.zip yourSourceFileDir</div></pre></td></tr></table></figure><p>回车就OK了，但是这种方法只输入一次密码，万一压缩时输错密码，再想打开可就悲剧了。</p><blockquote><p>注意: -P 需要大写</p></blockquote><blockquote><p>Encryption:<br>  -e        use standard (weak) PKZip 2.0 encryption, prompt for password<br>  -P pswd   use standard encryption, password is pswd<br> <a id="more"></a><br>————————————————<br>版权声明：本文为CSDN博主「yooozooo」的原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a href="https://blog.csdn.net/yooozooo/article/details/42496735" target="_blank" rel="external">https://blog.csdn.net/yooozooo/article/details/42496735</a></p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Mac下创建加密的zip文件，无需第三方软件，直接在终端中 敲入几行命令就能搞定。&lt;br&gt;方法一： &lt;/p&gt;
+&lt;p&gt;选择压缩包保存路径：&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;$ cd yourPath&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;h3 id=&quot;1-只压缩单个文件&quot;&gt;&lt;a href=&quot;#1-只压缩单个文件&quot; class=&quot;headerlink&quot; title=&quot;1. 只压缩单个文件&quot;&gt;&lt;/a&gt;1. 只压缩单个文件&lt;/h3&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;zip -e yourZipFileName.zip yourSourceFile&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;回车 ，分别输入密码（回车）和确认密码（回车）就OK了。&lt;/p&gt;
+&lt;h3 id=&quot;2-压缩文件夹&quot;&gt;&lt;a href=&quot;#2-压缩文件夹&quot; class=&quot;headerlink&quot; title=&quot;2. 压缩文件夹&quot;&gt;&lt;/a&gt;2. 压缩文件夹&lt;/h3&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;zip -e -r yourZipFileName.zip yourSourceFileDir&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;其余同上。(-r 表示将文件夹中所有的文件进行压缩)&lt;/p&gt;
+&lt;h3 id=&quot;方法二：可以通过一行命令搞定&quot;&gt;&lt;a href=&quot;#方法二：可以通过一行命令搞定&quot; class=&quot;headerlink&quot; title=&quot;方法二：可以通过一行命令搞定&quot;&gt;&lt;/a&gt;方法二：可以通过一行命令搞定&lt;/h3&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;zip -r -P yourPassword yourZipFileName.zip yourSourceFileDir&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;回车就OK了，但是这种方法只输入一次密码，万一压缩时输错密码，再想打开可就悲剧了。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;注意: -P 需要大写&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Encryption:&lt;br&gt;  -e        use standard (weak) PKZip 2.0 encryption, prompt for password&lt;br&gt;  -P pswd   use standard encryption, password is pswd&lt;br&gt;
+    
+    </summary>
+    
+    
+    
+  </entry>
   
   <entry>
     <title>hexo 博客同步管理及迁移</title>
@@ -47,7 +123,7 @@
     <link href="https://blog.qzcool.com/2019/10/30/%E5%BC%80%E5%8F%91%E4%BA%86%E4%B8%80%E4%B8%AA%E8%8B%B1%E8%AF%AD%E9%98%85%E8%AF%BB%E5%B0%8F%E7%AB%99/"/>
     <id>https://blog.qzcool.com/2019/10/30/开发了一个英语阅读小站/</id>
     <published>2019-10-30T02:07:02.000Z</published>
-    <updated>2019-10-30T06:21:47.422Z</updated>
+    <updated>2019-10-30T06:32:51.972Z</updated>
     
     <content type="html"><![CDATA[<p>觉得有必要提高一下英语水平,找了很多方法,发现阅读外文是比较有趣方法,找到了经济学人期刊,刚好前段时间学Python,为了方便阅读同时练手一下自己建了个小站,如果你也喜欢经济学人可以点击 (<a href="https://qzcool.xyz" target="_blank" rel="external">https://qzcool.xyz</a>) 注册阅读,站点免费开放.</p><a id="more"></a>]]></content>
     
