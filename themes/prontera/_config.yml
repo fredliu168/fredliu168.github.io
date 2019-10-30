@@ -28,7 +28,7 @@ disqus: fishman-1
 duoshuo: 
 
 auto_excerpt:
-  enable: true
+  enable: false
   length: 150
 
 # Analytics
