@@ -41,7 +41,7 @@ zip -r -P yourPassword yourZipFileName.zip yourSourceFileDir
 > Encryption:
   -e        use standard (weak) PKZip 2.0 encryption, prompt for password
   -P pswd   use standard encryption, password is pswd
- 
+ <!-- more -->
 ————————————————
 > 版权声明：本文为CSDN博主「yooozooo」的原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接及本声明。
 原文链接：https://blog.csdn.net/yooozooo/article/details/42496735
