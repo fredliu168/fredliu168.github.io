@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.qzcool.com/"/>
-  <updated>2019-10-30T07:48:03.151Z</updated>
+  <updated>2019-10-30T08:33:43.340Z</updated>
   <id>https://blog.qzcool.com/</id>
   
   <author>
@@ -15,6 +15,26 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>苹果发布新耳机AirPods Pro</title>
+    <link href="https://blog.qzcool.com/2019/10/30/%E8%8B%B9%E6%9E%9C%E5%8F%91%E5%B8%83%E6%96%B0%E8%80%B3%E6%9C%BAAirPods-Pro/"/>
+    <id>https://blog.qzcool.com/2019/10/30/苹果发布新耳机AirPods-Pro/</id>
+    <published>2019-10-30T08:23:42.000Z</published>
+    <updated>2019-10-30T08:33:43.340Z</updated>
+    
+    <content type="html"><![CDATA[<p>苹果昨晚直接在官网发布了 AirPods Pro, 顺便测试一下hexo发布带图片的功能</p><p><img src="./airpodsPro.jpg" alt=""></p><a id="more"></a>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;苹果昨晚直接在官网发布了 AirPods Pro, 顺便测试一下hexo发布带图片的功能&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;./airpodsPro.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+    
+    
+  </entry>
   
   <entry>
     <title>ssh/sftp无需输入密码设置</title>
