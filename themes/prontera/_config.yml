@@ -27,6 +27,10 @@ about_info:
 disqus: fishman-1
 duoshuo: 
 
+auto_excerpt:
+  enable: true
+  length: 150
+
 # Analytics
 google_analytics: fishman
 tencent_analytics: 
