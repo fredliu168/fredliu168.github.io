@@ -38,3 +38,5 @@ _posts/post_name/image.jpg
 ```
 CDN引用
 除了在本地存储图片，还可以将图片上传到一些免费的CDN服务中。比如Cloudinary提供的图片CDN服务，在Cloudinary中上传图片后，会生成对应的url地址，将地址直接拿来引用即可。
+
+文章来源:https://yanyinhong.github.io/2017/05/02/How-to-insert-image-in-hexo-post/
