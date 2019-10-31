@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.qzcool.com/"/>
-  <updated>2019-10-31T01:37:44.642Z</updated>
+  <updated>2019-10-31T08:26:42.760Z</updated>
   <id>https://blog.qzcool.com/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Hexo博客搭建之在文章中插入图片 </title>
+    <link href="https://blog.qzcool.com/2019/10/31/Hexo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E4%B9%8B%E5%9C%A8%E6%96%87%E7%AB%A0%E4%B8%AD%E6%8F%92%E5%85%A5%E5%9B%BE%E7%89%87/"/>
+    <id>https://blog.qzcool.com/2019/10/31/Hexo博客搭建之在文章中插入图片/</id>
+    <published>2019-10-31T08:24:49.000Z</published>
+    <updated>2019-10-31T08:26:42.760Z</updated>
+    
+    <content type="html"><![CDATA[<p>在写文章时，常常有配图说明的需求。Hexo有多种图片插入方式，可以将图片存放在本地引用或者将图片放在CDN上引用。</p><p>本地引用<br>绝对路径<br>当Hexo项目中只用到少量图片时，可以将图片统一放在source/images文件夹中，通过markdown语法访问它们。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">source/images/image.jpg</div><div class="line"></div><div class="line">![](/images/image.jpg)</div></pre></td></tr></table></figure></p><p>图片既可以在首页内容中访问到，也可以在文章正文中访问到。</p><p>相对路径<br>图片除了可以放在统一的images文件夹中，还可以放在文章自己的目录中。文章的目录可以通过配置_config.yml来生成。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">_config.yml</div><div class="line"></div><div class="line">post_asset_folder: true</div></pre></td></tr></table></figure></p><p>将_config.yml文件中的配置项post_asset_folder设为true后，执行命令$ hexo new post_name，在source/_posts中会生成文章post_name.md和同名文件夹post_name。将图片资源放在post_name中，文章就可以使用相对路径引用图片资源了。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">_posts/post_name/image.jpg</div><div class="line"></div><div class="line">![](image.jpg)</div></pre></td></tr></table></figure></p><p>上述是markdown的引用方式，图片只能在文章中显示，但无法在首页中正常显示。</p><p>如果希望图片在文章和首页中同时显示，可以使用标签插件语法。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">_posts/post_name/image.jpg</div><div class="line"></div><div class="line">&#123;% asset_img image.jpg This is an image %&#125;</div></pre></td></tr></table></figure></p><p>CDN引用<br>除了在本地存储图片，还可以将图片上传到一些免费的CDN服务中。比如Cloudinary提供的图片CDN服务，在Cloudinary中上传图片后，会生成对应的url地址，将地址直接拿来引用即可。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;在写文章时，常常有配图说明的需求。Hexo有多种图片插入方式，可以将图片存放在本地引用或者将图片放在CDN上引用。&lt;/p&gt;
+&lt;p&gt;本地引用&lt;br&gt;绝对路径&lt;br&gt;当Hexo项目中只用到少量图片时，可以将图片统一放在source/images文件夹中，通过markdown语法
+      
+    
+    </summary>
+    
+    
+    
+  </entry>
   
   <entry>
     <title>大疆发布了Mavic Mini</title>
