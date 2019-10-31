@@ -5,9 +5,10 @@ tags:
 ---
 
 苹果昨晚直接在官网发布了 AirPods Pro, 
+一款带有主动降噪功能的真无线入耳耳机。中国区售价 1999 元.
+ 
+{% asset_img airpodsPro.jpg This is an image %}
 
-![](./airpodsPro.jpg)
 
-一款带有主动降噪功能的真无线入耳耳机。中国区售价 1999 元,顺便测试一下hexo发布带图片的功能
 
 <!-- more -->
