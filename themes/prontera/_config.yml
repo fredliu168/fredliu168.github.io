@@ -13,8 +13,8 @@ nav_icons:
 
 # Friend Links
 friend_links:
+    - ['restran', '淡水', 'https://www.restran.net']
     - ['iReading', '英语学习,经济学人在线阅读', 'https://qzcool.xyz']
-
 
 # About
 about_info:
@@ -28,7 +28,7 @@ disqus: fishman-1
 duoshuo: 
 
 auto_excerpt:
-  enable: true
+  enable: false
   length: 150
 
 # Analytics
