@@ -3,11 +3,11 @@
 <p>删除当前默认路由</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo route delete default</div></pre></td></tr></table></figure>
 <p>2.添加内网ip路由</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo route add -net 10.49.28.0 netmask 255.255.255.0 gw 10.49.76.129 eno1</div><div class="line">sudo route add -net 192.168.14.0 netmask 255.255.255.0 gw 10.49.76.129 eno1</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sudo route add -net 10.49.28.0 netmask 255.255.255.0 gw 10.49.76.129 eno1</div><div class="line">sudo route add -net 192.168.14.0 netmask 255.255.255.0 gw 10.49.76.129 eno1</div><div class="line">sudo route add -net 192.168.8.0 netmask 255.255.255.0 gw 10.49.76.129 eno1</div></pre></td></tr></table></figure>
 <p>3.添加外网路由</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo route add -net default netmask 255.255.255.0 gw 192.168.31.1 wlxf48ceb4c4436</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo route add -net 0.0.0.0 netmask 0.0.0.0 gw 192.168.31.1 wlxf48ceb4c4436</div></pre></td></tr></table></figure>
 <p>删除配置的路由</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo route del -net 192.168.8.0 netmask 255.255.255.0</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo route del -net 192.168.8.0 netmask 255.255.255.0</div><div class="line">sudo route del -net  0.0.0.0 netmask 255.255.255.0</div></pre></td></tr></table></figure>
 <h2 id="windows-配置双网卡路由"><a href="#windows-配置双网卡路由" class="headerlink" title="windows 配置双网卡路由"></a>windows 配置双网卡路由</h2><p>查看网卡信息</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">ipconfig</div><div class="line"></div><div class="line">13 有线网口</div><div class="line"></div><div class="line">25 无线网口</div></pre></td></tr></table></figure>
 <p>1.删除默认路由</p>
