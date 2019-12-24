@@ -28,20 +28,20 @@ sudo route delete default
 ```
 sudo route add -net 10.49.28.0 netmask 255.255.255.0 gw 10.49.76.129 eno1
 sudo route add -net 192.168.14.0 netmask 255.255.255.0 gw 10.49.76.129 eno1
-
+sudo route add -net 192.168.8.0 netmask 255.255.255.0 gw 10.49.76.129 eno1
 ```
 
 3.添加外网路由
 
 ```
-sudo route add -net default netmask 255.255.255.0 gw 192.168.31.1 wlxf48ceb4c4436
-
+sudo route add -net 0.0.0.0 netmask 0.0.0.0 gw 192.168.31.1 wlxf48ceb4c4436
 ```
 
 删除配置的路由
 
 ```
 sudo route del -net 192.168.8.0 netmask 255.255.255.0
+sudo route del -net  0.0.0.0 netmask 255.255.255.0
 ```
 
 
