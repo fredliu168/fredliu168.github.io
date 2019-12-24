@@ -8,7 +8,7 @@ menu:
 
 # Nav Shortcut Icons
 nav_icons:
-    - ['/images/github.svg', 'https://github/fredliu168']
+    - ['/images/github.svg', 'https://github.com/fredliu168']
     - ['/images/rss.svg', '/atom.xml']
 
 # Friend Links
