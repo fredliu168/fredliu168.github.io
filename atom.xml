@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.qzcool.com/"/>
-  <updated>2019-12-24T01:49:10.086Z</updated>
+  <updated>2019-12-24T01:55:07.777Z</updated>
   <id>https://blog.qzcool.com/</id>
   
   <author>
@@ -15,6 +15,21 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>AirPods2使用体验</title>
+    <link href="https://blog.qzcool.com/2019/12/24/AirPods2%E4%BD%BF%E7%94%A8%E4%BD%93%E9%AA%8C/"/>
+    <id>https://blog.qzcool.com/2019/12/24/AirPods2使用体验/</id>
+    <published>2019-12-24T01:55:07.000Z</published>
+    <updated>2019-12-24T01:55:07.777Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+    
+  </entry>
   
   <entry>
     <title>PyCharm激活方法</title>
@@ -484,32 +499,6 @@
     
     
       <category term="iOS" scheme="https://blog.qzcool.com/tags/iOS/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>H5发送短信</title>
-    <link href="https://blog.qzcool.com/2016/06/20/h5-send-sms/"/>
-    <id>https://blog.qzcool.com/2016/06/20/h5-send-sms/</id>
-    <published>2016-06-20T02:46:05.000Z</published>
-    <updated>2016-06-20T02:46:57.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>特殊符号需要url编码,比如#号写成%23</p><p>Android 系统发送短信:</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;a href=&quot;sms:139603558**?body=*%23123&quot;&gt;发短信(Android)&lt;/a&gt;</div></pre></td></tr></table></figure><p>iOS系统发送短信:</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;a href=&quot;sms:139603558**&amp;body=*%23123&quot;&gt;发短信(iOS)&lt;/a&gt;</div></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;特殊符号需要url编码,比如#号写成%23&lt;/p&gt;
-&lt;p&gt;Android 系统发送短信:&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/
-      
-    
-    </summary>
-    
-    
-    
-      <category term="h5" scheme="https://blog.qzcool.com/tags/h5/"/>
     
   </entry>
   
