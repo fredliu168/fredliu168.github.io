@@ -11,6 +11,14 @@ tags:
 
 > 阿里云Ubuntu 16.04.3 LTS (GNU/Linux 4.4.0-105-generic x86_64)
 
+本人服务器上安装路径：
+
+``` 
+/home/frp/0.21.0/certbot-auto
+```
+
+<!-- more -->
+
 ## `STEP 1`
 
 从`Certbot`官方网站下载 `certbot-auto` 指令，並设定其执行权限：
