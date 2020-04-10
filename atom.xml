@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.qzcool.com/"/>
-  <updated>2020-03-17T06:53:44.436Z</updated>
+  <updated>2020-04-10T03:26:36.500Z</updated>
   <id>https://blog.qzcool.com/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Docker常用操作命令</title>
+    <link href="https://blog.qzcool.com/2020/04/10/Docker%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4/"/>
+    <id>https://blog.qzcool.com/2020/04/10/Docker常用操作命令/</id>
+    <published>2020-04-10T03:21:18.000Z</published>
+    <updated>2020-04-10T03:26:36.500Z</updated>
+    
+    <content type="html"><![CDATA[<p>1、docker服务自动重启设置</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">systemctl enable docker.service</div></pre></td></tr></table></figure><p>2、docker容器自动启动设置</p><p>在运行docker容器时可以加如下参数来保证每次docker服务重启后容器也自动重启：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker run --restart=always</div></pre></td></tr></table></figure><p>如果已经启动了则可以使用如下命令：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker update --restart=always &lt;CONTAINER ID&gt;</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;1、docker服务自动重启设置&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;co
+      
+    
+    </summary>
+    
+    
+    
+  </entry>
   
   <entry>
     <title>Nginx泛域名添加https免费SSL证书Lets Encrypt(certbot)安装使用步骤
@@ -476,32 +499,6 @@
     
     
       <category term="iOS" scheme="https://blog.qzcool.com/tags/iOS/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>德化或将2020年通火车</title>
-    <link href="https://blog.qzcool.com/2016/06/21/%E5%BE%B7%E5%8C%96%E6%88%96%E5%B0%862020%E5%B9%B4%E9%80%9A%E7%81%AB%E8%BD%A6/"/>
-    <id>https://blog.qzcool.com/2016/06/21/德化或将2020年通火车/</id>
-    <published>2016-06-21T09:21:01.000Z</published>
-    <updated>2016-06-20T15:58:20.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>前几天看到家乡将开始建设铁路的重大新闻,兴泉铁路即将开工,兴泉铁路福建段（宁化至泉州）预计今年第三季度全线开工,设计工期为4.5年,德化站点设在盖德乡,铁路设计时速160公里,结束了德化没有铁路的历史,届时德化到泉州和厦门的通行时间将进一步缩短,出行更加方便了.希望这次消息比较靠谱,第一次听到要建设铁路已经是几年前的事情了.</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;前几天看到家乡将开始建设铁路的重大新闻,兴泉铁路即将开工,兴泉铁路福建段（宁化至泉州）预计今年第三季度全线开工,设计工期为4.5年,德化站点设在盖德乡,铁路设计时速160公里,结束了德化没有铁路的历史,届时德化到泉州和厦门的通行时间将进一步缩短,出行更加方便了.希望这次消息
-      
-    
-    </summary>
-    
-    
-      <category term="日记" scheme="https://blog.qzcool.com/categories/%E6%97%A5%E8%AE%B0/"/>
-    
-    
-      <category term="日记" scheme="https://blog.qzcool.com/tags/%E6%97%A5%E8%AE%B0/"/>
     
   </entry>
   
