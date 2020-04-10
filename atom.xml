@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.qzcool.com/"/>
-  <updated>2020-04-10T03:26:36.500Z</updated>
+  <updated>2020-04-10T07:24:45.095Z</updated>
   <id>https://blog.qzcool.com/</id>
   
   <author>
@@ -21,9 +21,9 @@
     <link href="https://blog.qzcool.com/2020/04/10/Docker%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4/"/>
     <id>https://blog.qzcool.com/2020/04/10/Docker常用操作命令/</id>
     <published>2020-04-10T03:21:18.000Z</published>
-    <updated>2020-04-10T03:26:36.500Z</updated>
+    <updated>2020-04-10T07:24:45.095Z</updated>
     
-    <content type="html"><![CDATA[<p>1、docker服务自动重启设置</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">systemctl enable docker.service</div></pre></td></tr></table></figure><p>2、docker容器自动启动设置</p><p>在运行docker容器时可以加如下参数来保证每次docker服务重启后容器也自动重启：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker run --restart=always</div></pre></td></tr></table></figure><p>如果已经启动了则可以使用如下命令：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker update --restart=always &lt;CONTAINER ID&gt;</div></pre></td></tr></table></figure>]]></content>
+    <content type="html"><![CDATA[<p>1、docker服务自动重启设置</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">systemctl enable docker.service</div></pre></td></tr></table></figure><p>2、docker容器自动启动设置</p><p>在运行docker容器时可以加如下参数来保证每次docker服务重启后容器也自动重启：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker run --restart=always</div></pre></td></tr></table></figure><p>如果已经启动了则可以使用如下命令：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker update --restart=always &lt;CONTAINER ID&gt;</div></pre></td></tr></table></figure><p>3.进入docker 容器 </p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker exec -it 2a81dcba834f /bin/bash</div></pre></td></tr></table></figure><p>文件拷贝</p><p>容器-&gt;主机<br>docker cp 2a81dcba834f:/usr/local/etc/php/php.ini /Users/fredliu/Documents/PHP</p><p>主机-&gt;容器<br>docker cp /Users/fredliu/Documents/PHP/php.ini 2a81dcba834f:/usr/local/etc/php</p>]]></content>
     
     <summary type="html">
     

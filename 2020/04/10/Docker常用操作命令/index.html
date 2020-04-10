@@ -4,7 +4,13 @@
 <p>在运行docker容器时可以加如下参数来保证每次docker服务重启后容器也自动重启：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker run --restart=always</div></pre></td></tr></table></figure>
 <p>如果已经启动了则可以使用如下命令：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker update --restart=always &lt;CONTAINER ID&gt;</div></pre></td></tr></table></figure></div></article></div><div id="disqus_thread"></div></div><script>var disqus_shortname = 'fishman-1';
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker update --restart=always &lt;CONTAINER ID&gt;</div></pre></td></tr></table></figure>
+<p>3.进入docker 容器 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker exec -it 2a81dcba834f /bin/bash</div></pre></td></tr></table></figure>
+<p>文件拷贝</p>
+<p>容器-&gt;主机<br>docker cp 2a81dcba834f:/usr/local/etc/php/php.ini /Users/fredliu/Documents/PHP</p>
+<p>主机-&gt;容器<br>docker cp /Users/fredliu/Documents/PHP/php.ini 2a81dcba834f:/usr/local/etc/php</p>
+</div></article></div><div id="disqus_thread"></div></div><script>var disqus_shortname = 'fishman-1';
 var disqus_identifier = '2020/04/10/Docker常用操作命令/';
 var disqus_title = 'Docker常用操作命令';
 var disqus_url = 'https://blog.qzcool.com/2020/04/10/Docker常用操作命令/';
@@ -12,4 +18,4 @@ var disqus_url = 'https://blog.qzcool.com/2020/04/10/Docker常用操作命令/';
     var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
     dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-})();</script><script id="dsq-count-scr" src="//fishman-1.disqus.com/count.js" async></script></main><footer class="footer-container"><div class="paginator"><a href="/2020/03/16/Nginx泛域名添加https免费SSL证书Lets-Encrypt-certbot-安装使用步骤/" class="next">NEXT</a></div><div class="copyright"><p>© 2017 - 2020 <a href="https://blog.qzcool.com">fredliu</a>,<a href='http://www.beian.miit.gov.cn'>备案编号:闽ICP备17012963号-1</a> powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/AngryPowman/hexo-theme-prontera" target="_blank">hexo-theme-prontera</a>.</p></div></footer><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"fishman",'auto');ga('send','pageview');</script></body></html>
+})();</script><script id="dsq-count-scr" src="//fishman-1.disqus.com/count.js" async></script></main><footer class="footer-container"><div class="paginator"><a href="/2020/03/16/Nginx泛域名添加https免费SSL证书Lets-Encrypt-certbot-安装使用步骤/" class="next">下一篇</a></div><div class="copyright"><p>© 2017 - 2020 <a href="https://blog.qzcool.com">fredliu</a>,<a href='http://www.beian.miit.gov.cn'>备案编号:闽ICP备17012963号-1</a> powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/AngryPowman/hexo-theme-prontera" target="_blank">hexo-theme-prontera</a>.</p></div></footer><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"fishman",'auto');ga('send','pageview');</script></body></html>
