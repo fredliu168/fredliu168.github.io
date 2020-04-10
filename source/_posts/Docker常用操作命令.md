@@ -23,3 +23,19 @@ docker run --restart=always
 ```
 docker update --restart=always <CONTAINER ID>
 ```
+
+
+3.进入docker 容器 
+
+```
+docker exec -it 2a81dcba834f /bin/bash
+```
+
+文件拷贝
+ 
+容器->主机
+docker cp 2a81dcba834f:/usr/local/etc/php/php.ini /Users/fredliu/Documents/PHP
+
+主机->容器
+docker cp /Users/fredliu/Documents/PHP/php.ini 2a81dcba834f:/usr/local/etc/php
+
