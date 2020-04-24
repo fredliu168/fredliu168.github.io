@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.qzcool.com/"/>
-  <updated>2020-04-24T08:01:58.940Z</updated>
+  <updated>2020-04-24T08:31:34.975Z</updated>
   <id>https://blog.qzcool.com/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>openwrt软路由间歇性断流掉线无法连接的解决办法</title>
+    <link href="https://blog.qzcool.com/2020/04/24/openwrt%E8%BD%AF%E8%B7%AF%E7%94%B1%E9%97%B4%E6%AD%87%E6%80%A7%E6%96%AD%E6%B5%81%E6%8E%89%E7%BA%BF%E6%97%A0%E6%B3%95%E8%BF%9E%E6%8E%A5%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/"/>
+    <id>https://blog.qzcool.com/2020/04/24/openwrt软路由间歇性断流掉线无法连接的解决办法/</id>
+    <published>2020-04-24T08:30:07.000Z</published>
+    <updated>2020-04-24T08:31:34.975Z</updated>
+    
+    <content type="html"><![CDATA[<p>问题<br>树莓派 openwrt 作为软旁路由（网关）提供设备“出国访问”。但是经常性会发生断流，掉线的情况。</p><p>解决办法<br>openwrt 网络–》接口–》编辑 eth0 网口–》高级设置物理接口–》取消掉桥接<br>openwrt 网络–》防火墙–》自定义规则，添加如下规则，iptables -t nat -I POSTROUTING -o eth0 -j MASQUERADE，然后重启即可。</p><p>通过设置好像有改善了。</p><p>参考：<a href="http://blog.sinovale.com/2576.html" target="_blank" rel="external">http://blog.sinovale.com/2576.html</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;问题&lt;br&gt;树莓派 openwrt 作为软旁路由（网关）提供设备“出国访问”。但是经常性会发生断流，掉线的情况。&lt;/p&gt;
+&lt;p&gt;解决办法&lt;br&gt;openwrt 网络–》接口–》编辑 eth0 网口–》高级设置物理接口–》取消掉桥接&lt;br&gt;openwrt 网络–》防火墙–》自
+      
+    
+    </summary>
+    
+    
+    
+  </entry>
   
   <entry>
     <title>树莓派Docker中使用openwrt做旁路网关</title>
@@ -459,27 +482,6 @@
     </summary>
     
     
-    
-  </entry>
-  
-  <entry>
-    <title>经济学人在线阅读</title>
-    <link href="https://blog.qzcool.com/2019/10/30/%E5%BC%80%E5%8F%91%E4%BA%86%E4%B8%80%E4%B8%AA%E8%8B%B1%E8%AF%AD%E9%98%85%E8%AF%BB%E5%B0%8F%E7%AB%99/"/>
-    <id>https://blog.qzcool.com/2019/10/30/开发了一个英语阅读小站/</id>
-    <published>2019-10-30T02:07:02.000Z</published>
-    <updated>2019-10-30T08:53:30.072Z</updated>
-    
-    <content type="html"><![CDATA[<p>觉得有必要提高一下英语水平,找了很多方法,发现阅读外文是比较有趣方法,找到了经济学人期刊,刚好前段时间学Python,为了方便阅读同时练手一下自己建了个小站,如果你也喜欢经济学人可以点击 (<a href="https://qzcool.xyz" target="_blank" rel="external">https://qzcool.xyz</a>) 注册阅读,站点免费开放.</p><a id="more"></a>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;觉得有必要提高一下英语水平,找了很多方法,发现阅读外文是比较有趣方法,找到了经济学人期刊,刚好前段时间学Python,为了方便阅读同时练手一下自己建了个小站,如果你也喜欢经济学人可以点击 (&lt;a href=&quot;https://qzcool.xyz&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://qzcool.xyz&lt;/a&gt;) 注册阅读,站点免费开放.&lt;/p&gt;
-    
-    </summary>
-    
-    
-    
-      <category term="日记" scheme="https://blog.qzcool.com/tags/%E6%97%A5%E8%AE%B0/"/>
     
   </entry>
   
