@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.qzcool.com/"/>
-  <updated>2020-04-24T06:36:38.251Z</updated>
+  <updated>2020-04-24T08:01:58.940Z</updated>
   <id>https://blog.qzcool.com/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>树莓派Docker中使用openwrt做旁路网关</title>
+    <link href="https://blog.qzcool.com/2020/04/24/%E6%A0%91%E8%8E%93%E6%B4%BEDocker%E4%B8%AD%E4%BD%BF%E7%94%A8openwrt%E5%81%9A%E6%97%81%E8%B7%AF%E7%BD%91%E5%85%B3/"/>
+    <id>https://blog.qzcool.com/2020/04/24/树莓派Docker中使用openwrt做旁路网关/</id>
+    <published>2020-04-24T07:57:19.000Z</published>
+    <updated>2020-04-24T08:01:58.940Z</updated>
+    
+    <content type="html"><![CDATA[<p>首先我们说一下 openwrt,说白了你可以你理解为路由器系统的一种。<br>OpenWrt 是面向嵌入型设备的 Linux 发行版，所以 OpenWrt 系统运行时的资源占用率会很低。而树莓派的硬件性能要比普通路由器要高很多。虽然树莓派在硬件配置上的绝对优势能让 OpenWrt 有更大的施展空间，但相应的，硬件上的优势也带来了资源的浪费（OpenWrt 在树莓派上正常运行时，资源占用率只有不到 1/10）。再加上 OpenWrt 的可扩展性不是很强，所以很多能在 Raspbian/Debian 上能做的事情在 OpenWrt 上往往无法实现。<br>总不可能直接用树莓派只刷个 openwrt 就没了吧，那怕是有点奢侈了。那有什么方式呢？<br>没错就是 Docker,这样就可以让 linux 和 openwrt 共存了。树莓派就不这么吃灰了。<br>旁路网关<br>那么什么又是旁路网关呢？其实他跟 spring cloud 有那么几分相似之处。<br>普通路由器就像一开始的单机模式，什么都是它一台机器负责，比如信号转发、DNS、网关等，其中的“网关”角色负责路由器内部数据的处理。但因为一般家用的路由器硬件性能很有限，在运行一些比较吃资源的应用（如酸酸乳、去广告等）时，几乎会占满所有硬件资源，导致路由器网络/系统不稳定等诸多问题。这个时候我们把网关的这个角色划分出去单独的在树莓派上跑，是不是分担了主路由的压力，是不是有点微服务那个味道。这样子每个角色各司其职，树莓派也结束了它吃灰的命运了，更好的验证了那句 买前生产力，买后旁路由。</p><p>注意：</p><p>本文 docker 镜像只适用于树莓派 2B/3B/3B+/4B，在其他设备上理论上不能正常使用<br>在 Docker 中运行 OpenWrt ，树莓派将工作在旁路网关模式下，在这种工作模式下，树莓派的板载无线网卡不会工作（同时在 OpenWrt 的控制面板中也找不到有关 WIFI 的设置）。所以，需要将树莓派与路由器通过网线连接来使用。</p><p>具体步骤</p><p>Step 1: 打开网卡混杂模式</p><p>sudo ip link set eth0 promisc on<br>复制代码<br>Step 2 :创建 docker 网络**</p><p>注意了，这里需要结合自己的网络修改，不能照搬！！ sudo ifconfig 可以查看树莓派 IP 地址，不过刚刚不是都知道了嘛 [汗]，多一种方式嘛<br>刚刚登陆 ssh 的 ip 地址 192.168.31.7 那么说明树莓派处在 192.168.31.x 网段，那么下面的命令中的<br>–subnet=192.168.x.0/24 和–gateway=192.168.x.1 将要替换成对应网段的地址。(此处的 x 请根据自己的网络进行修改)<br>替换后：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker network create -d macvlan --subnet=192.168.31.0/24 --gateway=192.168.31.1 -o parent=eth0 macnet</div></pre></td></tr></table></figure><p>这是我们 docker network ls 就可以查看到刚刚创建的网络</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">pi@raspbian:~$ docker network ls</div><div class="line">NETWORK ID          NAME                DRIVER              SCOPE</div><div class="line">e5988f578007        bridge              bridge              local</div><div class="line">107c16227dd4        docker_gwbridge     bridge              local</div><div class="line">3ceb60d85b9c        host                host                local</div><div class="line">b1929166e45c        macnet              macvlan             local</div><div class="line">93ad7ae8da72        none                null                local</div></pre></td></tr></table></figure><p>这里我还特意去查了一下 macvlan<br>macvlan 是一种虚拟网卡的解决方案：</p><p>macvlan 并不创建网络，只创建虚拟网卡。<br>macvlan 会共享物理网卡所链接的外部网络，实现的效果跟桥接模式是一样的。</p><p>想要了解更多等会文末会附上个参考链接。</p><p>Step 3 :拉取镜像。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker pull harryzhang6/openwrt:latest</div></pre></td></tr></table></figure><p>复制代码我们可以通过 docker images 查看本地的镜像</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">pi@raspbian:~$ docker images</div><div class="line">REPOSITORY            TAG                 IMAGE ID            CREATED             SIZE</div><div class="line">harryzhang6/openwrt   latest              5c354d2e6f6f        3 hours ago         235MB</div></pre></td></tr></table></figure><p>这里也就说明镜像拉取成功了。</p><p>Step 4 :创建并启动容器</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker run --restart always --name openwrt -d --network macnet --privileged harryzhang6/openwrt:latest /sbin/init</div></pre></td></tr></table></figure><p>复制代码<br>–restart always 参数表示容器退出时始终重启，使服务尽量保持始终可用；<br>–name openwrt 参数定义了容器的名称；<br>-d 参数定义使容器运行在 Daemon 模式；<br>–network macnet 参数定义将容器加入 maxnet 网络；<br>–privileged 参数定义容器运行在特权模式下；</p><p>我们 docker ps 确认一下容器是否启动成功</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">pi@raspbian:~$ docker ps</div><div class="line">CONTAINER ID        IMAGE                        COMMAND             CREATED             STATUS              PORTS               NAMES</div><div class="line">755d018206fd        harryzhang6/openwrt:latest   &quot;/sbin/init&quot;        2 minutes ago</div></pre></td></tr></table></figure><p>确认启动成功，下一步就是进入容器配置了</p><p>Step 5 :进入容器并修改相关参数</p><p>注意：这一步的某些配置也跟上面一样，不能照搬<br>docker exec -it openwrt bash<br>复制代码执行此命令后我们便进入 OpenWrt 的命令行界面，首先，我们需要编辑 OpenWrt 的网络配置文件：<br>vim /etc/config/network<br>复制代码我们需要更改 Lan 口设置：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">config interface &apos;lan&apos;</div><div class="line">        option type &apos;bridge&apos;</div><div class="line">        option ifname &apos;eth0&apos;</div><div class="line">        option proto &apos;static&apos;</div><div class="line">        option ipaddr &apos;192.168.31.100&apos; //需要更改处</div><div class="line">        option netmask &apos;255.255.255.0&apos;</div><div class="line">        option ip6assign &apos;60&apos;</div><div class="line">        option gateway &apos;192.168.31.1&apos; //需要更改处</div><div class="line">        option broadcast &apos;192.168.123.255&apos;</div><div class="line">        option dns &apos;192.168.31.1&apos; //需要更改处</div></pre></td></tr></table></figure><p>这里是我配置好的，需要自行更改。option gateway 和 option dns 填写路由器的 IP，若树莓派获得的 IP 为 192.168.31.154，路由器 IP 为 192.168.31.1.<br>option ipaddr 项目定义了 OpenWrt 的 IP 地址，在完成网段设置后，IP 最后一段可根据自己的爱好修改（前提是符合规则且不和现有已分配 IP 冲突）。</p><p>Step 6 :重启网络</p><p>/etc/init.d/network restart<br>复制代码<br>Step 7 : 进入 openwrt 管理页面</p><p>在浏览器输入刚刚 Step 5 中定义的 option ipaddr,我这里是 192.168.31.1,就可以看到后台的管理界面</p><p>用户名：root</p><p>密码：password</p><p>Step 8 :关闭 DHCP 服务</p><p>在 “网络 - 接口 - Lan - 修改” 界面中，勾选下方的 “忽略此接口（不在此接口提供 DHCP 服务）”，并“保存&amp;应用”<br>Step 9: 主路由 DHCP 设置</p><p>这里不非必要的，<br>进入路由器后台中，将主路由的 DHCP 的默认网关和 DNS 服务器设置为第 5 步中 option ipaddr 项目中的 IP。<br>由于不想每台设备都通过这个 opwrt，只有自己设置的设备才走 openwrt 这个网关。<br>如果你修改了主路由 DHCP 请重启路由器。<br>到这里也差不多了教程，下面附上手动指定网关的教程<br>手动指定网关<br>如果路由器固件不支持自定义 DHCP 服务的网关及 DNS 地址（常见于路由器官方固件），或者只希望局域网下的个别设备接入旁路网关时，须在接入设备上做以下配置：</p><p>作者：HarryZhang6<br>链接：<a href="https://juejin.im/post/5e62711fe51d4526e91f5a1b" target="_blank" rel="external">https://juejin.im/post/5e62711fe51d4526e91f5a1b</a><br>来源：掘金<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;首先我们说一下 openwrt,说白了你可以你理解为路由器系统的一种。&lt;br&gt;OpenWrt 是面向嵌入型设备的 Linux 发行版，所以 OpenWrt 系统运行时的资源占用率会很低。而树莓派的硬件性能要比普通路由器要高很多。虽然树莓派在硬件配置上的绝对优势能让 Open
+      
+    
+    </summary>
+    
+    
+    
+  </entry>
   
   <entry>
     <title>树莓派Docker设置代理</title>
@@ -452,27 +474,6 @@
     <summary type="html">
     
       &lt;p&gt;觉得有必要提高一下英语水平,找了很多方法,发现阅读外文是比较有趣方法,找到了经济学人期刊,刚好前段时间学Python,为了方便阅读同时练手一下自己建了个小站,如果你也喜欢经济学人可以点击 (&lt;a href=&quot;https://qzcool.xyz&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://qzcool.xyz&lt;/a&gt;) 注册阅读,站点免费开放.&lt;/p&gt;
-    
-    </summary>
-    
-    
-    
-      <category term="日记" scheme="https://blog.qzcool.com/tags/%E6%97%A5%E8%AE%B0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>换了Prontera风格</title>
-    <link href="https://blog.qzcool.com/2019/10/30/%E6%8D%A2%E4%BA%86Prontera%E9%A3%8E%E6%A0%BC/"/>
-    <id>https://blog.qzcool.com/2019/10/30/换了Prontera风格/</id>
-    <published>2019-10-30T01:54:36.000Z</published>
-    <updated>2019-10-30T02:05:11.188Z</updated>
-    
-    <content type="html"><![CDATA[<p>博客荒废了好久,重新启用一下,换了一个叫Prontera的风格,下载地址<a href="https://github.com/AngryPowman/hexo-theme-prontera" target="_blank" rel="external">https://github.com/AngryPowman/hexo-theme-prontera</a></p><a id="more"></a>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;博客荒废了好久,重新启用一下,换了一个叫Prontera的风格,下载地址&lt;a href=&quot;https://github.com/AngryPowman/hexo-theme-prontera&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://github.com/AngryPowman/hexo-theme-prontera&lt;/a&gt;&lt;/p&gt;
     
     </summary>
     
