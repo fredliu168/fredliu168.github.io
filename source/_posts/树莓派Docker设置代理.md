@@ -33,3 +33,24 @@ docker login
 ```
 
 可以正常访问到仓库了。
+
+其他（上面的设置突然无效了,使用下面有效）
+
+写入代理设置
+
+```cmd
+sudo mkdir /lib/systemd/system/docker.service.d
+cat > /lib/systemd/system/docker.service.d/socks5-proxy.conf <<EOF
+[Service]
+Environment="ALL_PROXY=socks5://127.0.0.1:1080"
+EOF
+```
+
+重新加载配置
+
+```cmd
+systemctl daemon-reload
+systemctl restart docker
+```
+
+<!-- more -->
