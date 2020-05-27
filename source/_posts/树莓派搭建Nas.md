@@ -93,7 +93,38 @@ sudo mount -t ntfs-3g -o permissions /dev/sda2 /home/ubuntu/share
 
 ```
 
+自动挂载设备
+
+查看要指定加载储存设备的 UUID
+
+```
+sudo blkid
+```
+
+结果如下：
+
+```
+/dev/mmcblk0p1: LABEL=”boot” UUID=”CDD4-B453” TYPE=”vfat” PARTUUID=”daf17199-01”
+/dev/mmcblk0p2: LABEL=”rootfs” UUID=”72bfc10d-73ec-4d9e-a54a-1cc507ee7ed2” TYPE=”ext4” PARTUUID=”daf17199-02”
+/dev/mmcblk0: PTUUID=”daf17199” PTTYPE=”dos”
+/dev/sda1: LABEL=”piusb” UUID=”3EFBF3DF518ACC17” TYPE=”ntfs” PARTLABEL=”Basic data partition” PARTUUID=”5cb848ac-2940-462f-8600-e881ce428606”
+```
+
+```
+// 编辑设备管理
+sudo vim /etc/fstab
+// 在最后一行添加你要挂载的设备
+// 针对非 ntfs 格式的移动硬盘
+UUID=3EFBF3DF518ACC17 /media/piusb auto defaults,noexec,umask=0000 0 0
+
+// 针对 ntfs 格式的移动硬盘
+UUID=7AE83E6917B75C04 /home/ubuntu/share ntfs-3g defaults,noexec,umask=0000 0 0
+
+```
+
 作者：HarryZhang6
 链接：https://juejin.im/post/5e5c02dc6fb9a07ccb7e9b58
 来源：掘金
 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+<!-- more -->
