@@ -79,17 +79,17 @@ sudo apt-get install ntfs-3g
 ```
 
 ```
-sudo umount /dev/sdb1
+sudo umount /dev/sda2
 ```
 
 格式化 NTFS
 
 ```
-sudo mkfs.ntfs -f /dev/sdb1
+sudo mkfs.ntfs -f /dev/sda2
 ```
 
 ```
-sudo mount -t ntfs-3g -o permissions /dev/sda3 /mnt/data
+sudo mount -t ntfs-3g -o permissions /dev/sda2 /home/ubuntu/share
 
 ```
 
