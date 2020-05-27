@@ -23,7 +23,14 @@
 <p>格式化 NTFS</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo mkfs.ntfs -f /dev/sda2</div></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo mount -t ntfs-3g -o permissions /dev/sda2 /home/ubuntu/share</div></pre></td></tr></table></figure>
+<p>自动挂载设备</p>
+<p>查看要指定加载储存设备的 UUID</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo blkid</div></pre></td></tr></table></figure>
+<p>结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">/dev/mmcblk0p1: LABEL=”boot” UUID=”CDD4-B453” TYPE=”vfat” PARTUUID=”daf17199-01”</div><div class="line">/dev/mmcblk0p2: LABEL=”rootfs” UUID=”72bfc10d-73ec-4d9e-a54a-1cc507ee7ed2” TYPE=”ext4” PARTUUID=”daf17199-02”</div><div class="line">/dev/mmcblk0: PTUUID=”daf17199” PTTYPE=”dos”</div><div class="line">/dev/sda1: LABEL=”piusb” UUID=”3EFBF3DF518ACC17” TYPE=”ntfs” PARTLABEL=”Basic data partition” PARTUUID=”5cb848ac-2940-462f-8600-e881ce428606”</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">// 编辑设备管理</div><div class="line">sudo vim /etc/fstab</div><div class="line">// 在最后一行添加你要挂载的设备</div><div class="line">// 针对非 ntfs 格式的移动硬盘</div><div class="line">UUID=3EFBF3DF518ACC17 /media/piusb auto defaults,noexec,umask=0000 0 0</div><div class="line"></div><div class="line">// 针对 ntfs 格式的移动硬盘</div><div class="line">UUID=7AE83E6917B75C04 /home/ubuntu/share ntfs-3g defaults,noexec,umask=0000 0 0</div></pre></td></tr></table></figure>
 <p>作者：HarryZhang6<br>链接：<a href="https://juejin.im/post/5e5c02dc6fb9a07ccb7e9b58" target="_blank" rel="external">https://juejin.im/post/5e5c02dc6fb9a07ccb7e9b58</a><br>来源：掘金<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
+<a id="more"></a>
 </div></article></div><div id="disqus_thread"></div></div><script>var disqus_shortname = 'fishman-1';
 var disqus_identifier = '2020/05/27/树莓派搭建Nas/';
 var disqus_title = '树莓派搭建Nas';
