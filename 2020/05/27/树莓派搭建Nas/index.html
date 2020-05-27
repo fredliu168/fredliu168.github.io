@@ -19,10 +19,10 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo samba restart</div></pre></td></tr></table></figure>
 <p>挂载 ntfs 格式硬盘</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install ntfs-3g</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo umount /dev/sdb1</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo umount /dev/sda2</div></pre></td></tr></table></figure>
 <p>格式化 NTFS</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo mkfs.ntfs -f /dev/sdb1</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo mount -t ntfs-3g -o permissions /dev/sda3 /mnt/data</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo mkfs.ntfs -f /dev/sda2</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo mount -t ntfs-3g -o permissions /dev/sda2 /home/ubuntu/share</div></pre></td></tr></table></figure>
 <p>作者：HarryZhang6<br>链接：<a href="https://juejin.im/post/5e5c02dc6fb9a07ccb7e9b58" target="_blank" rel="external">https://juejin.im/post/5e5c02dc6fb9a07ccb7e9b58</a><br>来源：掘金<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
 </div></article></div><div id="disqus_thread"></div></div><script>var disqus_shortname = 'fishman-1';
 var disqus_identifier = '2020/05/27/树莓派搭建Nas/';
