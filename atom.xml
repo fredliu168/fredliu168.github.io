@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.qzcool.com/"/>
-  <updated>2020-05-07T02:08:42.793Z</updated>
+  <updated>2020-05-27T07:59:26.794Z</updated>
   <id>https://blog.qzcool.com/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>树莓派搭建Nas</title>
+    <link href="https://blog.qzcool.com/2020/05/27/%E6%A0%91%E8%8E%93%E6%B4%BE%E6%90%AD%E5%BB%BANas/"/>
+    <id>https://blog.qzcool.com/2020/05/27/树莓派搭建Nas/</id>
+    <published>2020-05-27T07:39:12.000Z</published>
+    <updated>2020-05-27T07:59:26.794Z</updated>
+    
+    <content type="html"><![CDATA[<p>Step 1: 更新系统</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo apt-get update</div><div class="line">sudo apt-get upgrade</div></pre></td></tr></table></figure><p>Step 2: 安装 Samba</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install samba samba-common-bin</div></pre></td></tr></table></figure><p>Step 3: 挂载移动硬盘</p><p>Step 4: 使用 Samba 共享文件夹</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo nano /etc/samba/smb.conf</div></pre></td></tr></table></figure><p>在文件的身份验证下面添加上这一行</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">security = user</div></pre></td></tr></table></figure><p>Step 5: 设置共享文件夹</p><p>还是在刚刚那个配置文件上，在结尾添加：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">[MyNas]</div><div class="line">path = /home/pi/shared</div><div class="line">writeable=Yes</div><div class="line">create mask=0777</div><div class="line">directory mask=0777</div><div class="line">public=no</div></pre></td></tr></table></figure><p>MyNas: 这定义了与共享文件夹有关的地址和其他配置。例如，共享文件夹将是以下地址：\ raspberrypi \ MyNas。<br>path：共享文件夹目录；<br>valid users：有效用户；<br>read only：是否只读；<br>create mask：创建文件的权限；<br>directory mask：创建文件夹的权限；<br>guest ok：是否允许访客访问；<br>browseable：是否可见。</p><p>添加完成后保存就行了，CTRL + X 然后按 Y and 最后敲个回车</p><p>Step 6: 添加用户到 Samba</p><p>sudo smbpasswd -a pi<br>这一步会让你输入密码，这个密码是等会用来登陆 nas 用的，不是系统的那个密码。</p><p>pi 是树莓派默认的用户，如果你想改个名也可以，新建用户就完事了。<br>sudo adduser username<br>sudo smbpasswd -a username</p><p>这一步可能要重启 Samba 才能生效—————–注：samba 默认开机自启，无需为重启担心。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo samba restart</div></pre></td></tr></table></figure><p>挂载 ntfs 格式硬盘</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install ntfs-3g</div></pre></td></tr></table></figure><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo umount /dev/sdb1</div></pre></td></tr></table></figure><p>格式化 NTFS</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo mkfs.ntfs -f /dev/sdb1</div></pre></td></tr></table></figure><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo mount -t ntfs-3g -o permissions /dev/sda3 /mnt/data</div></pre></td></tr></table></figure><p>作者：HarryZhang6<br>链接：<a href="https://juejin.im/post/5e5c02dc6fb9a07ccb7e9b58" target="_blank" rel="external">https://juejin.im/post/5e5c02dc6fb9a07ccb7e9b58</a><br>来源：掘金<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;Step 1: 更新系统&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;/p
+      
+    
+    </summary>
+    
+    
+    
+  </entry>
   
   <entry>
     <title>显示来自远程JSON文件的SwiftUI列表</title>
@@ -454,30 +477,6 @@
       &lt;p&gt;Linux系统有一个钥匙环(keyring)的管理程序．钥匙环受到用户登录密码的保护．当你登录Linux系统时，会自动解开钥匙环的密码，从而可访问钥匙环．SSH的密钥和公钥也存储在钥匙环．所以初次使用SSH密钥登录远程Linux服务器时需要输入一次SSH密钥的密码．而将来使用SSH密钥登录时不再输入密码。Ubuntu的钥匙环程序是seahorse．&lt;br&gt;SSH密钥就好比是你的身份证明．远程Linux服务器用你生成的SSH公钥来加密一条消息，而只有你的SSH密钥可以解开这条消息．所以其他人如果没有你的SSH密钥，是无法解开加密消息的，从而也就无法登录你的Linux服务器．&lt;/p&gt;
 &lt;p&gt;检查一下你有没有 ssh key&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;ls ~/.ssh&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
 &lt;p&gt;如果有包含下面这两个文件，则说明你有ssh key&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;id_rsa id_rsa.pub&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-    
-    </summary>
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>Git配置全局账号密码避免每次拉取、提交输入账号密码</title>
-    <link href="https://blog.qzcool.com/2019/10/30/Git%E9%85%8D%E7%BD%AE%E5%85%A8%E5%B1%80%E8%B4%A6%E5%8F%B7%E5%AF%86%E7%A0%81%E9%81%BF%E5%85%8D%E6%AF%8F%E6%AC%A1%E6%8B%89%E5%8F%96%E3%80%81%E6%8F%90%E4%BA%A4%E8%BE%93%E5%85%A5%E8%B4%A6%E5%8F%B7%E5%AF%86%E7%A0%81/"/>
-    <id>https://blog.qzcool.com/2019/10/30/Git配置全局账号密码避免每次拉取、提交输入账号密码/</id>
-    <published>2019-10-30T07:29:47.000Z</published>
-    <updated>2019-10-30T07:46:21.222Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote><p>前言</p></blockquote><pre><code>在大家使用github的过程中，一定会碰到这样一种情况，就是每次要push 和pull时总是要输入github的账号和密码，这样不仅浪费了大量的时间且降低了工作效率。在此背景下，本文在网上找了两种方法来避免这种状况，这些成果也是先人提出来的，在此只是做个总结。</code></pre><h2 id="1-方法一"><a href="#1-方法一" class="headerlink" title="1.方法一"></a>1.方法一</h2><h3 id="1-1-创建文件存储GIT用户名和密码"><a href="#1-1-创建文件存储GIT用户名和密码" class="headerlink" title="1.1 创建文件存储GIT用户名和密码"></a>1.1 创建文件存储GIT用户名和密码</h3><p>在%HOME%目录中，一般为C:\users\Administrator，也可以是你自己创建的系统用户名目录，反正都在C:\users\中。文件名为.git-credentials,由于在Window中不允许直接创建以”.”开头的文件，所以需要借助git bash进行，打开git bash客户端，进行%HOME%目录，然后用touch创建文件 .git-credentials, 用vim编辑此文件，输入内容格式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">touch .git-credentials</div><div class="line"></div><div class="line">vim .git-credentials</div><div class="line"></div><div class="line">https://&#123;username&#125;:&#123;password&#125;@git.coding.net       //我这里用的是coding.net域名</div></pre></td></tr></table></figure></p><p>针对 SSH 协议的方式， 配置SSH 公钥，使用 SSH 协议操作，具体见 SSH 公钥配置</p><a id="more"></a><p>对于 Https 协议</p><p>首先在全局配置保存你的密码， ~/.git-credentials （没有就创建）内添加 https://{username}:<a href="mailto:{passwd}@git.coding.net" target="_blank" rel="external">{passwd}@git.coding.net</a><br>然后配置 Git 命令存储认证，</p><h3 id="1-2-添加Git-Config-内容"><a href="#1-2-添加Git-Config-内容" class="headerlink" title="1.2 添加Git Config 内容"></a>1.2 添加Git Config 内容</h3><p>进入git bash终端， 输入如下命令：</p><p>git config –global credential.helper store</p><p>执行完后查看%HOME%目录下的.gitconfig文件，会多了一项：</p><pre><code>[credential]    helper = store</code></pre><p>重新开启git bash会发现git push时不用再输入用户名和密码</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;blockquote&gt;
-&lt;p&gt;前言&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;pre&gt;&lt;code&gt;在大家使用github的过程中，一定会碰到这样一种情况，就是每次要push 和pull时总是要输入github的账号和密码，这样不仅浪费了大量的时间且降低了工作效率。在此背景下，本文在网上找了两种方法来避免这种状况，这些成果也是先人提出来的，在此只是做个总结。
-&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&quot;1-方法一&quot;&gt;&lt;a href=&quot;#1-方法一&quot; class=&quot;headerlink&quot; title=&quot;1.方法一&quot;&gt;&lt;/a&gt;1.方法一&lt;/h2&gt;&lt;h3 id=&quot;1-1-创建文件存储GIT用户名和密码&quot;&gt;&lt;a href=&quot;#1-1-创建文件存储GIT用户名和密码&quot; class=&quot;headerlink&quot; title=&quot;1.1 创建文件存储GIT用户名和密码&quot;&gt;&lt;/a&gt;1.1 创建文件存储GIT用户名和密码&lt;/h3&gt;&lt;p&gt;在%HOME%目录中，一般为C:\users\Administrator，也可以是你自己创建的系统用户名目录，反正都在C:\users\中。文件名为.git-credentials,由于在Window中不允许直接创建以”.”开头的文件，所以需要借助git bash进行，打开git bash客户端，进行%HOME%目录，然后用touch创建文件 .git-credentials, 用vim编辑此文件，输入内容格式：&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;touch .git-credentials&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;vim .git-credentials&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;https://&amp;#123;username&amp;#125;:&amp;#123;password&amp;#125;@git.coding.net       //我这里用的是coding.net域名&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;针对 SSH 协议的方式， 配置SSH 公钥，使用 SSH 协议操作，具体见 SSH 公钥配置&lt;/p&gt;
     
     </summary>
     
