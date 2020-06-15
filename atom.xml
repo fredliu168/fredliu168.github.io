@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.qzcool.com/"/>
-  <updated>2020-05-27T11:22:29.972Z</updated>
+  <updated>2020-06-15T09:47:35.098Z</updated>
   <id>https://blog.qzcool.com/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>MacbookPro2015升级SSD固态硬盘</title>
+    <link href="https://blog.qzcool.com/2020/06/15/MacbookPro2015%E5%8D%87%E7%BA%A7SSD%E5%9B%BA%E6%80%81%E7%A1%AC%E7%9B%98/"/>
+    <id>https://blog.qzcool.com/2020/06/15/MacbookPro2015升级SSD固态硬盘/</id>
+    <published>2020-06-15T08:33:12.000Z</published>
+    <updated>2020-06-15T09:47:35.098Z</updated>
+    
+    <content type="html"><![CDATA[<p>为了给 MacBook pro2015 升级硬盘，网上看了很多文章，基本上是要求买个硬盘盒进行格式化硬盘，用 U 盘做引导，其实是不用的，如果你想要升级硬盘可以参考我的做法，关于拆机部分可以参考网上的其他文章。<br>我升级过程过程中出现了一个小意外，进系统实用工具之后是找不到 SSD,还在考虑是不是要买个硬盘盒的时候搜索了一下文章，发现是开机时按键盘的方式不对，重启后可以识别出来了。</p><p>618 区间一只关注固态硬盘的价格，看到 HP EX900 500G 降到 380 块的时候，用卷和京豆最后 350 块价格买下了，然后淘宝上淘一个转接卡回来，开搞。</p><p>1.找一块硬盘做 TimeMachine</p><p>2.关机</p><p>3.拆机</p><p>4.拔电源</p><p>5.拆硬盘</p><p>6.换硬盘</p><p>7.插电</p><p>然后可以开机了，记得要同时按“电源+cmd+r+option”四个按键，等小地球出来松手，少按一个都不行，我第一次只按了 command+R+电源键，结果进系统实用工具之后是找不到 SSD 的。</p><p>8.格式化 ssd<br>记得要选择 APFS 格式，分区选择 GUID<br>SSD 格式化之后关闭磁盘工具，回到系统首页，直接选择第一个从时间机器备份进行恢复<br>然后就是一路下一步下一步，选择备份磁盘，选择目标磁盘 EX 900<br>恢复完成之后系统会自己重启，这时候登陆 Apple ID，进入系统，至此全部完成，记得关机，把后盖螺丝都拧上</p><p>可以参考这篇文章：<br><a href="https://new.qq.com/omn/20191210/20191210A0DVDF00.html" target="_blank" rel="external">https://new.qq.com/omn/20191210/20191210A0DVDF00.html</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;为了给 MacBook pro2015 升级硬盘，网上看了很多文章，基本上是要求买个硬盘盒进行格式化硬盘，用 U 盘做引导，其实是不用的，如果你想要升级硬盘可以参考我的做法，关于拆机部分可以参考网上的其他文章。&lt;br&gt;我升级过程过程中出现了一个小意外，进系统实用工具之后是找
+      
+    
+    </summary>
+    
+    
+    
+  </entry>
   
   <entry>
     <title>树莓派搭建Nas</title>
@@ -483,27 +505,6 @@
     
       &lt;p&gt;苹果昨晚直接在官网发布了 AirPods Pro,&lt;br&gt;一款带有主动降噪功能的真无线入耳耳机。中国区售价 1999 元.&lt;/p&gt;
 &lt;img src=&quot;/2019/10/30/苹果发布新耳机AirPods-Pro/airpodsPro.jpg&quot; alt=&quot;This is an image&quot; title=&quot;This is an image&quot;&gt;
-    
-    </summary>
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>ssh/sftp无需输入密码设置</title>
-    <link href="https://blog.qzcool.com/2019/10/30/ssh-sftp%E6%97%A0%E9%9C%80%E8%BE%93%E5%85%A5%E5%AF%86%E7%A0%81%E8%AE%BE%E7%BD%AE/"/>
-    <id>https://blog.qzcool.com/2019/10/30/ssh-sftp无需输入密码设置/</id>
-    <published>2019-10-30T07:47:06.000Z</published>
-    <updated>2019-10-30T07:48:03.151Z</updated>
-    
-    <content type="html"><![CDATA[<p>Linux系统有一个钥匙环(keyring)的管理程序．钥匙环受到用户登录密码的保护．当你登录Linux系统时，会自动解开钥匙环的密码，从而可访问钥匙环．SSH的密钥和公钥也存储在钥匙环．所以初次使用SSH密钥登录远程Linux服务器时需要输入一次SSH密钥的密码．而将来使用SSH密钥登录时不再输入密码。Ubuntu的钥匙环程序是seahorse．<br>SSH密钥就好比是你的身份证明．远程Linux服务器用你生成的SSH公钥来加密一条消息，而只有你的SSH密钥可以解开这条消息．所以其他人如果没有你的SSH密钥，是无法解开加密消息的，从而也就无法登录你的Linux服务器．</p><p>检查一下你有没有 ssh key<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ls ~/.ssh</div></pre></td></tr></table></figure></p><p>如果有包含下面这两个文件，则说明你有ssh key<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">id_rsa id_rsa.pub</div></pre></td></tr></table></figure></p><a id="more"></a><p>有 .pub 后缀的是公钥，没有的是私钥。公钥可以让别人知道，私钥就像你的密码一样，不要给别人。</p><p>如果没有 ssh key，可以用 ssh-keygen -t rsa 命令 来生成<br>然后一路回车，就可以生成 ssh key 了</p><p>然后，再一个命令，把公钥上传到服务器<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh-copy-id username@remote-server</div></pre></td></tr></table></figure></p><p>这样公钥就会上传到服务器的 ~/.ssh/authorized_keys 位置中<br>大功告成，以后在本机不用输入密码就可以用ssh连接服务器了</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Linux系统有一个钥匙环(keyring)的管理程序．钥匙环受到用户登录密码的保护．当你登录Linux系统时，会自动解开钥匙环的密码，从而可访问钥匙环．SSH的密钥和公钥也存储在钥匙环．所以初次使用SSH密钥登录远程Linux服务器时需要输入一次SSH密钥的密码．而将来使用SSH密钥登录时不再输入密码。Ubuntu的钥匙环程序是seahorse．&lt;br&gt;SSH密钥就好比是你的身份证明．远程Linux服务器用你生成的SSH公钥来加密一条消息，而只有你的SSH密钥可以解开这条消息．所以其他人如果没有你的SSH密钥，是无法解开加密消息的，从而也就无法登录你的Linux服务器．&lt;/p&gt;
-&lt;p&gt;检查一下你有没有 ssh key&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;ls ~/.ssh&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
-&lt;p&gt;如果有包含下面这两个文件，则说明你有ssh key&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;id_rsa id_rsa.pub&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
     
     </summary>
     
