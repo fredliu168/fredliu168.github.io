@@ -1,31 +1,29 @@
 favicon: /favicon.ico
 
-
 # Nav Menus
 menu:
-    Index: /
-    Archives: /archives
+  Index: /
+  Archives: /archives
 
 # Nav Shortcut Icons
 nav_icons:
-    - ['/images/github.svg', 'https://github.com/fredliu168']
-    - ['/images/rss.svg', '/atom.xml']
+  - ['/images/github.svg', 'https://github.com/fredliu168']
+  - ['/images/rss.svg', '/atom.xml']
 
 # Friend Links
 friend_links:
-    - ['restran', '淡水', 'https://www.restran.net']
-    - ['iReading', '英语学习,经济学人在线阅读', 'https://qzcool.xyz']
+  - ['restran', '淡水', 'https://www.restran.net']
 
 # About
 about_info:
-    name: "Fishman"
-    bio: "且行且珍惜"
-    avatar: "/images/avatar.png"
+  name: 'Fishman'
+  bio: '且行且珍惜'
+  avatar: '/images/avatar.png'
 
 # Comment
 # e.g disqus: seansun
 disqus: fishman-1
-duoshuo: 
+duoshuo:
 
 auto_excerpt:
   enable: false
@@ -33,7 +31,7 @@ auto_excerpt:
 
 # Analytics
 google_analytics: fishman
-tencent_analytics: 
- 
+tencent_analytics:
+
 # Copyright Infomation
 startyear: 2017

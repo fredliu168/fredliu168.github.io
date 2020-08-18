@@ -4,15 +4,14 @@
 
 # Site
 title: 非鱼笔记
-subtitle: 随手笔记 一个没技术含量的博客 
-description: 80后,略懂一点编程.
+subtitle: 随手笔记 一个没技术含量的博客
+description: 略懂一点编程.
 author: fredliu
 language: zh-Hans
 timezone:
 
-#设置 头像 
+#设置 头像
 avatar: /uploads/avatar.png
-
 
 #多说评论
 #duoshuo_shortname: fredliu168
@@ -25,8 +24,6 @@ search:
 
 #百度统计
 baidu_analytics: 6ca493ead9e34275c0dc9fecbcf5ede1
-
-
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
@@ -90,4 +87,4 @@ deploy:
   type: git
   repo: https://github.com/fredliu168/fredliu168.github.io.git
   branch: master
-  message: 
+  message:
