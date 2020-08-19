@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.qzcool.com/"/>
-  <updated>2020-08-19T09:43:00.469Z</updated>
+  <updated>2020-08-19T09:46:30.776Z</updated>
   <id>https://blog.qzcool.com/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>iMac终端走Socks5代理方法</title>
+    <link href="https://blog.qzcool.com/2020/08/19/iMac%E7%BB%88%E7%AB%AF%E8%B5%B0Socks5%E4%BB%A3%E7%90%86%E6%96%B9%E6%B3%95/"/>
+    <id>https://blog.qzcool.com/2020/08/19/iMac终端走Socks5代理方法/</id>
+    <published>2020-08-19T09:44:16.000Z</published>
+    <updated>2020-08-19T09:46:30.776Z</updated>
+    
+    <content type="html"><![CDATA[<p>1.找到代理地址和端口<br>本人的 Socks5 的监听地址是 127.0.0.1，端口 1086</p><ol start="2"><li>打开终端添加配置</li></ol><p>（我的终端是 zsh）打开终端，输入以下代码打开 vim</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim ~/.zshrc</div></pre></td></tr></table></figure><p>按下键盘上的字母「i」，进入编辑模式，输入以下代码，第二行末尾改成自己的代理地址和端口</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># proxy list</div><div class="line">alias proxy=&apos;export all_proxy=socks5://127.0.0.1:1086&apos;</div><div class="line">alias unproxy=&apos;unset all_proxy&apos;</div></pre></td></tr></table></figure><p>按下键盘上的「esc」，退出编辑模式。输入以下代码保存修改并退出 vim</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:wq</div></pre></td></tr></table></figure><p>初始化配置</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">source ~/.zshrc</div></pre></td></tr></table></figure><ol start="3"><li>执行</li></ol><p>开启代理模式，查看 ip，看看 brew update 命令顺畅与否</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">proxy</div><div class="line">brew update</div></pre></td></tr></table></figure><p>如果不想走代理了则使用 unproxy 命令</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">unproxy</div></pre></td></tr></table></figure><p>开启代理模式前后可以查看 ip</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl cip.cc</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;1.找到代理地址和端口&lt;br&gt;本人的 Socks5 的监听地址是 127.0.0.1，端口 1086&lt;/p&gt;
+&lt;ol start=&quot;2&quot;&gt;
+&lt;li&gt;打开终端添加配置&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;（我的终端是 zsh）打开终端，输入以下代码打开 vim&lt;/p&gt;
+&lt;figure
+      
+    
+    </summary>
+    
+    
+    
+      <category term="iMac" scheme="https://blog.qzcool.com/tags/iMac/"/>
+    
+  </entry>
   
   <entry>
     <title>树莓派通过Nginx发布共享音频文件</title>
@@ -501,26 +530,6 @@
         &lt;p&gt;在写文章时，常常有配图说明的需求。Hexo有多种图片插入方式，可以将图片存放在本地引用或者将图片放在CDN上引用。&lt;/p&gt;
 &lt;p&gt;本地引用&lt;br&gt;绝对路径&lt;br&gt;当Hexo项目中只用到少量图片时，可以将图片统一放在source/images文件夹中，通过markdown语法
       
-    
-    </summary>
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>大疆发布了Mavic Mini</title>
-    <link href="https://blog.qzcool.com/2019/10/31/%E5%A4%A7%E7%96%86%E5%8F%91%E5%B8%83%E4%BA%86Mavic-Mini/"/>
-    <id>https://blog.qzcool.com/2019/10/31/大疆发布了Mavic-Mini/</id>
-    <published>2019-10-31T01:28:26.000Z</published>
-    <updated>2019-10-31T01:37:44.642Z</updated>
-    
-    <content type="html"><![CDATA[<p>大疆昨天发布了最新的Mavic,把他定义为可以每天飞行的相机.质量249克,30分钟最长飞行时间,售价仅2699人民币,价格相当亲民.</p><img src="/2019/10/31/大疆发布了Mavic-Mini/mavicmini.jpg" alt="This is an image" title="This is an image"><a id="more"></a>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;大疆昨天发布了最新的Mavic,把他定义为可以每天飞行的相机.质量249克,30分钟最长飞行时间,售价仅2699人民币,价格相当亲民.&lt;/p&gt;
-&lt;img src=&quot;/2019/10/31/大疆发布了Mavic-Mini/mavicmini.jpg&quot; alt=&quot;This is an image&quot; title=&quot;This is an image&quot;&gt;
     
     </summary>
     
