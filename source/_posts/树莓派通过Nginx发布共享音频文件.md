@@ -85,5 +85,5 @@ sudo nginx -s reload
 没有提示错误的话就可以通过浏览器进行访问
 
 ```
-http://127.0.0.1/xx/xxx.mp3
+http://127.0.0.1:8080/xx/xxx.mp3
 ```
