@@ -31,3 +31,5 @@ psk:密码
 priority:连接优先级，越大越优先
 scan_ssid:连接隐藏WiFi时需要指定该值为1
 ```
+
+<!-- more -->
