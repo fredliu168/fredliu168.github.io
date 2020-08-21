@@ -4,7 +4,27 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">network=&#123;</div><div class="line">ssid=”wifi_name”</div><div class="line">scan_ssid=1</div><div class="line">psk=”wifi_password”</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>关键是 ssid_scan=1 这一句，加上后才能扫描到隐藏的 wifi 网络。之后保存退出（ctrl+o 保存，ctrl+x 退出）nano 编辑器，reboot 重启即可。</p>
 <p>相关 network 的配置信息：<br>network：是一个连接一个 WiFi 网络的配置，可以有多个，wpa_supplicant 会按照 priority 指定的优先级（数字越大越先连接）来连接，当然，在这个列表里面隐藏 WiFi 不受 priority 的影响，隐藏 WiFi 总是在可见 WiFi 不能连接时才开始连接。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">ssid:网络的ssid</div><div class="line">psk:密码</div><div class="line">priority:连接优先级，越大越优先</div><div class="line">scan_ssid:连接隐藏WiFi时需要指定该值为1</div></pre></td></tr></table></figure></div><a href="/2020/08/21/树莓派连接隐藏wifi网络/" class="read-more">READ MORE</a></article></div><div class="post-list-item"><article class="post-block"><h2 class="post-title"><a href="/2020/08/19/iMac终端走Socks5代理方法/" class="post-title-link">iMac终端走Socks5代理方法</a></h2><div class="post-info">Aug 19, 2020</div><div class="post-content"></div><a href="/2020/08/19/iMac终端走Socks5代理方法/" class="read-more">READ MORE</a></article></div><div class="post-list-item"><article class="post-block"><h2 class="post-title"><a href="/2020/08/18/树莓派通过Nginx发布共享音频文件/" class="post-title-link">树莓派通过Nginx发布共享音频文件</a></h2><div class="post-info">Aug 18, 2020</div><div class="post-content"><p>我们想通过局域网共享一下存放在树莓派里面的音频文件，树莓派安装了树莓派自带的系统。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">ssid:网络的ssid</div><div class="line">psk:密码</div><div class="line">priority:连接优先级，越大越优先</div><div class="line">scan_ssid:连接隐藏WiFi时需要指定该值为1</div></pre></td></tr></table></figure></div><a href="/2020/08/21/树莓派连接隐藏wifi网络/" class="read-more">READ MORE</a></article></div><div class="post-list-item"><article class="post-block"><h2 class="post-title"><a href="/2020/08/19/iMac终端走Socks5代理方法/" class="post-title-link">iMac终端走Socks5代理方法</a></h2><div class="post-info">Aug 19, 2020</div><div class="post-content"><p>1.找到代理地址和端口<br>本人的 Socks5 的监听地址是 127.0.0.1，端口 1086</p>
+<ol start="2">
+<li>打开终端添加配置</li>
+</ol>
+<p>（我的终端是 zsh）打开终端，输入以下代码打开 vim</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim ~/.zshrc</div></pre></td></tr></table></figure>
+<p>按下键盘上的字母「i」，进入编辑模式，输入以下代码，第二行末尾改成自己的代理地址和端口</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># proxy list</div><div class="line">alias proxy=&apos;export all_proxy=socks5://127.0.0.1:1086&apos;</div><div class="line">alias unproxy=&apos;unset all_proxy&apos;</div></pre></td></tr></table></figure>
+<p>按下键盘上的「esc」，退出编辑模式。输入以下代码保存修改并退出 vim</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">:wq</div></pre></td></tr></table></figure>
+<p>初始化配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">source ~/.zshrc</div></pre></td></tr></table></figure>
+<ol start="3">
+<li>执行</li>
+</ol>
+<p>开启代理模式，查看 ip，看看 brew update 命令顺畅与否</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">proxy</div><div class="line">brew update</div></pre></td></tr></table></figure>
+<p>如果不想走代理了则使用 unproxy 命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">unproxy</div></pre></td></tr></table></figure>
+<p>开启代理模式前后可以查看 ip</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl cip.cc</div></pre></td></tr></table></figure></div><a href="/2020/08/19/iMac终端走Socks5代理方法/" class="read-more">READ MORE</a></article></div><div class="post-list-item"><article class="post-block"><h2 class="post-title"><a href="/2020/08/18/树莓派通过Nginx发布共享音频文件/" class="post-title-link">树莓派通过Nginx发布共享音频文件</a></h2><div class="post-info">Aug 18, 2020</div><div class="post-content"><p>我们想通过局域网共享一下存放在树莓派里面的音频文件，树莓派安装了树莓派自带的系统。</p>
 <p>1、安装 Nginx</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo apt-get update</div><div class="line">sudo apt-get install nginx</div></pre></td></tr></table></figure>
 <p>2.测试是否安装成功（nginx 默认是 80 端口）</p>
