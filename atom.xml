@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.qzcool.com/"/>
-  <updated>2020-08-21T07:25:52.508Z</updated>
+  <updated>2020-08-21T09:23:37.298Z</updated>
   <id>https://blog.qzcool.com/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>树莓派chromium设置sock5代理访问</title>
+    <link href="https://blog.qzcool.com/2020/08/21/%E6%A0%91%E8%8E%93%E6%B4%BEchromium%E8%AE%BE%E7%BD%AEsock5%E4%BB%A3%E7%90%86%E8%AE%BF%E9%97%AE/"/>
+    <id>https://blog.qzcool.com/2020/08/21/树莓派chromium设置sock5代理访问/</id>
+    <published>2020-08-21T09:20:43.000Z</published>
+    <updated>2020-08-21T09:23:37.298Z</updated>
+    
+    <content type="html"><![CDATA[<p>由于在特定网络环境下 chromium 需要通过代理访问,可以用如下方法</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">chromium-browser --proxy-server=&quot;socks5://192.168.31.5:1080&quot;</div></pre></td></tr></table></figure><p>经过测试使用 127.0.0.1 无法代理，必须使用设备 ip。</p><a id="more"></a>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;由于在特定网络环境下 chromium 需要通过代理访问,可以用如下方法&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;chromium-browser --proxy-server=&amp;quot;socks5://192.168.31.5:1080&amp;quot;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;经过测试使用 127.0.0.1 无法代理，必须使用设备 ip。&lt;/p&gt;
+    
+    </summary>
+    
+    
+    
+  </entry>
   
   <entry>
     <title>树莓派连接隐藏wifi网络</title>
@@ -520,28 +541,6 @@
       
       
         &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/di
-      
-    
-    </summary>
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>charles系列破解激活办法（最高charles4.2都可以激活）</title>
-    <link href="https://blog.qzcool.com/2019/11/12/charles%E7%B3%BB%E5%88%97%E7%A0%B4%E8%A7%A3%E6%BF%80%E6%B4%BB%E5%8A%9E%E6%B3%95(%E6%9C%80%E9%AB%98charles4-2%E9%83%BD%E5%8F%AF%E4%BB%A5%E6%BF%80%E6%B4%BB)/"/>
-    <id>https://blog.qzcool.com/2019/11/12/charles系列破解激活办法(最高charles4-2都可以激活)/</id>
-    <published>2019-11-12T13:52:40.000Z</published>
-    <updated>2019-11-15T08:20:50.442Z</updated>
-    
-    <content type="html"><![CDATA[<p>// Charles Proxy License<br>// 适用于Charles任意版本的注册码，谁还会想要使用破解版呢。<br>// Charles 4.2目前是最新版，可用。<br>Registered Name: <a href="https://zhile.io" target="_blank" rel="external">https://zhile.io</a><br>License Key: 48891cf209c6d32bf4</p><p>本方法通杀charlse系列激活问题。</p><p>————————————————<br>版权声明：本文为CSDN博主「花2不谢」的原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a href="https://blog.csdn.net/qq_25821067/article/details/79848589" target="_blank" rel="external">https://blog.csdn.net/qq_25821067/article/details/79848589</a></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;// Charles Proxy License&lt;br&gt;// 适用于Charles任意版本的注册码，谁还会想要使用破解版呢。&lt;br&gt;// Charles 4.2目前是最新版，可用。&lt;br&gt;Registered Name: &lt;a href=&quot;https://zhile.io&quot;
       
     
     </summary>
