@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.qzcool.com/"/>
-  <updated>2020-08-21T07:22:50.580Z</updated>
+  <updated>2020-08-21T07:25:52.508Z</updated>
   <id>https://blog.qzcool.com/</id>
   
   <author>
@@ -21,17 +21,19 @@
     <link href="https://blog.qzcool.com/2020/08/21/%E6%A0%91%E8%8E%93%E6%B4%BE%E8%BF%9E%E6%8E%A5%E9%9A%90%E8%97%8Fwifi%E7%BD%91%E7%BB%9C/"/>
     <id>https://blog.qzcool.com/2020/08/21/树莓派连接隐藏wifi网络/</id>
     <published>2020-08-21T07:20:20.000Z</published>
-    <updated>2020-08-21T07:22:50.580Z</updated>
+    <updated>2020-08-21T07:25:52.508Z</updated>
     
-    <content type="html"><![CDATA[<p>使用 nano 编辑器打开 wpa-supplicant 配置文件</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo nano /etc/wpa_supplicant/wpa_supplicant.conf</div></pre></td></tr></table></figure><p>在文件底部添加：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">network=&#123;</div><div class="line">ssid=”wifi_name”</div><div class="line">scan_ssid=1</div><div class="line">psk=”wifi_password”</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>关键是 ssid_scan=1 这一句，加上后才能扫描到隐藏的 wifi 网络。之后保存退出（ctrl+o 保存，ctrl+x 退出）nano 编辑器，reboot 重启即可。</p><p>相关 network 的配置信息：<br>network：是一个连接一个 WiFi 网络的配置，可以有多个，wpa_supplicant 会按照 priority 指定的优先级（数字越大越先连接）来连接，当然，在这个列表里面隐藏 WiFi 不受 priority 的影响，隐藏 WiFi 总是在可见 WiFi 不能连接时才开始连接。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">ssid:网络的ssid</div><div class="line">psk:密码</div><div class="line">priority:连接优先级，越大越优先</div><div class="line">scan_ssid:连接隐藏WiFi时需要指定该值为1</div></pre></td></tr></table></figure>]]></content>
+    <content type="html"><![CDATA[<p>使用 nano 编辑器打开 wpa-supplicant 配置文件</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo nano /etc/wpa_supplicant/wpa_supplicant.conf</div></pre></td></tr></table></figure><p>在文件底部添加：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">network=&#123;</div><div class="line">ssid=”wifi_name”</div><div class="line">scan_ssid=1</div><div class="line">psk=”wifi_password”</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>关键是 ssid_scan=1 这一句，加上后才能扫描到隐藏的 wifi 网络。之后保存退出（ctrl+o 保存，ctrl+x 退出）nano 编辑器，reboot 重启即可。</p><p>相关 network 的配置信息：<br>network：是一个连接一个 WiFi 网络的配置，可以有多个，wpa_supplicant 会按照 priority 指定的优先级（数字越大越先连接）来连接，当然，在这个列表里面隐藏 WiFi 不受 priority 的影响，隐藏 WiFi 总是在可见 WiFi 不能连接时才开始连接。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">ssid:网络的ssid</div><div class="line">psk:密码</div><div class="line">priority:连接优先级，越大越优先</div><div class="line">scan_ssid:连接隐藏WiFi时需要指定该值为1</div></pre></td></tr></table></figure><a id="more"></a>]]></content>
     
     <summary type="html">
     
-      
-      
-        &lt;p&gt;使用 nano 编辑器打开 wpa-supplicant 配置文件&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;
-      
+      &lt;p&gt;使用 nano 编辑器打开 wpa-supplicant 配置文件&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;sudo nano /etc/wpa_supplicant/wpa_supplicant.conf&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;在文件底部添加：&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;network=&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;ssid=”wifi_name”&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;scan_ssid=1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;psk=”wifi_password”&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;关键是 ssid_scan=1 这一句，加上后才能扫描到隐藏的 wifi 网络。之后保存退出（ctrl+o 保存，ctrl+x 退出）nano 编辑器，reboot 重启即可。&lt;/p&gt;
+&lt;p&gt;相关 network 的配置信息：&lt;br&gt;network：是一个连接一个 WiFi 网络的配置，可以有多个，wpa_supplicant 会按照 priority 指定的优先级（数字越大越先连接）来连接，当然，在这个列表里面隐藏 WiFi 不受 priority 的影响，隐藏 WiFi 总是在可见 WiFi 不能连接时才开始连接。&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;ssid:网络的ssid&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;psk:密码&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;priority:连接优先级，越大越优先&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;scan_ssid:连接隐藏WiFi时需要指定该值为1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
     
     </summary>
     
