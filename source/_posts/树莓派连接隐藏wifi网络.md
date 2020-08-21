@@ -4,6 +4,8 @@ date: 2020-08-21 15:20:20
 tags: 树莓派
 ---
 
+使用 nano 编辑器打开 wpa-supplicant 配置文件
+
 ```
 sudo nano /etc/wpa_supplicant/wpa_supplicant.conf
 ```
