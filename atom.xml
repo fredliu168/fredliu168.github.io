@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.qzcool.com/"/>
-  <updated>2020-08-27T07:20:40.466Z</updated>
+  <updated>2020-08-27T08:46:54.277Z</updated>
   <id>https://blog.qzcool.com/</id>
   
   <author>
@@ -21,17 +21,22 @@
     <link href="https://blog.qzcool.com/2020/08/27/certbot-auto%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86/"/>
     <id>https://blog.qzcool.com/2020/08/27/certbot-auto错误处理/</id>
     <published>2020-08-27T07:15:55.000Z</published>
-    <updated>2020-08-27T07:20:40.466Z</updated>
+    <updated>2020-08-27T08:46:54.277Z</updated>
     
-    <content type="html"><![CDATA[<p>使用 cerbot-auto 时提示如下错误：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">UnicodeEncodeError: &apos;ascii&apos; codec can&apos;t encode character u&apos;\u4e0e&apos; in position 2870: ordinal not in range(128)</div></pre></td></tr></table></figure><p>查看日志</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/var/log/letsencrypt/letsencrypt.log</div></pre></td></tr></table></figure><p>错误原因：<br>在 python2.7 下将字符串写入到文件时会出现”UnicodeEncodeError: ‘ascii’ codec can’t encode character u’\xa0’ in position”的错误,原因是由于 python 基于 ASCII 处理字符的，当出现不属于 ASCII 的字符时，会出现错误信息。</p><p>解决办法：<br>指定文件字符集为 utf-8</p><p>在 letsencryp 头文件</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim /opt/eff.org/certbot/venv/bin/letsencrypt</div></pre></td></tr></table></figure><p>加入以下代码：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">import sys</div><div class="line">reload(sys)</div><div class="line">sys.setdefaultencoding(&apos;utf-8&apos;)</div></pre></td></tr></table></figure>]]></content>
+    <content type="html"><![CDATA[<p>使用 cerbot-auto 时提示如下错误：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">UnicodeEncodeError: &apos;ascii&apos; codec can&apos;t encode character u&apos;\u4e0e&apos; in position 2870: ordinal not in range(128)</div></pre></td></tr></table></figure><p>查看日志</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/var/log/letsencrypt/letsencrypt.log</div></pre></td></tr></table></figure><p>错误原因：<br>在 python2.7 下将字符串写入到文件时会出现”UnicodeEncodeError: ‘ascii’ codec can’t encode character u’\xa0’ in position”的错误,原因是由于 python 基于 ASCII 处理字符的，当出现不属于 ASCII 的字符时，会出现错误信息。</p><p>解决办法：<br>指定文件字符集为 utf-8</p><p>在 letsencryp 头文件</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim /opt/eff.org/certbot/venv/bin/letsencrypt</div></pre></td></tr></table></figure><p>加入以下代码：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">import sys</div><div class="line">reload(sys)</div><div class="line">sys.setdefaultencoding(&apos;utf-8&apos;)</div></pre></td></tr></table></figure><a id="more"></a>]]></content>
     
     <summary type="html">
     
-      
-      
-        &lt;p&gt;使用 cerbot-auto 时提示如下错误：&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td cl
-      
+      &lt;p&gt;使用 cerbot-auto 时提示如下错误：&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;UnicodeEncodeError: &amp;apos;ascii&amp;apos; codec can&amp;apos;t encode character u&amp;apos;\u4e0e&amp;apos; in position 2870: ordinal not in range(128)&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;查看日志&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;/var/log/letsencrypt/letsencrypt.log&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;错误原因：&lt;br&gt;在 python2.7 下将字符串写入到文件时会出现”UnicodeEncodeError: ‘ascii’ codec can’t encode character u’\xa0’ in position”的错误,原因是由于 python 基于 ASCII 处理字符的，当出现不属于 ASCII 的字符时，会出现错误信息。&lt;/p&gt;
+&lt;p&gt;解决办法：&lt;br&gt;指定文件字符集为 utf-8&lt;/p&gt;
+&lt;p&gt;在 letsencryp 头文件&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;vim /opt/eff.org/certbot/venv/bin/letsencrypt&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;加入以下代码：&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;import sys&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;reload(sys)&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;sys.setdefaultencoding(&amp;apos;utf-8&amp;apos;)&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
     
     </summary>
     
