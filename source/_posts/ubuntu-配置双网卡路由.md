@@ -4,7 +4,7 @@ date: 2019-11-15 15:09:58
 tags:
 ---
 
-## ubuntu配置双网卡路由
+## ubuntu 配置双网卡路由
 
 1.显示当前默认路由
 
@@ -23,7 +23,7 @@ sudo route delete default
 
 ```
 
-2.添加内网ip路由
+2.添加内网 ip 路由
 
 ```
 sudo route add -net 10.49.28.0 netmask 255.255.255.0 gw 10.49.76.129 eno1
@@ -44,7 +44,6 @@ sudo route del -net 192.168.8.0 netmask 255.255.255.0
 sudo route del -net  0.0.0.0 netmask 255.255.255.0
 ```
 
-
 ## windows 配置双网卡路由
 
 查看网卡信息
@@ -58,11 +57,18 @@ ipconfig
 
 ```
 
+查看路由配置
+
+```
+route print
+```
+
 1.删除默认路由
 
 ```
 route delete 0.0.0.0
 ```
+
 2.添加内网路由
 
 ```
