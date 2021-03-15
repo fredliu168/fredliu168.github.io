@@ -38,6 +38,8 @@ tags:
 
 ```
 $ hexo new [layout] <title>
+
+npx hexo new
 ```
 
 作者：容与
