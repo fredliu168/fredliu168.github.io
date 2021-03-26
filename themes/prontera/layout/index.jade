@@ -1,0 +1,17 @@
+extends partial/layout
+
+block container
+    div#body-container
+        div#post-list.left
+            include mixins/post
+            +posts()
+        div#sidebar.left
+            include partial/sidebar
+    div.clear
+
+block pagination
+    include mixins/paginator
+    +home()
+
+block copyright
+    include partial/copyright
