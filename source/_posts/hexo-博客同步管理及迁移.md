@@ -46,3 +46,17 @@ npx hexo new
 链接：https://www.zhihu.com/question/21193762/answer/369050999
 来源：知乎
 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+# hexo d -g 出现的问题处理
+
+```
+(node:3908) Warning: Accessing non-existent property 'lineno' of module exports inside circular dependency
+...
+```
+出现这些是因为node版本太高，切换成低版本的node再重新安装Hexo就可以了
+```
+npm uninstall hexo-cli -g
+npm install -g hexo-cli
+```
+我原先是安装了最新版node14.0，后来多装了一个比较稳定的node12.14版本，这个问题就解决了
