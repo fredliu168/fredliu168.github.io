@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.qzcool.com/"/>
-  <updated>2021-03-22T01:58:57.183Z</updated>
+  <updated>2021-04-11T14:11:40.089Z</updated>
   <id>https://blog.qzcool.com/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>树莓派其他应用安装</title>
+    <link href="https://blog.qzcool.com/2021/04/11/%E6%A0%91%E8%8E%93%E6%B4%BE%E5%85%B6%E4%BB%96%E5%BA%94%E7%94%A8%E5%AE%89%E8%A3%85/"/>
+    <id>https://blog.qzcool.com/2021/04/11/%E6%A0%91%E8%8E%93%E6%B4%BE%E5%85%B6%E4%BB%96%E5%BA%94%E7%94%A8%E5%AE%89%E8%A3%85/</id>
+    <published>2021-04-11T14:06:39.000Z</published>
+    <updated>2021-04-11T14:11:40.089Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="python卸载与安装"><a href="#python卸载与安装" class="headerlink" title="python卸载与安装"></a>python卸载与安装</h1><p>卸载：<br>1、卸载python3.4<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get remove python3.4</span><br></pre></td></tr></table></figure></p><p>2、卸载python3.4及其依赖<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get remove --auto-remove python3.4</span><br></pre></td></tr></table></figure></p><p>3、清除python3.4</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get purge python3.4</span><br><span class="line">or</span><br><span class="line">sudo apt-get purge --auto-remove python3.4</span><br></pre></td></tr></table></figure><p>安装：<br>下载python<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wget https://www.python.org/ftp/python/2.7.9/Python-2.7.9.tgz</span><br><span class="line">wget -P /usr/lib https://www.python.org/ftp/python/2.7.9/Python-2.7.9.tgz(下载文件到指定目录)</span><br></pre></td></tr></table></figure></p><p>解压、编译安装<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf Python-2.7.9.tgz</span><br><span class="line">cd Python-2.7.9</span><br><span class="line">./configure --prefix=/usr/local/python-2.7.9</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure></p><p>系统自带了python版本，我们需要为新安装的版本添加一个软链<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln -s /usr/local/python-2.7.9/bin/python /usr/bin/python2.7.9</span><br></pre></td></tr></table></figure></p><h1 id="远程桌面安装"><a href="#远程桌面安装" class="headerlink" title="远程桌面安装"></a>远程桌面安装</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install xrdp</span><br></pre></td></tr></table></figure><p>安装完成后可以使用windows的远程桌面访问</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;python卸载与安装&quot;&gt;&lt;a href=&quot;#python卸载与安装&quot; class=&quot;headerlink&quot; title=&quot;python卸载与安装&quot;&gt;&lt;/a&gt;python卸载与安装&lt;/h1&gt;&lt;p&gt;卸载：&lt;br&gt;1、卸载python3.4&lt;br&gt;&lt;figure cl
+      
+    
+    </summary>
+    
+    
+    
+  </entry>
   
   <entry>
     <title>MAC升级BigSur后解决brew update时error：Your CLT does not support macOS 11.</title>
@@ -525,31 +547,6 @@
 &lt;/blockquote&gt;
 &lt;p&gt;本人服务器上安装路径：&lt;/p&gt;
 &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;/home/frp/0.21.0/certbot-auto&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-    
-    </summary>
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>iMac如何通过快捷键连接AirPods耳机</title>
-    <link href="https://blog.qzcool.com/2020/01/14/iMac%E5%A6%82%E4%BD%95%E9%80%9A%E8%BF%87%E5%BF%AB%E6%8D%B7%E9%94%AE%E8%BF%9E%E6%8E%A5AirPods%E8%80%B3%E6%9C%BA/"/>
-    <id>https://blog.qzcool.com/2020/01/14/iMac%E5%A6%82%E4%BD%95%E9%80%9A%E8%BF%87%E5%BF%AB%E6%8D%B7%E9%94%AE%E8%BF%9E%E6%8E%A5AirPods%E8%80%B3%E6%9C%BA/</id>
-    <published>2020-01-14T03:32:49.000Z</published>
-    <updated>2020-01-14T06:38:27.048Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote><p>每次从手机切换耳机到电脑都要手动去点击一下,很麻烦,找到了通过快捷键切换的方法,<br>该方法适用于其他蓝牙耳机</p></blockquote><h2 id="1-安装BluetoothConnector"><a href="#1-安装BluetoothConnector" class="headerlink" title="1 .安装BluetoothConnector:"></a>1 .安装BluetoothConnector:</h2><p><a href="https://github.com/lapfelix/BluetoothConnector" target="_blank" rel="noopener">BluetoothConnector</a></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install bluetoothconnector</span><br></pre></td></tr></table></figure><p>安装成功后打开Terminals输入以下命令,查看蓝牙耳机mac地址:</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bluetoothconnector</span><br></pre></td></tr></table></figure><p>返回本机连接的蓝牙设备列表</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Get the MAC address from the list below (if your device is missing, pair it with your computer first):</span><br><span class="line">f8-70-c0-7a-eb-bf - alp的AirPods</span><br><span class="line">......</span><br></pre></td></tr></table></figure><p>输入下列命令进行测试:</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">BluetoothConnector f8-70-c0-7a-eb-bf  --notify</span><br></pre></td></tr></table></figure><p>执行成功就会弹出通知,如果已经连接则会断开,记得把mac地址改为你自己的蓝牙设备</p><h3 id="2-设置键盘快捷键"><a href="#2-设置键盘快捷键" class="headerlink" title="2.设置键盘快捷键"></a>2.设置键盘快捷键</h3><p>1.打开“启动台”-》“other”-》“自动操作”<br>新建-》快速操作<br>把运行AppleScript拖动到工作路程,输入以下代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">on run &#123;input, parameters&#125;v</span><br><span class="line">do shell script &quot;/usr/local/bin/BluetoothConnector f8-70-c0-7a-eb-bf --notify&quot;</span><br><span class="line">return input</span><br><span class="line">end run</span><br></pre></td></tr></table></figure></p><p>测试运行成功,保存,名称可以自己命名</p><p>2.设置键盘快捷键<br>打开“系统偏好”-》“键盘”-》“快捷键”-》“服务”-》找到刚才保存的服务,设置你想要的快捷键.至此大功告成</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;blockquote&gt;
-&lt;p&gt;每次从手机切换耳机到电脑都要手动去点击一下,很麻烦,找到了通过快捷键切换的方法,&lt;br&gt;该方法适用于其他蓝牙耳机&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h2 id=&quot;1-安装BluetoothConnector&quot;&gt;&lt;a href=&quot;#1-安装Blu
-      
     
     </summary>
     
