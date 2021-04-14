@@ -120,6 +120,10 @@ local_port = 8080
 use_encryption = false
 use_compression = false 
 subdomain = weixin
+[ssh] # 远程登录ssh
+type = tcp
+local_port = 22
+remote_port = 2222
 ```
 server_addr：对应的时阿里云的公网地址
 server_port：服务端端口
