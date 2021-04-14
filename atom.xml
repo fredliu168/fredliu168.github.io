@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.qzcool.com/"/>
-  <updated>2021-04-11T15:16:57.250Z</updated>
+  <updated>2021-04-14T01:11:46.983Z</updated>
   <id>https://blog.qzcool.com/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>树莓派不带图形化界面系统安装桌面GUI及其管理服务</title>
+    <link href="https://blog.qzcool.com/2021/04/14/%E6%A0%91%E8%8E%93%E6%B4%BE%E4%B8%8D%E5%B8%A6%E5%9B%BE%E5%BD%A2%E5%8C%96%E7%95%8C%E9%9D%A2%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85%E6%A1%8C%E9%9D%A2GUI%E5%8F%8A%E5%85%B6%E7%AE%A1%E7%90%86%E6%9C%8D%E5%8A%A1/"/>
+    <id>https://blog.qzcool.com/2021/04/14/%E6%A0%91%E8%8E%93%E6%B4%BE%E4%B8%8D%E5%B8%A6%E5%9B%BE%E5%BD%A2%E5%8C%96%E7%95%8C%E9%9D%A2%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85%E6%A1%8C%E9%9D%A2GUI%E5%8F%8A%E5%85%B6%E7%AE%A1%E7%90%86%E6%9C%8D%E5%8A%A1/</id>
+    <published>2021-04-14T01:04:13.000Z</published>
+    <updated>2021-04-14T01:11:46.983Z</updated>
+    
+    <content type="html"><![CDATA[<p>树莓派P4桌面无法登录处理.   </p><h2 id="1、依次安装Xorg、xinit，加-y参数安装过程自动确认"><a href="#1、依次安装Xorg、xinit，加-y参数安装过程自动确认" class="headerlink" title="1、依次安装Xorg、xinit，加-y参数安装过程自动确认"></a>1、依次安装Xorg、xinit，加-y参数安装过程自动确认</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install --no-install-recommends xserver-xorg -y</span><br><span class="line">sudo apt-get install --no-install-recommends xinit -y</span><br></pre></td></tr></table></figure><h2 id="2、安装桌面GUI类型"><a href="#2、安装桌面GUI类型" class="headerlink" title="2、安装桌面GUI类型"></a>2、安装桌面GUI类型</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Raspberry Pi Desktop (RPD) GUI</span><br><span class="line"></span><br><span class="line">sudo apt-get install raspberrypi-ui-mods -y</span><br></pre></td></tr></table></figure><p>LXDE GUI<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install lxde-core lxappearance  -y</span><br></pre></td></tr></table></figure></p><p>XFCE GUI<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install xfce4 xfce4-terminal -y</span><br></pre></td></tr></table></figure></p><h2 id="3、安装登陆管理器"><a href="#3、安装登陆管理器" class="headerlink" title="3、安装登陆管理器"></a>3、安装登陆管理器</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install lightdm</span><br></pre></td></tr></table></figure><h2 id="4、设置自动进入桌面"><a href="#4、设置自动进入桌面" class="headerlink" title="4、设置自动进入桌面"></a>4、设置自动进入桌面</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo raspi-config</span><br></pre></td></tr></table></figure><ol><li>System Options -&gt; S5.Boot/Auto Login -&gt; B4.Desktop AutoLogin Desktop GUI  </li></ol><p>这里建议选择B4，启动免登陆进入桌面（以pi账户登陆）<br>B3 则需要在登陆界面输入账户及密码登陆。<br>B1进入命令行界面<br>B2免登陆进入命令行界面</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;树莓派P4桌面无法登录处理.   &lt;/p&gt;
+&lt;h2 id=&quot;1、依次安装Xorg、xinit，加-y参数安装过程自动确认&quot;&gt;&lt;a href=&quot;#1、依次安装Xorg、xinit，加-y参数安装过程自动确认&quot; class=&quot;headerlink&quot; title=&quot;1、依次安装X
+      
+    
+    </summary>
+    
+    
+    
+  </entry>
   
   <entry>
     <title>树莓派docker jd脚本运行</title>
@@ -520,29 +543,6 @@
 &lt;figure class=&quot;highlight sh&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;ifconfig eth0 192.168.1.2/24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;sysctl net.ipv4.ip_forward=1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;iptables -t nat -A POSTROUTING -s 192.168.1.0/24 -j MASQUERADE&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;iptables -t nat -nL&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;p&gt;小米路由器设置：&lt;/p&gt;
 &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;192.168.1.3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;255.255.255.0&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;网关：192.168.1.2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;DNS：8.8.8.8&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-    
-    </summary>
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>Docker常用操作命令</title>
-    <link href="https://blog.qzcool.com/2020/04/10/Docker%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4/"/>
-    <id>https://blog.qzcool.com/2020/04/10/Docker%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4/</id>
-    <published>2020-04-10T03:21:18.000Z</published>
-    <updated>2020-04-10T07:24:45.095Z</updated>
-    
-    <content type="html"><![CDATA[<p>1、docker服务自动重启设置</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl enable docker.service</span><br></pre></td></tr></table></figure><p>2、docker容器自动启动设置</p><p>在运行docker容器时可以加如下参数来保证每次docker服务重启后容器也自动重启：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --restart=always</span><br></pre></td></tr></table></figure><p>如果已经启动了则可以使用如下命令：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker update --restart=always &lt;CONTAINER ID&gt;</span><br></pre></td></tr></table></figure><p>3.进入docker 容器 </p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it 2a81dcba834f /bin/bash</span><br></pre></td></tr></table></figure><p>文件拷贝</p><p>容器-&gt;主机<br>docker cp 2a81dcba834f:/usr/local/etc/php/php.ini /Users/fredliu/Documents/PHP</p><p>主机-&gt;容器<br>docker cp /Users/fredliu/Documents/PHP/php.ini 2a81dcba834f:/usr/local/etc/php</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;1、docker服务自动重启设置&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td cla
-      
     
     </summary>
     
