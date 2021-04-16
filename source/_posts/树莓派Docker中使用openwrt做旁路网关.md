@@ -12,18 +12,20 @@ OpenWrt 是面向嵌入型设备的 Linux 发行版，所以 OpenWrt 系统运�
 那么什么又是旁路网关呢？其实他跟 spring cloud 有那么几分相似之处。
 普通路由器就像一开始的单机模式，什么都是它一台机器负责，比如信号转发、DNS、网关等，其中的“网关”角色负责路由器内部数据的处理。但因为一般家用的路由器硬件性能很有限，在运行一些比较吃资源的应用（如酸酸乳、去广告等）时，几乎会占满所有硬件资源，导致路由器网络/系统不稳定等诸多问题。这个时候我们把网关的这个角色划分出去单独的在树莓派上跑，是不是分担了主路由的压力，是不是有点微服务那个味道。这样子每个角色各司其职，树莓派也结束了它吃灰的命运了，更好的验证了那句 买前生产力，买后旁路由。
 
-注意：
+>注意：
 
-本文 docker 镜像只适用于树莓派 2B/3B/3B+/4B，在其他设备上理论上不能正常使用
+本文docker镜像只适用于树莓派 2B/3B/3B+/4B，在其他设备上理论上不能正常使用,
 在 Docker 中运行 OpenWrt ，树莓派将工作在旁路网关模式下，在这种工作模式下，树莓派的板载无线网卡不会工作（同时在 OpenWrt 的控制面板中也找不到有关 WIFI 的设置）。所以，需要将树莓派与路由器通过网线连接来使用。
 
 具体步骤
 
-Step 1: 打开网卡混杂模式
+## Step 1: 打开网卡混杂模式
 
+```
 sudo ip link set eth0 promisc on
-复制代码
-Step 2 :创建 docker 网络\*\*
+```
+
+## Step 2 :创建 docker 网络
 
 注意了，这里需要结合自己的网络修改，不能照搬！！ sudo ifconfig 可以查看树莓派 IP 地址，不过刚刚不是都知道了嘛 [汗]，多一种方式嘛
 刚刚登陆 ssh 的 ip 地址 192.168.31.7 那么说明树莓派处在 192.168.31.x 网段，那么下面的命令中的
@@ -31,7 +33,7 @@ Step 2 :创建 docker 网络\*\*
 替换后：
 
 ```
-docker network create -d macvlan --subnet=192.168.31.0/24 --gateway=192.168.31.1 -o parent=eth0 macnet
+docker network create -d macvlan --subnet=192.168.50.0/24 --gateway=192.168.50.1 -o parent=eth0 macnet
 
 ```
 
@@ -55,12 +57,12 @@ macvlan 会共享物理网卡所链接的外部网络，实现的效果跟桥接
 
 想要了解更多等会文末会附上个参考链接。
 
-Step 3 :拉取镜像。
+## Step 3 :拉取镜像。
 
 ```
 docker pull harryzhang6/openwrt:latest
 ```
-
+ 
 复制代码我们可以通过 docker images 查看本地的镜像
 
 ```
@@ -72,11 +74,37 @@ harryzhang6/openwrt   latest              5c354d2e6f6f        3 hours ago       
 
 这里也就说明镜像拉取成功了。
 
-Step 4 :创建并启动容器
+
+> 备注使用阿里源:
+
+为提高拉取速度，我拉取阿里云仓库中的镜像：
+
+``` 
+docker pull registry.cn-shanghai.aliyuncs.com/suling/openwrt:latest
+```
+
+镜像拉取完成后，我们可以执行docker images命令查看现存镜像：
+
+```
+$ docker images
+REPOSITORY                                              TAG                 IMAGE ID            CREATED             SIZE
+registry.cn-shanghai.aliyuncs.com/suling/openwrt        latest              4f4bc5dca2d9        1 hours ago         112MB
+```
+此时证明镜像已成功拉取到本地。
+
+
+
+## Step 4 :创建并启动容器
 
 ```
 docker run --restart always --name openwrt -d --network macnet --privileged harryzhang6/openwrt:latest /sbin/init
 ```
+使用阿里源:
+
+```
+docker run --restart always --name openwrt -d --network macnet --privileged registry.cn-shanghai.aliyuncs.com/suling/openwrt:latest /sbin/init
+```
+
 
 复制代码
 --restart always 参数表示容器退出时始终重启，使服务尽量保持始终可用；
@@ -95,35 +123,41 @@ CONTAINER ID        IMAGE                        COMMAND             CREATED    
 
 确认启动成功，下一步就是进入容器配置了
 
-Step 5 :进入容器并修改相关参数
+## Step 5 :进入容器并修改相关参数
 
 注意：这一步的某些配置也跟上面一样，不能照搬
+```
 docker exec -it openwrt bash
-复制代码执行此命令后我们便进入 OpenWrt 的命令行界面，首先，我们需要编辑 OpenWrt 的网络配置文件：
+```
+代码执行此命令后我们便进入 OpenWrt 的命令行界面，首先，我们需要编辑 OpenWrt 的网络配置文件：
+```
 vim /etc/config/network
-复制代码我们需要更改 Lan 口设置：
+```
+我们需要更改 Lan 口设置：
 
 ```
 config interface 'lan'
         option type 'bridge'
         option ifname 'eth0'
         option proto 'static'
-        option ipaddr '192.168.31.100' //需要更改处
+        option ipaddr '192.168.50.100' //需要更改处
         option netmask '255.255.255.0'
         option ip6assign '60'
-        option gateway '192.168.31.1' //需要更改处
-        option broadcast '192.168.123.255'
-        option dns '192.168.31.1' //需要更改处
+        option gateway '192.168.50.1' //需要更改处
+        option broadcast '192.168.50.255'
+        option dns '192.168.50.1' //需要更改处
 ```
 
-这里是我配置好的，需要自行更改。option gateway 和 option dns 填写路由器的 IP，若树莓派获得的 IP 为 192.168.31.154，路由器 IP 为 192.168.31.1.
+这里是我配置好的，需要自行更改。option gateway 和 option dns 填写路由器的 IP，若树莓派获得的 IP 为 192.168.50.154，路由器 IP 为 192.168.50.1.
 option ipaddr 项目定义了 OpenWrt 的 IP 地址，在完成网段设置后，IP 最后一段可根据自己的爱好修改（前提是符合规则且不和现有已分配 IP 冲突）。
 
-Step 6 :重启网络
+## Step 6 :重启网络
 
+```
 /etc/init.d/network restart
-复制代码
-Step 7 : 进入 openwrt 管理页面
+```
+ 
+## Step 7 : 进入 openwrt 管理页面
 
 在浏览器输入刚刚 Step 5 中定义的 option ipaddr,我这里是 192.168.31.1,就可以看到后台的管理界面
 
@@ -131,7 +165,7 @@ Step 7 : 进入 openwrt 管理页面
 
 密码：password
 
-Step 8 :关闭 DHCP 服务
+## Step 8 :关闭 DHCP 服务
 
 在 “网络 - 接口 - Lan - 修改” 界面中，勾选下方的 “忽略此接口（不在此接口提供 DHCP 服务）”，并“保存&应用”
 Step 9: 主路由 DHCP 设置
@@ -143,6 +177,18 @@ Step 9: 主路由 DHCP 设置
 到这里也差不多了教程，下面附上手动指定网关的教程
 手动指定网关
 如果路由器固件不支持自定义 DHCP 服务的网关及 DNS 地址（常见于路由器官方固件），或者只希望局域网下的个别设备接入旁路网关时，须在接入设备上做以下配置：
+
+## 其他问题
+发现上外网速度贼快，但是国内 DNS 解析速度慢的一批。但是经常性会发生断流，掉线的情况,后来查询发现是因为国内网站走了一遍防火墙，我们设置防火墙即可解决问题
+
+解决办法
+openwrt 网络–》接口–》编辑 eth0 网口–》高级设置物理接口–》取消掉桥接
+openwrt 网络–》防火墙–》自定义规则，添加如下规则
+
+```
+iptables -t nat -I POSTROUTING -o eth0 -j MASQUERADE
+```
+然后重启即可。
 
 作者：HarryZhang6
 链接：https://juejin.im/post/5e62711fe51d4526e91f5a1b
