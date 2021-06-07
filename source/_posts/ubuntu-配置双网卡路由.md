@@ -9,7 +9,7 @@ tags:
 # 1、设置网卡地址
 
 ```
-sudo ifconfig en4 ether 11:1C:29:1A:12:AD
+sudo ifconfig en4 ether 11:1C:29:1A:12:0D
 
 ```
 
@@ -50,7 +50,7 @@ An asterisk (*) denotes that a network service is disabled.
 ```
 
 ```
-networksetup -setadditionalroutes "AX88179 USB 3.0 to Gigabit Ethernet" 192.168.14.0 255.255.255.0 10.49.97.129 10.49.28.0 255.255.255.0 10.49.97.129 192.168.8.0 255.255.255.0 10.49.97.129
+networksetup -setadditionalroutes "AX88179 USB 3.0 to Gigabit Ethernet" 192.168.0.0 255.255.255.0 10.0.0.129 
 ```
 
 ## 查看路由配置
@@ -89,9 +89,9 @@ sudo route delete default
 2.添加内网 ip 路由
 
 ```
-sudo route add -net 10.49.28.0 netmask 255.255.255.0 gw 10.49.76.129 eno1
-sudo route add -net 192.168.14.0 netmask 255.255.255.0 gw 10.49.76.129 eno1
-sudo route add -net 192.168.8.0 netmask 255.255.255.0 gw 10.49.76.129 eno1
+sudo route add -net 10.0.0.0 netmask 255.255.255.0 gw 10.0.0.0 eno1
+sudo route add -net 192.168.0.0 netmask 255.255.255.0 gw 10.0.0.0 eno1
+sudo route add -net 192.168.8.0 netmask 255.255.255.0 gw 10.0.0.0 eno1
 ```
 
 3.添加外网路由
@@ -135,8 +135,8 @@ route delete 0.0.0.0
 2.添加内网路由
 
 ```
-route  -p add   192.168.14.0 mask 255.255.255.0   10.49.76.129  if 13
-route  -p add   10.49.28.0 mask 255.255.255.0   10.49.76.129  if 13
+route  -p add   192.168.0.0 mask 255.255.255.0   10.0.0.0  if 13
+route  -p add   10.0.0.0 mask 255.255.255.0   10.0.0.0  if 13
 
 ```
 
