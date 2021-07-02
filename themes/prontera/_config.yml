@@ -11,13 +11,13 @@ nav_icons:
   - ['/images/rss.svg', '/atom.xml']
 
 # Friend Links
-friend_links:
-  - ['restran', '淡水', 'https://www.restran.net']
+# friend_links:
+#  - ['xxx', 'xxx', 'https://www.xxx.net']
 
 # About
 about_info:
-  name: 'Fishman'
-  bio: '且行且珍惜'
+  name: 'fred'
+  bio: 'follow your heart'
   avatar: '/images/avatar.png'
 
 # Comment

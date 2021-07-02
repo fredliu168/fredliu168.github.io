@@ -3,10 +3,10 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: 非鱼笔记
+title: 运维笔记
 subtitle: 随手笔记 一个没技术含量的博客
 description: 略懂一点编程.
-author: fredliu
+author: marsland
 language: zh-Hans
 timezone:
 
@@ -27,7 +27,7 @@ baidu_analytics: 6ca493ead9e34275c0dc9fecbcf5ede1
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: https://blog.qzcool.com
+url: https://blog.qzcool.xyz
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
