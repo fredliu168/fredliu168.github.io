@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.qzcool.xyz/"/>
-  <updated>2021-04-14T03:10:03.022Z</updated>
+  <updated>2021-07-29T07:04:58.371Z</updated>
   <id>https://blog.qzcool.xyz/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>为iterm2设置代理</title>
+    <link href="https://blog.qzcool.xyz/2021/07/29/%E4%B8%BAiterm2%E8%AE%BE%E7%BD%AE%E4%BB%A3%E7%90%86/"/>
+    <id>https://blog.qzcool.xyz/2021/07/29/%E4%B8%BAiterm2%E8%AE%BE%E7%BD%AE%E4%BB%A3%E7%90%86/</id>
+    <published>2021-07-29T06:55:08.000Z</published>
+    <updated>2021-07-29T07:04:58.371Z</updated>
+    
+    <content type="html"><![CDATA[<ol><li>设置终端代理<br>最新的 ShadowsocksX-NG 已经支持终端代理, 我们可以如下图复制得出:</li></ol><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export http_proxy=http://127.0.0.1:1081;export https_proxy=http://127.0.0.1:1081;</span><br></pre></td></tr></table></figure><img src="/2021/07/29/为iterm2设置代理/1.png" title="This is an image"><p>为了方便, 我们可以制作一下别名</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">alias setproxy=&apos;export http_proxy=&quot;http://127.0.0.1:8002&quot;; export HTTP_PROXY=&quot;http://127.0.0.1:8002&quot;; export https_proxy=&quot;http://127.0.0.1:8002&quot;; export HTTPS_PROXY=&quot;http://127.0.0.1:8002&quot;&apos; # 设置终端代理</span><br><span class="line"></span><br><span class="line">alias unproxy=&apos;unset http_proxy https_proxy&apos; # 取消终端代理</span><br><span class="line"></span><br><span class="line">alias ip=&apos;curl cip.cc&apos; # 测试</span><br></pre></td></tr></table></figure><p>安装配置iterm2和oh my zsh</p><p><a href="https://segmentfault.com/a/1190000016952262" target="_blank" rel="noopener">https://segmentfault.com/a/1190000016952262</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;ol&gt;
+&lt;li&gt;设置终端代理&lt;br&gt;最新的 ShadowsocksX-NG 已经支持终端代理, 我们可以如下图复制得出:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;
+      
+    
+    </summary>
+    
+    
+    
+  </entry>
   
   <entry>
     <title>nginx 之 proxy_pass详解</title>
@@ -520,34 +545,6 @@
         &lt;h2 id=&quot;设置环境变量&quot;&gt;&lt;a href=&quot;#设置环境变量&quot; class=&quot;headerlink&quot; title=&quot;设置环境变量&quot;&gt;&lt;/a&gt;设置环境变量&lt;/h2&gt;&lt;p&gt;打开mac终端，输入 conda –version&lt;/p&gt;
 &lt;p&gt;返回是 conda command not
       
-    
-    </summary>
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>通过树莓派4共享CMCC上网</title>
-    <link href="https://blog.qzcool.xyz/2020/04/17/%E9%80%9A%E8%BF%87%E6%A0%91%E8%8E%93%E6%B4%BE4%E5%85%B1%E4%BA%ABCMCC%E4%B8%8A%E7%BD%91/"/>
-    <id>https://blog.qzcool.xyz/2020/04/17/%E9%80%9A%E8%BF%87%E6%A0%91%E8%8E%93%E6%B4%BE4%E5%85%B1%E4%BA%ABCMCC%E4%B8%8A%E7%BD%91/</id>
-    <published>2020-04-17T09:06:52.000Z</published>
-    <updated>2020-08-18T08:08:39.058Z</updated>
-    
-    <content type="html"><![CDATA[<p>由于没有其他网络，只能通过 cmcc 上网，想通过共享的方式提供给其他设备上网。手头刚好有个闲置的树莓派 4，树莓派装了 ubuntu 的系统（测试树莓派自带系统同样可用）</p><p>步骤一：</p><p>a) 设置一下有线网口的 eth0 IP 192.168.1.2，做一下下 nat 转发</p><p>b) 把接有线网口的网线连接到小米路由的 wan 口</p><p>c) 然后把小米路由器的地址上网设置成静态 IP，网关设置树莓派的 IP</p><p>d) 通过其他设备测试是否可以成功连接互联网。</p><p>树莓派设置：</p><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ifconfig eth0 192.168.1.2/24</span><br><span class="line">sysctl net.ipv4.ip_forward=1</span><br><span class="line">iptables -t nat -A POSTROUTING -s 192.168.1.0/24 -j MASQUERADE</span><br><span class="line">iptables -t nat -nL</span><br></pre></td></tr></table></figure><p>小米路由器设置：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">192.168.1.3</span><br><span class="line">255.255.255.0</span><br><span class="line">网关：192.168.1.2</span><br><span class="line">DNS：8.8.8.8</span><br></pre></td></tr></table></figure><a id="more"></a><p>步骤二：</p><p>如果通过上述步骤无法成功联网，可以先把树莓派网线接到电脑的网口上，同时修改一下电脑的静态 ip，要和树莓派的同一个网段，测试一下是否能连接到树莓派，如果无法联通，重启一下树莓派，使用树莓派的默认 ip 进行设置。</p><p>查看树莓派的 ip</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ifconfig</span><br></pre></td></tr></table></figure><p>然后把步骤一的 ip 改成当前树莓派的 ip 即可。</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;由于没有其他网络，只能通过 cmcc 上网，想通过共享的方式提供给其他设备上网。手头刚好有个闲置的树莓派 4，树莓派装了 ubuntu 的系统（测试树莓派自带系统同样可用）&lt;/p&gt;
-&lt;p&gt;步骤一：&lt;/p&gt;
-&lt;p&gt;a) 设置一下有线网口的 eth0 IP 192.168.1.2，做一下下 nat 转发&lt;/p&gt;
-&lt;p&gt;b) 把接有线网口的网线连接到小米路由的 wan 口&lt;/p&gt;
-&lt;p&gt;c) 然后把小米路由器的地址上网设置成静态 IP，网关设置树莓派的 IP&lt;/p&gt;
-&lt;p&gt;d) 通过其他设备测试是否可以成功连接互联网。&lt;/p&gt;
-&lt;p&gt;树莓派设置：&lt;/p&gt;
-&lt;figure class=&quot;highlight sh&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;ifconfig eth0 192.168.1.2/24&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;sysctl net.ipv4.ip_forward=1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;iptables -t nat -A POSTROUTING -s 192.168.1.0/24 -j MASQUERADE&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;iptables -t nat -nL&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;小米路由器设置：&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;192.168.1.3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;255.255.255.0&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;网关：192.168.1.2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;DNS：8.8.8.8&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
     
     </summary>
     
