@@ -17,7 +17,7 @@ export http_proxy=http://127.0.0.1:1081;export https_proxy=http://127.0.0.1:1081
 为了方便, 我们可以制作一下别名
 
 ```
-alias setproxy='export http_proxy="http://127.0.0.1:8002"; export HTTP_PROXY="http://127.0.0.1:8002"; export https_proxy="http://127.0.0.1:8002"; export HTTPS_PROXY="http://127.0.0.1:8002"' # 设置终端代理
+alias setproxy='export http_proxy="http://127.0.0.1:8001"; export HTTP_PROXY="http://127.0.0.1:8001"; export https_proxy="http://127.0.0.1:8001"; export HTTPS_PROXY="http://127.0.0.1:8001"' # 设置终端代理
 
 alias unproxy='unset http_proxy https_proxy' # 取消终端代理
 
