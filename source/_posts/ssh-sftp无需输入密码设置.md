@@ -13,7 +13,7 @@ ls ~/.ssh
 ```
 如果有包含下面这两个文件，则说明你有ssh key
 ```
-id_rsa id_rsa.pub
+id_rsaid_rsa.pub
 ```
 
 <!-- more -->
