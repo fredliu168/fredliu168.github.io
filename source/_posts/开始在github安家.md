@@ -26,7 +26,7 @@ tags: 日记
 2.在/source目录下创建一个CNAME文件（文件名叫CNAME，没有文件后缀），并上传至你的主页项目中。
 文件内容:
 ```
-qzcool.com 
+qzcool.xyz 
 ```
 3.前往你的DNS服务商新建一个CNAME解析至你的github page个人主页地址（如：fredliu168.github.io）。
 

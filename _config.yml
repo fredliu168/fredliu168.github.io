@@ -75,11 +75,18 @@ time_format: HH:mm:ss
 per_page: 10
 pagination_dir: page
 
+card_style:
+  home: project-card
+  archive: article-card
+  tag: article-card
+  category: article-card
+
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
 #theme: next
-theme: prontera
+theme: prontera2
+#theme: stellar
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
