@@ -25,6 +25,8 @@ alias ip='curl cip.cc' # 测试
 
 ```
 
+<!-- more -->
+
 安装配置iterm2和oh my zsh
 
 https://segmentfault.com/a/1190000016952262

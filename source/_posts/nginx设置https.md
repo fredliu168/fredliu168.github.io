@@ -47,6 +47,8 @@ If you're feeling more conservative and would like to make the changes to your N
 sudo certbot certonly --nginx
 ```
 
+<!-- more -->
+
 ## Test automatic renewal
 
 The Certbot packages on your system come with a cron job or systemd timer that will renew your certificates automatically before they expire. You will not need to run Certbot again, unless you change your configuration.
