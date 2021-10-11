@@ -17,7 +17,10 @@ Ensure that your version of snapd is up to date
 Execute the following instructions on the command line on the machine to ensure that you have the latest version of snapd.
 
 ```
-sudo snap install core; sudo snap refresh core
+
+sudo snap install core; 
+
+sudo snap refresh core
 ```
 Remove certbot-auto and any Certbot OS packages
 If you have any Certbot packages installed using an OS package manager like apt, dnf, or yum, you should remove them before installing the Certbot snap to ensure that when you run the command certbot the snap is used rather than the installation from your OS package manager. The exact command to do this depends on your OS, but common examples are sudo apt-get remove certbot, sudo dnf remove certbot, or sudo yum remove certbot.

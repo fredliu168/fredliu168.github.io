@@ -7,6 +7,48 @@ tags:
 
 本文介绍如何在 nginx 服务器上使用免费的 Let’s Encrypt 凭证，提供 HTTPS 的安全加密网页。
 
+使用Certbot进行进行证书更新,可以参考以下文章
+https://certbot.eff.org/lets-encrypt/centosrhel7-nginx
+
+https://www.shookm.com/2021/03/05/Certbot%E9%85%8D%E7%BD%AELet's%20Encrypt%E7%9A%84https_ssl%E8%AF%81%E4%B9%A6%E4%BB%A5%E5%8F%8A%E8%BF%87%E7%A8%8B%E4%B8%AD%E5%87%BA%E7%8E%B0%E7%9A%84%E9%97%AE%E9%A2%98(2021%E6%9B%B4%E6%96%B0)/
+
+# Centos 下安装
+
+先进行安装依赖等配置
+
+```
+[root@j certbot]# yum install epel-release                 # 安装epel
+[root@j certbot]# yum install snapd                        # 安装snapd
+[root@j certbot]# systemctl enable --now snapd.socket      # 启用snapd.socket
+[root@j certbot]# ln -s /var/lib/snapd/snap /snap          # 创建软链接
+[root@j certbot]# snap install --classic certbot           # 安装certbot
+[root@j certbot]# ln -s /snap/bin/certbot /usr/bin/certbot # 创建certbot软链接
+```
+如果之前安装过Certbot出现了问题，可以进行重装
+
+```
+[root@j certbot]# yum remove certbot                      # 卸载certbot
+[root@j certbot]# rm /usr/local/bin/certbot-auto          # 删除安装文件
+[root@j certbot]# rm -rf /opt/eff.org/certbot
+```
+
+certbot自动定时续期证书
+
+```
+certbot renew #手动测试，查看证书过期时间
+
+certbot renew --force-renewal #忽略证书过期时间，直接重置证书时间
+
+crontab -e #定时任务
+
+0 0 1 * * /usr/bin/certbot renew --force-renewal #编辑文件
+
+```
+
+
+<!-- more -->
+以下旧了方法已经失效:
+
 本教程的安装环境是:
 
 > 阿里云Ubuntu 16.04.3 LTS (GNU/Linux 4.4.0-105-generic x86_64)
