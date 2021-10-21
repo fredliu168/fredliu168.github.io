@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.qzcool.xyz/"/>
-  <updated>2021-10-21T03:44:15.391Z</updated>
+  <updated>2021-10-21T03:44:46.961Z</updated>
   <id>https://blog.qzcool.xyz/</id>
   
   <author>
@@ -21,16 +21,14 @@
     <link href="https://blog.qzcool.xyz/2021/10/21/nginx%E5%AE%89%E5%85%A8%E9%85%8D%E7%BD%AE/"/>
     <id>https://blog.qzcool.xyz/2021/10/21/nginx%E5%AE%89%E5%85%A8%E9%85%8D%E7%BD%AE/</id>
     <published>2021-10-21T03:39:27.000Z</published>
-    <updated>2021-10-21T03:44:15.391Z</updated>
+    <updated>2021-10-21T03:44:46.961Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="如何避免CRLF注入攻击配置"><a href="#如何避免CRLF注入攻击配置" class="headerlink" title="如何避免CRLF注入攻击配置"></a>如何避免CRLF注入攻击配置</h1><p>CR 和 LF 字符将在 $request_uri 中编码为 %0D%0A。<br> 可以通过在服务器块顶部附近放置一个 if 块来检测它们：  </p><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">if</span> ( <span class="variable">$request_uri</span> <span class="regexp">~* "%0A|%0D"</span> ) </span><br><span class="line">&#123; </span><br><span class="line">    <span class="attribute">return</span> <span class="number">403</span>; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+    <content type="html"><![CDATA[<h1 id="如何避免CRLF注入攻击配置"><a href="#如何避免CRLF注入攻击配置" class="headerlink" title="如何避免CRLF注入攻击配置"></a>如何避免CRLF注入攻击配置</h1><p>CR 和 LF 字符将在 $request_uri 中编码为 %0D%0A。<br> 可以通过在服务器块顶部附近放置一个 if 块来检测它们：  </p><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">if</span> ( <span class="variable">$request_uri</span> <span class="regexp">~* "%0A|%0D"</span> ) </span><br><span class="line">&#123; </span><br><span class="line">    <span class="attribute">return</span> <span class="number">403</span>; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><a id="more"></a>]]></content>
     
     <summary type="html">
     
-      
-      
-        &lt;h1 id=&quot;如何避免CRLF注入攻击配置&quot;&gt;&lt;a href=&quot;#如何避免CRLF注入攻击配置&quot; class=&quot;headerlink&quot; title=&quot;如何避免CRLF注入攻击配置&quot;&gt;&lt;/a&gt;如何避免CRLF注入攻击配置&lt;/h1&gt;&lt;p&gt;CR 和 LF 字符将在 $request_
-      
+      &lt;h1 id=&quot;如何避免CRLF注入攻击配置&quot;&gt;&lt;a href=&quot;#如何避免CRLF注入攻击配置&quot; class=&quot;headerlink&quot; title=&quot;如何避免CRLF注入攻击配置&quot;&gt;&lt;/a&gt;如何避免CRLF注入攻击配置&lt;/h1&gt;&lt;p&gt;CR 和 LF 字符将在 $request_uri 中编码为 %0D%0A。&lt;br&gt; 可以通过在服务器块顶部附近放置一个 if 块来检测它们：  &lt;/p&gt;
+&lt;figure class=&quot;highlight nginx&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;attribute&quot;&gt;if&lt;/span&gt; ( &lt;span class=&quot;variable&quot;&gt;$request_uri&lt;/span&gt; &lt;span class=&quot;regexp&quot;&gt;~* &quot;%0A|%0D&quot;&lt;/span&gt; ) &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#123; &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    &lt;span class=&quot;attribute&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;number&quot;&gt;403&lt;/span&gt;; &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
     
     </summary>
     
