@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.qzcool.xyz/"/>
-  <updated>2021-11-17T03:33:13.924Z</updated>
+  <updated>2022-02-24T01:32:39.258Z</updated>
   <id>https://blog.qzcool.xyz/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Mac使用WireShark和Ettercap抓同一局域网设备数据包</title>
+    <link href="https://blog.qzcool.xyz/2022/02/24/Mac%E4%BD%BF%E7%94%A8WireShark%E5%92%8CEttercap%E6%8A%93%E5%90%8C%E4%B8%80%E5%B1%80%E5%9F%9F%E7%BD%91%E8%AE%BE%E5%A4%87%E6%95%B0%E6%8D%AE%E5%8C%85/"/>
+    <id>https://blog.qzcool.xyz/2022/02/24/Mac%E4%BD%BF%E7%94%A8WireShark%E5%92%8CEttercap%E6%8A%93%E5%90%8C%E4%B8%80%E5%B1%80%E5%9F%9F%E7%BD%91%E8%AE%BE%E5%A4%87%E6%95%B0%E6%8D%AE%E5%8C%85/</id>
+    <published>2022-02-24T01:17:24.000Z</published>
+    <updated>2022-02-24T01:32:39.258Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="安装Ettercap"><a href="#安装Ettercap" class="headerlink" title="安装Ettercap"></a><strong>安装Ettercap</strong></h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ brew install ettercap</span><br></pre></td></tr></table></figure><h2 id="使用Ettercap进行arp欺骗与回话劫持"><a href="#使用Ettercap进行arp欺骗与回话劫持" class="headerlink" title="使用Ettercap进行arp欺骗与回话劫持"></a>使用Ettercap进行arp欺骗与回话劫持</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ettercap -Tqi en0 -M arp:remote /192.168.50.212//  -l /tmp/<span class="built_in">log</span></span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;安装Ettercap&quot;&gt;&lt;a href=&quot;#安装Ettercap&quot; class=&quot;headerlink&quot; title=&quot;安装Ettercap&quot;&gt;&lt;/a&gt;&lt;strong&gt;安装Ettercap&lt;/strong&gt;&lt;/h2&gt;&lt;figure class=&quot;highlight
+      
+    
+    </summary>
+    
+    
+    
+  </entry>
   
   <entry>
     <title>RSA加密在Vue和Python中的使用</title>
@@ -476,28 +498,6 @@
     
     
       <category term="树莓派" scheme="https://blog.qzcool.xyz/tags/%E6%A0%91%E8%8E%93%E6%B4%BE/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>MacbookPro2015升级SSD固态硬盘</title>
-    <link href="https://blog.qzcool.xyz/2020/06/15/MacbookPro2015%E5%8D%87%E7%BA%A7SSD%E5%9B%BA%E6%80%81%E7%A1%AC%E7%9B%98/"/>
-    <id>https://blog.qzcool.xyz/2020/06/15/MacbookPro2015%E5%8D%87%E7%BA%A7SSD%E5%9B%BA%E6%80%81%E7%A1%AC%E7%9B%98/</id>
-    <published>2020-06-15T08:33:12.000Z</published>
-    <updated>2021-04-01T01:35:05.040Z</updated>
-    
-    <content type="html"><![CDATA[<p>为了给 MacBook pro2015 升级硬盘，网上看了很多文章，基本上是要求买个硬盘盒进行格式化硬盘，用 U 盘做引导，其实是不用的，如果你想要升级硬盘可以参考我的做法，关于拆机部分可以参考网上的其他文章。<br>我升级过程过程中出现了一个小意外，进系统实用工具之后是找不到 SSD,还在考虑是不是要买个硬盘盒的时候搜索了一下文章，发现是开机时按键盘的方式不对，重启后可以识别出来了。</p><p>618 区间一只关注固态硬盘的价格，看到 HP EX900 500G 降到 380 块的时候，用卷和京豆最后 350 块价格买下了，然后淘宝上淘一个转接卡回来，开搞。</p><p>1.找一块硬盘做 TimeMachine</p><p>2.关机</p><p>3.拆机</p><p>4.拔电源</p><p>5.拆硬盘</p><p>6.换硬盘</p><p>7.插电</p><p>然后可以开机了，记得要同时按“电源+cmd+r+option”四个按键，等小地球出来松手，少按一个都不行，我第一次只按了 command+R+电源键，结果进系统实用工具之后是找不到 SSD 的。</p><p>8.格式化 ssd<br>记得要选择 APFS 格式，分区选择 GUID<br>SSD 格式化之后关闭磁盘工具，回到系统首页，直接选择第一个从时间机器备份进行恢复<br>然后就是一路下一步下一步，选择备份磁盘，选择目标磁盘 EX 900<br>恢复完成之后系统会自己重启，这时候登陆 Apple ID，进入系统，至此全部完成，记得关机，把后盖螺丝都拧上</p><p>可以参考这篇文章：<br><a href="https://new.qq.com/omn/20191210/20191210A0DVDF00.html" target="_blank" rel="noopener">https://new.qq.com/omn/20191210/20191210A0DVDF00.html</a></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;为了给 MacBook pro2015 升级硬盘，网上看了很多文章，基本上是要求买个硬盘盒进行格式化硬盘，用 U 盘做引导，其实是不用的，如果你想要升级硬盘可以参考我的做法，关于拆机部分可以参考网上的其他文章。&lt;br&gt;我升级过程过程中出现了一个小意外，进系统实用工具之后是找
-      
-    
-    </summary>
-    
-    
     
   </entry>
   
