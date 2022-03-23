@@ -1,7 +1,7 @@
 ---
 title: 用Python生成密码字典
 date: 2022-03-23 16:59:26
-tags:ctf
+tags: ctf
 ---
 
 

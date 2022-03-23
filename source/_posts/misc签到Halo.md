@@ -1,21 +1,17 @@
 ---
 title: misc签到Halo
 date: 2022-03-22 17:15:33
-tags:ctf
+tags: ctf
 ---
-
-
 ## Misc-Halo
 
 题目:
-
 
 ```
 aWdxNDs6NDFSOzFpa1I1MWliT08w
 ```
 
 请提交flag{}形式的答案 （这题没多难，这题只是缺德）
-
 
 ##### 解题：
 
