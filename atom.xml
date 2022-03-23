@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.qzcool.xyz/"/>
-  <updated>2022-03-03T07:32:23.580Z</updated>
+  <updated>2022-03-23T10:14:18.848Z</updated>
   <id>https://blog.qzcool.xyz/</id>
   
   <author>
@@ -15,6 +15,57 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>用Python生成密码字典</title>
+    <link href="https://blog.qzcool.xyz/2022/03/23/%E7%94%A8Python%E7%94%9F%E6%88%90%E5%AF%86%E7%A0%81%E5%AD%97%E5%85%B8/"/>
+    <id>https://blog.qzcool.xyz/2022/03/23/%E7%94%A8Python%E7%94%9F%E6%88%90%E5%AF%86%E7%A0%81%E5%AD%97%E5%85%B8/</id>
+    <published>2022-03-23T08:59:26.000Z</published>
+    <updated>2022-03-23T10:14:18.848Z</updated>
+    
+    <content type="html"><![CDATA[<p>题目:</p><p>我只记得RAR的密码是 abcdefg 中不重复的6个字母随机排列组成的。但是其中是不是有哪些字母转为了大写,我已经已经记不得了。一切都靠你自己了。<br>密码举例 cAeGfb</p><p><a href="用Python生成密码字典/本压缩包密码需要进行破解3.rar">附件:本压缩包密码需要进行破解3.rar</a></p><p>使用python生成密码字典,然后用ARCHPR破解,解密密码: D***,解压后获取flag</p><p>flag{158e02c09eac01316960696ff0d8e123}</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">import itertools, string</span><br><span class="line"></span><br><span class="line">   words = &apos;abcdefgABCDEFG&apos;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">   def generatePassword(repeat):</span><br><span class="line">       with open(&apos;pwd.txt&apos;,&apos;w&apos;) as f:</span><br><span class="line">           for item in itertools.product(words, repeat=repeat):</span><br><span class="line">               # print(item)</span><br><span class="line">               tmp = [x.lower() for x in item]</span><br><span class="line">               #print(tmp)</span><br><span class="line">               set_lst = set(tmp)</span><br><span class="line">               if len(set_lst) == len(tmp):</span><br><span class="line">                   # 没有重复元素</span><br><span class="line">                   # print(&apos;&apos;.join(item))</span><br><span class="line">                   f.write(&apos;&apos;.join(item)+&apos;\n&apos;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">   def generatePasswordForRepeat(min, max):</span><br><span class="line">       for i in range(max - min):</span><br><span class="line">           generatePassword(min + i)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">   passwords = generatePassword(6)</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;题目:&lt;/p&gt;
+&lt;p&gt;我只记得RAR的密码是 abcdefg 中不重复的6个字母随机排列组成的。但是其中是不是有哪些字母转为了大写,我已经已经记不得了。一切都靠你自己了。&lt;br&gt;密码举例 cAeGfb&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;用Python生成密码字典/本压缩包密码
+      
+    
+    </summary>
+    
+    
+    
+      <category term="ctf" scheme="https://blog.qzcool.xyz/tags/ctf/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>misc签到Halo</title>
+    <link href="https://blog.qzcool.xyz/2022/03/22/misc%E7%AD%BE%E5%88%B0Halo/"/>
+    <id>https://blog.qzcool.xyz/2022/03/22/misc%E7%AD%BE%E5%88%B0Halo/</id>
+    <published>2022-03-22T09:15:33.000Z</published>
+    <updated>2022-03-23T10:17:35.897Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="Misc-Halo"><a href="#Misc-Halo" class="headerlink" title="Misc-Halo"></a>Misc-Halo</h2><p>题目:</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">aWdxNDs6NDFSOzFpa1I1MWliT08w</span><br></pre></td></tr></table></figure><p>请提交flag{}形式的答案 （这题没多难，这题只是缺德）</p><h5 id="解题："><a href="#解题：" class="headerlink" title="解题："></a>解题：</h5><p>base64后:</p><p>igq4;:41R;1ikR51ibOO0</p><p>后来尝试多种后，想到之前看到过的base64和异或，于是尝试了下：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">python</span><br><span class="line">from base64 import *</span><br><span class="line"></span><br><span class="line">    b = b64decode(&quot;aWdxNDs6NDFSOzFpa1I1MWliT08w&quot;).decode()</span><br><span class="line">    print(b)</span><br><span class="line"></span><br><span class="line">    data = list(b)</span><br><span class="line"></span><br><span class="line">    print(data)</span><br><span class="line">    for k in range(0, 200):</span><br><span class="line"></span><br><span class="line">        key = &quot;&quot;</span><br><span class="line"></span><br><span class="line">        for i in range(len(data)):</span><br><span class="line">            key += chr(ord(data[i]) ^ k)</span><br><span class="line"></span><br><span class="line">        print(key)</span><br></pre></td></tr></table></figure><p>输出:</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">igq4;:41R;1ikR51ibOO0</span><br><span class="line">hfp5:;50S:0hjS40hcNN1</span><br><span class="line">kes69863P93kiP73k`MM2</span><br><span class="line">jdr78972Q82jhQ62jaLL3</span><br><span class="line">mcu0?&gt;05V?5moV15mfKK4</span><br><span class="line">lbt1&gt;?14W&gt;4lnW04lgJJ5</span><br><span class="line">oaw2=&lt;27T=7omT37odII6</span><br><span class="line">n`v3&lt;=36U&lt;6nlU26neHH7</span><br><span class="line">aoy&lt;32&lt;9Z39acZ=9ajGG8</span><br><span class="line">`nx=23=8[28`b[&lt;8`kFF9</span><br><span class="line">cm&#123;&gt;10&gt;;X1;caX?;chEE:</span><br><span class="line">blz?01?:Y0:b`Y&gt;:biDD;</span><br><span class="line">ek&#125;8768=^7=eg^9=enCC&lt;</span><br><span class="line">dj|9679&lt;_6&lt;df_8&lt;doBB=</span><br><span class="line">igq4;:41R;1ikR51ibOO0</span><br><span class="line">hfp5:;50S:0hjS40hcNN1</span><br><span class="line">kes69863P93kiP73k`MM2</span><br><span class="line">jdr78972Q82jhQ62jaLL3</span><br><span class="line">mcu0?&gt;05V?5moV15mfKK4</span><br><span class="line">lbt1&gt;?14W&gt;4lnW04lgJJ5</span><br><span class="line">oaw2=&lt;27T=7omT37odII6</span><br><span class="line">n`v3&lt;=36U&lt;6nlU26neHH7</span><br><span class="line">aoy&lt;32&lt;9Z39acZ=9ajGG8</span><br><span class="line">`nx=23=8[28`b[&lt;8`kFF9</span><br><span class="line">cm&#123;&gt;10&gt;;X1;caX?;chEE:</span><br><span class="line">blz?01?:Y0:b`Y&gt;:biDD;</span><br><span class="line">ek&#125;8768=^7=eg^9=enCC&lt;</span><br><span class="line">dj|9679&lt;_6&lt;df_8&lt;doBB=</span><br><span class="line">....</span><br></pre></td></tr></table></figure><p>看到唯一一个没有特殊字符的：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jdr78972Q82jhQ62jaLL3</span><br></pre></td></tr></table></figure><p>提交,即flag~</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;Misc-Halo&quot;&gt;&lt;a href=&quot;#Misc-Halo&quot; class=&quot;headerlink&quot; title=&quot;Misc-Halo&quot;&gt;&lt;/a&gt;Misc-Halo&lt;/h2&gt;&lt;p&gt;题目:&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;t
+      
+    
+    </summary>
+    
+    
+    
+      <category term="ctf" scheme="https://blog.qzcool.xyz/tags/ctf/"/>
+    
+  </entry>
   
   <entry>
     <title>Mac下运行.bin文件</title>
@@ -422,74 +473,6 @@
     </summary>
     
     
-    
-  </entry>
-  
-  <entry>
-    <title>树莓派连接隐藏wifi网络</title>
-    <link href="https://blog.qzcool.xyz/2020/08/21/%E6%A0%91%E8%8E%93%E6%B4%BE%E8%BF%9E%E6%8E%A5%E9%9A%90%E8%97%8Fwifi%E7%BD%91%E7%BB%9C/"/>
-    <id>https://blog.qzcool.xyz/2020/08/21/%E6%A0%91%E8%8E%93%E6%B4%BE%E8%BF%9E%E6%8E%A5%E9%9A%90%E8%97%8Fwifi%E7%BD%91%E7%BB%9C/</id>
-    <published>2020-08-21T07:20:20.000Z</published>
-    <updated>2021-04-01T01:35:05.050Z</updated>
-    
-    <content type="html"><![CDATA[<p>使用 nano 编辑器打开 wpa-supplicant 配置文件</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nano /etc/wpa_supplicant/wpa_supplicant.conf</span><br></pre></td></tr></table></figure><p>在文件底部添加：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">network=&#123;</span><br><span class="line">ssid=”wifi_name”</span><br><span class="line">scan_ssid=1</span><br><span class="line">psk=”wifi_password”</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>关键是 ssid_scan=1 这一句，加上后才能扫描到隐藏的 wifi 网络。之后保存退出（ctrl+o 保存，ctrl+x 退出）nano 编辑器，reboot 重启即可。</p><p>相关 network 的配置信息：<br>network：是一个连接一个 WiFi 网络的配置，可以有多个，wpa_supplicant 会按照 priority 指定的优先级（数字越大越先连接）来连接，当然，在这个列表里面隐藏 WiFi 不受 priority 的影响，隐藏 WiFi 总是在可见 WiFi 不能连接时才开始连接。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ssid:网络的ssid</span><br><span class="line">psk:密码</span><br><span class="line">priority:连接优先级，越大越优先</span><br><span class="line">scan_ssid:连接隐藏WiFi时需要指定该值为1</span><br></pre></td></tr></table></figure><a id="more"></a>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;使用 nano 编辑器打开 wpa-supplicant 配置文件&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;sudo nano /etc/wpa_supplicant/wpa_supplicant.conf&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;在文件底部添加：&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;network=&amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;ssid=”wifi_name”&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;scan_ssid=1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;psk=”wifi_password”&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;关键是 ssid_scan=1 这一句，加上后才能扫描到隐藏的 wifi 网络。之后保存退出（ctrl+o 保存，ctrl+x 退出）nano 编辑器，reboot 重启即可。&lt;/p&gt;
-&lt;p&gt;相关 network 的配置信息：&lt;br&gt;network：是一个连接一个 WiFi 网络的配置，可以有多个，wpa_supplicant 会按照 priority 指定的优先级（数字越大越先连接）来连接，当然，在这个列表里面隐藏 WiFi 不受 priority 的影响，隐藏 WiFi 总是在可见 WiFi 不能连接时才开始连接。&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;ssid:网络的ssid&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;psk:密码&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;priority:连接优先级，越大越优先&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;scan_ssid:连接隐藏WiFi时需要指定该值为1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-    
-    </summary>
-    
-    
-    
-      <category term="树莓派" scheme="https://blog.qzcool.xyz/tags/%E6%A0%91%E8%8E%93%E6%B4%BE/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>iMac终端走Socks5代理方法</title>
-    <link href="https://blog.qzcool.xyz/2020/08/19/iMac%E7%BB%88%E7%AB%AF%E8%B5%B0Socks5%E4%BB%A3%E7%90%86%E6%96%B9%E6%B3%95/"/>
-    <id>https://blog.qzcool.xyz/2020/08/19/iMac%E7%BB%88%E7%AB%AF%E8%B5%B0Socks5%E4%BB%A3%E7%90%86%E6%96%B9%E6%B3%95/</id>
-    <published>2020-08-19T09:44:16.000Z</published>
-    <updated>2021-08-03T02:30:07.760Z</updated>
-    
-    <content type="html"><![CDATA[<p>1.找到代理地址和端口<br>本人的 Socks5 的监听地址是 127.0.0.1，端口 1086</p><ol start="2"><li>打开终端添加配置</li></ol><p>（我的终端是 zsh）打开终端，输入以下代码打开 vim</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim ~/.zshrc</span><br></pre></td></tr></table></figure><p>按下键盘上的字母「i」，进入编辑模式，输入以下代码，第二行末尾改成自己的代理地址和端口</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># proxy list</span><br><span class="line">alias proxy=&apos;export all_proxy=socks5://127.0.0.1:1081&apos;</span><br><span class="line">alias unproxy=&apos;unset all_proxy&apos;</span><br></pre></td></tr></table></figure><p>按下键盘上的「esc」，退出编辑模式。输入以下代码保存修改并退出 vim</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:wq</span><br></pre></td></tr></table></figure><p>初始化配置</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source ~/.zshrc</span><br></pre></td></tr></table></figure><ol start="3"><li>执行</li></ol><p>开启代理模式，查看 ip，看看 brew update 命令顺畅与否</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">proxy</span><br><span class="line">brew update</span><br></pre></td></tr></table></figure><p>如果不想走代理了则使用 unproxy 命令</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">unproxy</span><br></pre></td></tr></table></figure><p>开启代理模式前后可以查看 ip</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl cip.cc</span><br></pre></td></tr></table></figure><a id="more"></a>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;1.找到代理地址和端口&lt;br&gt;本人的 Socks5 的监听地址是 127.0.0.1，端口 1086&lt;/p&gt;
-&lt;ol start=&quot;2&quot;&gt;
-&lt;li&gt;打开终端添加配置&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;（我的终端是 zsh）打开终端，输入以下代码打开 vim&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;vim ~/.zshrc&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;按下键盘上的字母「i」，进入编辑模式，输入以下代码，第二行末尾改成自己的代理地址和端口&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;# proxy list&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;alias proxy=&amp;apos;export all_proxy=socks5://127.0.0.1:1081&amp;apos;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;alias unproxy=&amp;apos;unset all_proxy&amp;apos;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;按下键盘上的「esc」，退出编辑模式。输入以下代码保存修改并退出 vim&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;:wq&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;初始化配置&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;source ~/.zshrc&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;ol start=&quot;3&quot;&gt;
-&lt;li&gt;执行&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;开启代理模式，查看 ip，看看 brew update 命令顺畅与否&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;proxy&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;brew update&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;如果不想走代理了则使用 unproxy 命令&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;unproxy&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;开启代理模式前后可以查看 ip&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;curl cip.cc&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-    
-    </summary>
-    
-    
-    
-      <category term="iMac" scheme="https://blog.qzcool.xyz/tags/iMac/"/>
     
   </entry>
   
