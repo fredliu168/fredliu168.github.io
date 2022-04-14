@@ -1,0 +1,63 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta name="generator" content="Hexo 3.9.0"><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> 安卓去壳逆向 · 运维笔记</title><meta name="description" content="安卓去壳逆向 - marsland"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.ico"><link rel="stylesheet" href="/css/prontera.css"><link rel="search" type="application/opensearchdescription+xml" href="https://blog.qzcool.xyz/atom.xml" title="运维笔记"><link rel="alternate" href="/atom.xml" title="运维笔记" type="application/atom+xml">
+</head><body><header class="feature-header"><nav class="component-nav"><ul><div class="logo-container"><a href="/"><h2 class="title">运维笔记</h2></a></div><a href="/" target="_self" class="li component-nav-item"><p>INDEX</p></a><a href="/archives" target="_self" class="li component-nav-item"><p>ARCHIVES</p></a><ul class="shortcut-icons"><a href="https://github.com/fredliu168" target="_blank"><img src="/images/github.svg" class="icon"></a><a href="/atom.xml" target="_blank"><img src="/images/rss.svg" class="icon"></a></ul></ul></nav></header><main class="container"><div id="post-container"><div class="post"><article class="post-block"><h1 class="post-title">安卓去壳逆向</h1><div class="post-info">Apr 14, 2022</div><div class="post-content"><p>(202005)网鼎杯青龙组 Reverse-bang</p>
+<p><a href="安卓去壳逆向/Reverse-bang.zip">附件下载:Reverse-bang.zip</a></p>
+<p>用到的软件:</p>
+<p>1.Frida</p>
+<p>2.MuMu模拟器</p>
+<p>3.frida-tools</p>
+<p>4.frida-sever</p>
+<p>5.ApkScan-PKID查壳工具</p>
+<p>6.jadx-gui逆向工具</p>
+<p>拿到手是一个APK文件，模拟器里打开看一下：</p>
+<p><img src="image/安卓去壳逆向/1649904017478.png" alt="1649904017478.png"></p>
+<p>接下来是查壳，apk查壳我们用PKID,本机路径(/逆向/apk逆向soft/ApkScan-PKID查壳工具.jar)</p>
+<p><img src="image/安卓去壳逆向/1649904268859.png" alt="1649904268859.png"></p>
+<p>显示是梆梆加壳，接下来我们用<a href="https://github.com/hluwa/FRIDA-DEXDump" target="_blank" rel="noopener">frida脚本</a>脱壳，使用该脚本前需要配置frida环境</p>
+<ul>
+<li>Frida是一款轻量级HOOK框架，适用于多平台上，例如android、windows、ios等。</li>
+<li>frida的服务端运行在目标机上，通过注入进程的方式来实现劫持应用函数，另一部分运行在系统机器上。</li>
+</ul>
+<p>第一步，我们先pip安装frida模块。cmd输入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install frida</span><br></pre></td></tr></table></figure>
+<p>第二步，安装frida-tools模块，命令同上，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install frida-tools 或者 python -m pip install frida-tools。</span><br></pre></td></tr></table></figure>
+<p><strong>第三步</strong> ，下载运行在目标机上的frida-sever端（ =一定要对应你的frida版本和目标机架构= ），<a href="https://github.com/frida/frida/releases" target="_blank" rel="noopener">官方下载地址</a>，下载时要选择对应的版本下载，先cmd输入“frida –version”看自己安装的frida版本</p>
+<p><img src="image/安卓去壳逆向/1649904665727.png" alt="1649904665727.png"></p>
+<p>再使自己的物理机连接上目标虚拟机，以我自己的（MuMu模拟器）为例：</p>
+<p><img src="image/安卓去壳逆向/1649904712013.png" alt="1649904712013.png"></p>
+<p>MAC版MuMu模拟器如何连接adb</p>
+<p>adb kill-server &amp;&amp; adb server &amp;&amp; adb shell</p>
+<p>再分别输入“adb shell”和“cat /proc/cpuinfo”即可查看自己的目标机架构版本，但有些可能不能显示出目标机架构版本，所以我直接到客户端看了一下版本，可以看出我的是X64模拟器。</p>
+<p> 结合我们的frida版本和目标机版本我们可以就选择下载frida-sever了，我这里下载的是frida-server-14.2.14-android-x86_64（因为我的frida版本是14.2.14，目标机是X64架构）</p>
+<p> <strong>第四步</strong> ，将之前下载好的文件解压，然后通过命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb push 你的电脑的存放位置 /data/local/tmp</span><br></pre></td></tr></table></figure>
+<p>将文件传输到手机中</p>
+<p>然后通过输入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">adb shell</span><br><span class="line">su</span><br><span class="line">cd /data/local/tmp</span><br></pre></td></tr></table></figure>
+<p>进入目标机的/data/local/tmp目录下，输入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod 777 frida-server-14.2.14-android-x86_64</span><br></pre></td></tr></table></figure>
+<p>给文件赋权777，<br>再输入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./frida-server-14.2.14-android-x86_64</span><br></pre></td></tr></table></figure>
+<p>启动。</p>
+<p><img src="image/安卓去壳逆向/1649905018379.png" alt="1649905018379.png"></p>
+<p>第五步，新开一个命令行输入命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">frida-ps -U</span><br></pre></td></tr></table></figure>
+<p>查看手机进程，如果出现以下结果，则frida安装成功。</p>
+<p><img src="image/安卓去壳逆向/1649904985130.png" alt="1649904985130.png"></p>
+<p>执行:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">frida-dexdump -FU -d  com.example.how_debug</span><br></pre></td></tr></table></figure>
+<p>之后我们发现frida_dexdump新建了子文件夹com.example.how_debug，里面存放脱壳后的dex文件。</p>
+<p>再用dex2jar工具反编译成.jar文件之后用<a href="https://github.com/skylot/jadx/releases/tag/v1.2.0" target="_blank" rel="noopener">jadx-gui</a>分析，在com.example.how_debug.MainActivity类中我们可以找到flag</p>
+<p><img src="image/安卓去壳逆向/1649905146212.png" alt="1649905146212.png"></p>
+<p>参考文章:</p>
+<p><a href="https://blog.csdn.net/m0_46296905/article/details/115727899" target="_blank" rel="noopener">https://blog.csdn.net/m0_46296905/article/details/115727899</a></p>
+<p><a href="https://blog.csdn.net/m0_46296905/article/details/115723160" target="_blank" rel="noopener">https://blog.csdn.net/m0_46296905/article/details/115723160</a></p>
+</div></article></div><div id="disqus_thread"></div></div><script>var disqus_shortname = 'fishman-1';
+var disqus_identifier = '2022/04/14/安卓去壳逆向/';
+var disqus_title = '安卓去壳逆向';
+var disqus_url = 'https://blog.qzcool.xyz/2022/04/14/安卓去壳逆向/';
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();</script><script id="dsq-count-scr" src="//fishman-1.disqus.com/count.js" async></script></main><footer class="footer-container"><div class="paginator"><a href="/2022/03/24/mac修改文件权限为777/" class="next">NEXT</a></div><div class="copyright"><p>© 2017 - 2022 <a href="https://blog.qzcool.xyz">marsland</a>, powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/AngryPowman/hexo-theme-prontera" target="_blank">hexo-theme-prontera</a>.</p></div></footer><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"fishman",'auto');ga('send','pageview');</script></body></html>
