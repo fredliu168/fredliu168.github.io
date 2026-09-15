@@ -14,7 +14,10 @@ if ! command -v node >/dev/null 2>&1; then
 fi
 
 ./node_modules/.bin/hexo clean
-./node_modules/.bin/hexo d -g
+./node_modules/.bin/hexo generate
+# 给本地 css/js/图片加上内容哈希（?v=xxxx），避免改过样式后访问者仍命中旧缓存
+node tools/cache-bust.mjs
+./node_modules/.bin/hexo deploy
 # 备份到 git
 git add -A
 git diff --cached --quiet || git commit -m "--"
