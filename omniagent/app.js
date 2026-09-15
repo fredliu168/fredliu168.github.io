@@ -60,7 +60,7 @@
       'demo.replay': '↻ 重播',
 
       'how.kicker': 'HOW IT WORKS',
-      'how.title': '不是聊天框，是一个会动手的循环',
+      'how.title': '不是聊天框，是一个会动手的AI 智能体',
       'how.desc': '每次任务都走同一条链路：看清页面 → 拆出步骤 → 调用工具 → 把结果落到页面上。过程实时可见，你随时可以喊停。',
       'how.s1t': '读取页面',
       'how.s1p': '通过内容脚本读取 DOM、正文、表单与结构，必要时截图理解画面。',
@@ -176,7 +176,7 @@
       'demo.replay': '↻ Replay',
 
       'how.kicker': 'HOW IT WORKS',
-      'how.title': 'Not a chat box — a loop that takes action',
+      'how.title': 'Not a chat box — an AI agent that takes action',
       'how.desc': 'Every task follows the same path: read the page → plan the steps → call the tools → write the result back. The whole run is visible, and you can stop it at any point.',
       'how.s1t': 'Read the page',
       'how.s1p': 'A content script reads the DOM, the article text, forms and page structure — plus screenshots when the visuals matter.',
