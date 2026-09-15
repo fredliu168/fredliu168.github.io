@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#08080b">
+<title>omniagent — 住在浏览器里的智能体</title>
+<meta name="description" content="omniagent 是一个 Chrome 侧边栏浏览器智能体：读懂当前页面，自己调用工具点击、输入、翻译、整理，把一句自然语言变成一件完成的事。">
+<meta name="keywords" content="omniagent,NeonAgent,浏览器智能体,Chrome 扩展,AI Agent,网页翻译,page agent">
+<link rel="canonical" href="http://fredliu168.github.io/omniagent/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="omniagent — 住在浏览器里的智能体">
+<meta property="og:description" content="读懂页面、拆解步骤、调用工具、回填结果。一句自然语言，换来一件完成的事。">
+<meta property="og:url" content="http://fredliu168.github.io/omniagent/">
+<link rel="icon" href="/omniagent/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="/omniagent/icon-192.png" sizes="192x192">
+<link rel="apple-touch-icon" href="/omniagent/apple-touch-icon.png">
+<script>
+/* Set the theme before first paint so there is no flash of the wrong colours.
+   If this fails or JS is off, CSS falls back to the dark defaults on :root. */
+(function () {
+  try {
+    var saved = window.localStorage.getItem('omniagent-theme');
+    var theme = (saved === 'light' || saved === 'dark') ? saved
+      : (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+    document.documentElement.setAttribute('data-theme', theme);
+  } catch (e) {
+    document.documentElement.setAttribute('data-theme', 'dark');
+  }
+})();
+</script>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="bg-grid" aria-hidden="true"></div>
+<div class="bg-glow" aria-hidden="true"></div>
+
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="/omniagent/" aria-label="omniagent">
+      <span class="brand-mark" aria-hidden="true">
+        <img src="icon-64.png" alt="" width="28" height="28" decoding="async">
+      </span>
+      <span class="brand-name">omniagent</span>
+      <span class="brand-tag">v0.1.31</span>
+    </a>
+    <nav class="nav-links" aria-label="主导航">
+      <a href="#demo" data-i18n="nav.demo">在线演示</a>
+      <a href="#how" data-i18n="nav.how">工作原理</a>
+      <a href="#features" data-i18n="nav.features">能力</a>
+      <a href="#install" data-i18n="nav.install">安装</a>
+      <a href="#faq" data-i18n="nav.faq">常见问题</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="theme-switch" id="theme-toggle" type="button" role="switch" aria-checked="true" aria-label="切换到浅色模式" title="切换到浅色模式">
+        <span class="ts-knob">
+          <span class="ts-knob-icon">
+            <svg class="ts-moon" viewBox="0 0 20 20" aria-hidden="true"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/></svg>
+            <svg class="ts-sun" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"/></svg>
+          </span>
+        </span>
+        <span class="ts-track-icons" aria-hidden="true">
+          <span class="ts-sun-side"><svg viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"/></svg></span>
+          <span class="ts-moon-side"><svg viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/></svg></span>
+        </span>
+      </button>
+      <button class="lang-btn" id="lang-toggle" type="button" aria-label="切换语言 / Switch language">
+        <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.4" d="M1.6 4.2h8M5.6 2.2v2M7.2 4.2c-.6 2.6-2.4 4.6-5 5.6M3.1 7.1c1 1.6 2.4 2.6 4 3.2M8.9 14.2l3-8 3 8M9.9 11.6h4"/></svg>
+        <span id="lang-label">EN</span>
+      </button>
+      <a class="ghost-btn" href="https://github.com/fredliu168/NeonAgent" target="_blank" rel="noopener" aria-label="GitHub — omniagent (NeonAgent)">
+        <svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8a8 8 0 0 0 5.47 7.59c.4.07.55-.17.55-.38l-.01-1.49c-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.4 7.4 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48l-.01 2.2c0 .21.15.46.55.38A8 8 0 0 0 8 0Z"/></svg>
+        GitHub
+        <span class="gh-stars" id="gh-stars" title="GitHub Stars">★ 10</span>
+      </a>
+      <a class="solid-btn sm" href="#install" data-i18n="nav.cta">立即安装</a>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- ================= HERO ================= -->
+  <section class="hero wrap">
+    <div class="hero-head">
+      <span class="pill">
+        <span class="dot"></span>
+        <span data-i18n="hero.pill">Chrome Side Panel · 开源浏览器智能体</span>
+      </span>
+      <h1 data-i18n-html="hero.title">让浏览器<br><span class="grad">替你把事情做完</span></h1>
+      <p class="lede" data-i18n-html="hero.lede">omniagent 住在你的 Chrome 侧边栏里。它读懂当前页面，自己拆步骤、调用工具，完成点击、输入、翻译、整理与提交——<strong>一句自然语言，换来一件完成的事</strong>。</p>
+      <div class="cta-row">
+        <a class="solid-btn" href="#install">
+          <span data-i18n="hero.cta1">三步安装扩展</span>
+          <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </a>
+        <a class="line-btn" href="#demo" data-i18n="hero.cta2">看它在页面上怎么干活</a>
+      </div>
+      <ul class="hero-facts">
+        <li><b>45</b> <span data-i18n="hero.fact1">个页面 / 后台工具</span></li>
+        <li><b>5</b> <span data-i18n="hero.fact2">家预设模型供应商</span></li>
+        <li><b>0</b> <span data-i18n="hero.fact3">条数据离开你配置的接口</span></li>
+      </ul>
+    </div>
+
+    <!-- ---------- interactive demo ---------- -->
+    <div class="stage" id="demo">
+      <div class="stage-glow" aria-hidden="true"></div>
+      <div class="window">
+        <div class="chrome">
+          <div class="lights"><i></i><i></i><i></i></div>
+          <div class="omnibox"><span class="lock">◈</span><span id="omni-url">article.example.com/deep-work</span></div>
+          <div class="chrome-actions"><span class="ext-dot" title="omniagent ready"></span></div>
+        </div>
+
+        <div class="window-body">
+          <!-- fake page -->
+          <div class="page">
+            <div class="page-head">
+              <div class="page-kicker">RESEARCH NOTES</div>
+              <h3 id="page-title" data-i18n="demo.title">深度工作：把注意力还给真正重要的事</h3>
+              <p class="page-meta" data-i18n="demo.meta">2026 · 12 分钟阅读 · 长文</p>
+            </div>
+            <div class="page-cols">
+              <div class="page-main">
+                <p data-block="intro" data-i18n="demo.p1">注意力是稀缺资源。真正拉开差距的，不是工作更长时间，而是能否长时间不被打断地处理一件难事。</p>
+                <p data-block="body" data-i18n="demo.p2">把重复的查找、复制、整理交给工具，人才有余力留在难题里。这也是自动化真正值得投入的地方——不是为了快，而是为了不被打断。</p>
+                <p data-block="body2" data-i18n="demo.p3">衡量的方式同样重要：一天结束时有几个 90 分钟不被打断的区块，比处理了多少条消息更能说明问题。</p>
+                <div class="page-quote" data-block="quote" data-i18n="demo.quote">「专注不是一种天赋，而是一套可以被搭建的环境。」</div>
+              </div>
+              <aside class="page-side" data-block="side">
+                <b data-i18n="demo.side">相关阅读</b>
+                <span></span><span></span><span></span>
+              </aside>
+            </div>
+            <div class="ghost-cursor" id="ghost-cursor" aria-hidden="true">
+              <svg viewBox="0 0 16 20" width="16" height="20"><path fill="#0b0b0f" stroke="#5ef2a0" stroke-width="1.2" d="M1 1l13 8.5-5.6 1.2L6.2 17z"/></svg>
+              <span>omniagent</span>
+            </div>
+          </div>
+
+          <!-- side panel -->
+          <aside class="panel" aria-live="polite">
+            <div class="panel-head">
+              <span class="panel-brand">
+                <span class="brand-mark sm" aria-hidden="true"><img src="icon-64.png" alt="" width="20" height="20" decoding="async"></span>
+                omniagent
+              </span>
+              <span class="panel-mode">Agent</span>
+            </div>
+            <div class="panel-body" id="panel-body">
+              <div class="bubble user" id="user-bubble" data-empty="true"></div>
+              <div class="agent-block" id="agent-block" hidden>
+                <div class="agent-steps" id="agent-steps"></div>
+                <div class="agent-result" id="agent-result" hidden></div>
+              </div>
+            </div>
+            <div class="panel-input">
+              <span id="panel-placeholder" data-i18n="demo.placeholder">接下来，还想做些什么？</span>
+              <span class="send">↑</span>
+            </div>
+          </aside>
+        </div>
+      </div>
+
+      <div class="stage-bar">
+        <span class="stage-label" data-i18n="demo.note">选择场景 · 演示为预设内容，不发起模型请求</span>
+        <div class="chips" role="tablist" aria-label="demo scenarios">
+          <button role="tab" class="chip is-active" data-scenario="research" aria-selected="true" data-i18n="demo.chip.research">阅读与研究</button>
+          <button role="tab" class="chip" data-scenario="translate" aria-selected="false" data-i18n="demo.chip.translate">整页翻译</button>
+          <button role="tab" class="chip" data-scenario="skill" aria-selected="false" data-i18n="demo.chip.skill">当作技能复用</button>
+          <button class="chip replay" id="replay" data-i18n="demo.replay">↻ 重播</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= HOW IT WORKS ================= -->
+  <section class="section wrap" id="how">
+    <div class="section-head">
+      <span class="kicker" data-i18n="how.kicker">HOW IT WORKS</span>
+      <h2 data-i18n="how.title">不是聊天框，是一个会动手的循环</h2>
+      <p data-i18n="how.desc">每次任务都走同一条链路：看清页面 → 拆出步骤 → 调用工具 → 把结果落到页面上。过程实时可见，你随时可以喊停。</p>
+    </div>
+    <ol class="pipeline">
+      <li>
+        <span class="step-no">01</span>
+        <h3 data-i18n="how.s1t">读取页面</h3>
+        <p data-i18n="how.s1p">通过内容脚本读取 DOM、正文、表单与结构，必要时截图理解画面。</p>
+        <code>read_page_content</code>
+      </li>
+      <li>
+        <span class="step-no">02</span>
+        <h3 data-i18n="how.s2t">拆解步骤</h3>
+        <p data-i18n="how.s2p">模型用 OpenAI 兼容的 function calling 规划工具序列，而非盲目试错。</p>
+        <code>tool_calls</code>
+      </li>
+      <li>
+        <span class="step-no">03</span>
+        <h3 data-i18n="how.s3t">调用工具</h3>
+        <p data-i18n="how.s3p">点击、输入、选择、滚动、等待元素、跳转——45 个工具按需加载。</p>
+        <code>click_element</code>
+      </li>
+      <li>
+        <span class="step-no">04</span>
+        <h3 data-i18n="how.s4t">回填结果</h3>
+        <p data-i18n="how.s4p">答案写回页面或侧边栏，成功的流程可存成技能，下次一键复用。</p>
+        <code>create_skill</code>
+      </li>
+    </ol>
+    <div class="loop-note">
+      <span class="loop-badge" data-i18n="how.loopBadge">Agent Loop</span>
+      <span data-i18n="how.loopText">用户消息 → 模型 → 工具 → 结果回灌 → 继续，直到任务完成或达到迭代上限。</span>
+    </div>
+  </section>
+
+  <!-- ================= FEATURES ================= -->
+  <section class="section wrap" id="features">
+    <div class="section-head">
+      <span class="kicker" data-i18n="feat.kicker">CAPABILITIES</span>
+      <h2 data-i18n="feat.title">六件它真的替你做的事</h2>
+      <p data-i18n="feat.desc">不是功能清单堆砌，而是每天都会用到的几件事。</p>
+    </div>
+    <div class="cards">
+      <article class="card wide">
+        <div class="card-icon">⌘</div>
+        <h3 data-i18n="feat.c1t">在页面上自主操作</h3>
+        <p data-i18n="feat.c1p">点击按钮、填写表单、切换下拉、等待异步元素、跨页面跳转。执行过程逐步展示，出错可回看每一步的入参与返回。</p>
+        <div class="mini-flow">
+          <span>get_page_info</span><i>→</i><span>click_element</span><i>→</i><span>type_text</span><i>→</i><span data-i18n="feat.done">✓ 完成</span>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card-icon">文</div>
+        <h3 data-i18n="feat.c2t">整页与划词翻译</h3>
+        <p data-i18n="feat.c2p">按段落串行翻译，可双语对照写回页面；双击单词看释义，划选一段即时出译文。</p>
+      </article>
+      <article class="card">
+        <div class="card-icon">✧</div>
+        <h3 data-i18n="feat.c3t">跨会话记忆</h3>
+        <p data-i18n="feat.c3p">偏好、站点特征、操作经验自动沉淀，新会话开局就带着上下文。超过 50 条可一键压缩。</p>
+      </article>
+      <article class="card">
+        <div class="card-icon">▧</div>
+        <h3 data-i18n="feat.c4t">技能库</h3>
+        <p data-i18n="feat.c4p">把跑通的多步流程存成技能，支持 Markdown 导入导出，团队之间可以直接共享。</p>
+      </article>
+      <article class="card">
+        <div class="card-icon">⌗</div>
+        <h3 data-i18n="feat.c5t">脚本技能</h3>
+        <p data-i18n="feat.c5p">用 JavaScript 给它加新工具，在受控沙盒里运行，可调用外部接口、处理复杂数据。</p>
+      </article>
+      <article class="card">
+        <div class="card-icon">◷</div>
+        <h3 data-i18n="feat.c6t">定时任务</h3>
+        <p data-i18n="feat.c6p">单次、间隔、每日、每周四种调度，让巡检、汇总、提醒之类的事自己发生。</p>
+      </article>
+      <article class="card wide alt">
+        <div class="card-icon">◱</div>
+        <h3 data-i18n="feat.c7t">接口流量分析</h3>
+        <p data-i18n="feat.c7p">基于浏览器性能数据列出页面 API 请求，按域名、路径、状态码聚合，找出最慢和最大的接口；点击之后有没有真的触发请求，一等就知道。</p>
+        <div class="mini-flow muted"><span>list_api_traffic</span><i>→</i><span>analyze_api_traffic</span><i>→</i><span>wait_for_api_traffic</span></div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ================= MODELS ================= -->
+  <section class="models wrap">
+    <span class="kicker" data-i18n="models.kicker">BRING YOUR OWN MODEL</span>
+    <h2 data-i18n="models.title">模型你自己选，接口你来配</h2>
+    <p class="models-copy" data-i18n="models.desc">内置预设供应商自动带出 Base URL，也可手动添加任何 OpenAI 兼容接口。主模型与翻译模型可以分开配置，思考强度四档可调。</p>
+    <div class="model-row">
+      <span class="model">DeepSeek</span>
+      <span class="model">Kimi</span>
+      <span class="model">MiniMax</span>
+      <span class="model" data-i18n="models.p4">火山引擎</span>
+      <span class="model" data-i18n="models.p5">硅基流动</span>
+      <span class="model ghost" data-i18n="models.compat">OpenAI 兼容接口 ↗</span>
+    </div>
+    <p class="models-foot" data-i18n="models.foot">API Key 保存在浏览器本地存储中，请求直接发往你填写的地址，不经过任何中间服务。</p>
+  </section>
+
+  <!-- ================= INSTALL ================= -->
+  <section class="section wrap" id="install">
+    <div class="section-head">
+      <span class="kicker" data-i18n="install.kicker">GET STARTED</span>
+      <h2 data-i18n="install.title">三步，跑起来</h2>
+      <p data-i18n="install.desc">需要 Node.js 与支持 Side Panel API 的新版 Chrome。</p>
+    </div>
+
+    <div class="install-grid">
+      <div class="install-step">
+        <span class="step-no">01</span>
+        <h3 data-i18n="install.s1t">克隆并构建</h3>
+        <p data-i18n="install.s1p">仓库目前仍沿用 NeonAgent 名称。</p>
+        <div class="code">
+          <div class="code-head"><span>bash</span><button class="copy" data-copy="git clone https://github.com/fredliu168/NeonAgent.git
+cd NeonAgent
+npm install
+npm run build">复制</button></div>
+          <pre><code>git clone https://github.com/fredliu168/NeonAgent.git
+cd NeonAgent
+npm install
+npm run build</code></pre>
+        </div>
+      </div>
+
+      <div class="install-step">
+        <span class="step-no">02</span>
+        <h3 data-i18n="install.s2t">加载扩展</h3>
+        <p data-i18n-html="install.s2p">打开 <code class="inline">chrome://extensions</code>，开启「开发者模式」，点击「加载已解压的扩展程序」，选择构建产物目录。</p>
+        <div class="path-pill">/NeonAgent/dist</div>
+        <p class="hint" data-i18n="install.hint2">首次加载后，点击工具栏图标即可打开侧边栏。</p>
+      </div>
+
+      <div class="install-step">
+        <span class="step-no">03</span>
+        <h3 data-i18n="install.s3t">接入模型</h3>
+        <p data-i18n="install.s3p">在设置页新增供应商，填入 Base URL、API Key 与模型名称，然后在输入框里发出第一个指令。</p>
+        <div class="prompt-card">
+          <span class="prompt-label" data-i18n="install.tryLabel">试试这样说</span>
+          <p data-i18n="install.tryText">“读一下这个页面，把要点整理成三条，存成笔记。”</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="install-cta">
+      <a class="solid-btn" href="https://github.com/fredliu168/NeonAgent#readme" target="_blank" rel="noopener" data-i18n="install.cta1">阅读完整文档 ↗</a>
+      <a class="line-btn" href="https://github.com/fredliu168/NeonAgent" target="_blank" rel="noopener" data-i18n="install.cta2">查看源代码</a>
+    </div>
+  </section>
+
+  <!-- ================= FAQ ================= -->
+  <section class="section wrap" id="faq">
+    <div class="section-head">
+      <span class="kicker" data-i18n="faq.kicker">FAQ</span>
+      <h2 data-i18n="faq.title">你可能想知道</h2>
+    </div>
+    <div class="faq">
+      <details>
+        <summary><span data-i18n="faq.q1">需要什么浏览器？</span><span class="plus">＋</span></summary>
+        <p data-i18n="faq.a1">项目基于 Chrome Side Panel API，需要支持侧边栏的新版 Chrome（或同内核浏览器）。安装方式为「加载已解压的扩展程序」，尚未上架应用商店。</p>
+      </details>
+      <details>
+        <summary><span data-i18n="faq.q2">可以用自己的模型吗？</span><span class="plus">＋</span></summary>
+        <p data-i18n="faq.a2">可以。设置页支持新增任意 OpenAI 兼容接口，内置 Kimi、MiniMax、DeepSeek、火山引擎、硅基流动预设。主模型、翻译模型、Temperature、Max Tokens 与思考强度都可分别调整。</p>
+      </details>
+      <details>
+        <summary><span data-i18n="faq.q3">网页内容会被发到哪里？</span><span class="plus">＋</span></summary>
+        <p data-i18n="faq.a3">只有模型处理所需的页面内容会发送到你自己配置的接口地址。配置、会话、记忆与技能保存在浏览器本地存储中，不经过第三方服务器。请同时了解你所选模型供应商的数据政策。</p>
+      </details>
+      <details>
+        <summary><span data-i18n="faq.q4">它会在我没盯着的时候乱点吗？</span><span class="plus">＋</span></summary>
+        <p data-i18n="faq.a4">每个工具调用都会在侧边栏逐步展示，你可以随时点停止中断。定时任务与自动解题属于需要显式开启的开关，默认关闭。</p>
+      </details>
+      <details>
+        <summary><span data-i18n="faq.q5">和普通的网页 AI 侧边栏有什么区别？</span><span class="plus">＋</span></summary>
+        <p data-i18n="faq.a5">普通的侧边栏只能「说」。omniagent 拥有作用于当前页面的一组工具，能读写 DOM、模拟交互、操作表单，因此可以真的把事情做完，而不是只给出建议。</p>
+      </details>
+    </div>
+  </section>
+
+  <!-- ================= FINAL CTA ================= -->
+  <section class="final wrap">
+    <h2 data-i18n="final.title">把重复的部分交出去</h2>
+    <p data-i18n="final.desc">留下需要判断力的那部分给自己。</p>
+    <div class="cta-row center">
+      <a class="solid-btn" href="#install" data-i18n="final.cta1">开始安装</a>
+      <a class="line-btn" href="https://github.com/fredliu168/NeonAgent" target="_blank" rel="noopener" data-i18n="final.cta2">GitHub ↗</a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-inner">
+    <a class="brand" href="/omniagent/">
+      <span class="brand-mark" aria-hidden="true"><img src="icon-64.png" alt="" width="28" height="28" decoding="async"></span>
+      <span class="brand-name">omniagent</span>
+    </a>
+    <nav aria-label="footer">
+      <a href="#demo" data-i18n="nav.demo">演示</a>
+      <a href="#how" data-i18n="nav.how">工作原理</a>
+      <a href="#features" data-i18n="nav.features">能力</a>
+      <a href="#install" data-i18n="nav.install">安装</a>
+      <a href="https://github.com/fredliu168/NeonAgent" target="_blank" rel="noopener">GitHub</a>
+      <a href="/" data-i18n="foot.back">返回博客</a>
+    </nav>
+    <small>© <span id="year">2026</span> <span data-i18n="foot.copy">omniagent · 个人开源项目，与模型供应商无隶属关系</span></small>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
