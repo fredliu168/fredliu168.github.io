@@ -142,8 +142,7 @@
       <p class="doc-note"><strong>权限的边界：</strong>打开一个页面<strong>不会</strong>自动上传它的内容。<strong>只有当你发起对话、翻译或任务时，相关页面内容才会发送到你配置的接口</strong>；可能在无逐次点击的情况下运行的开关（自动翻译、定时任务、自动解题）默认关闭。开发者不接收这些数据，本项目也没有任何服务端。</p>
 
       <h3>页面行为脚本：常驻注入，但默认休眠</h3>
-      <p>为了让「解除右键限制」这类开关<strong>在你打开的那一刻就能生效</strong>（必须早于页面自身的脚本运行），扩展会在页面加载的最早期向所有页面注入一小段脚本。在开关关闭时（默认状态），它<strong>只注册处于关闭状态的监听器，不改变页面任何行为</strong>；只有你主动打开对应开关，它才接管相关事件。这段脚本服务三项开关：解除右键与复制限制（恢复浏览器默认的右键菜单和复制粘贴）、阻止页面强制全屏、屏蔽常见的开发者工具检测信号。</p>
-      <p>另有一处站点兼容性例外：在 <code>ruankaodaren.com</code> 下会预先屏蔽该网站用于对抗调试的死循环构造，避免页面卡死；这一项不依赖开关，与考试页面支持功能相关。扩展对 <code>wangda.chinamobile.com</code> 的题目接口读取同属站点专属支持。这两处域名都写在扩展的清单文件里，可公开核查。</p>
+      <p>为了让「解除右键限制」这类开关<strong>在你打开的那一刻就能生效</strong>（必须早于页面自身的脚本运行），扩展会在页面加载的最早期向所有页面注入一小段脚本。在开关关闭时（默认状态），它<strong>只注册处于关闭状态的监听器</strong>；只有你主动打开对应开关，它才接管相关事件。这段脚本服务三项开关：解除右键与复制限制（恢复浏览器默认的右键菜单和复制粘贴）、阻止页面强制全屏、屏蔽常见的开发者工具检测信号。</p>
     </section>
 
     <section>
@@ -266,8 +265,7 @@
       <p class="doc-note"><strong>What the permission does not do:</strong> opening a page does <strong>not</strong> upload it. <strong>Page content is sent to your configured endpoint only when you start a conversation, a translation or a task</strong>; the switches that could run without a per-request click (automatic translation, scheduled tasks, auto-solving) are off by default. We never receive that data, and this project has no server of any kind.</p>
 
       <h3>Page-behaviour script: always injected, dormant by default</h3>
-      <p>So that switches such as "unlock right-click" take effect <strong>the moment you turn them on</strong> — which requires running before the page's own scripts — the extension injects a small script into every page at the earliest point of loading. While those switches are off (the default), it <strong>only registers listeners that are switched off and changes no page behaviour</strong>; it takes over the relevant events only after you enable a switch yourself. It serves three switches: unlocking right-click and copy restrictions (restoring the browser's default context menu and copy/paste), preventing a page from forcing fullscreen, and blocking common developer-tools detection signals.</p>
-      <p>There is one site-compatibility exception: on <code>ruankaodaren.com</code> a guard is installed up front that neutralizes the busy-loop construct that site uses against debugging, so the page does not freeze. That one does not depend on a switch and relates to exam-page support. The extension's reading of the question API on <code>wangda.chinamobile.com</code> is likewise site-specific support. Both domains appear in the extension's manifest and can be inspected publicly.</p>
+      <p>So that switches such as "unlock right-click" take effect <strong>the moment you turn them on</strong> — which requires running before the page's own scripts — the extension injects a small script into every page at the earliest point of loading. While those switches are off (the default), it <strong>only registers listeners that are switched off</strong>; it takes over the relevant events only after you enable a switch yourself. It serves three switches: unlocking right-click and copy restrictions (restoring the browser's default context menu and copy/paste), preventing a page from forcing fullscreen, and blocking common developer-tools detection signals.</p>
     </section>
 
     <section>
