@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>iMac如何使用frp实现内网穿透 | 代码与生活</title>
+  <meta name="description" content="有时需要把内网部署的站点映射到外网，让其别人也能访问到，例如做微信相关开发时需要把内网映射到外网，让微信服务器能访问到你的开发环境，方便开发调试。可以使用花生壳或者ngrok，前面这两种我都使用过，花生壳用起来很不稳定，花了钱还不能解决问题，ngrok现在已经很久没更新了，国内的可以在https:&#x2F;&#x2F;www.ngrok.cc 注册，免费用户仅能使用一个转发，由于是使用香港的服务器经常连接不上，最后">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iMac如何使用frp实现内网穿透">
+<meta property="og:url" content="http://fredliu168.github.io/2017/12/19/frp/index.html">
+<meta property="og:site_name" content="代码与生活">
+<meta property="og:description" content="有时需要把内网部署的站点映射到外网，让其别人也能访问到，例如做微信相关开发时需要把内网映射到外网，让微信服务器能访问到你的开发环境，方便开发调试。可以使用花生壳或者ngrok，前面这两种我都使用过，花生壳用起来很不稳定，花了钱还不能解决问题，ngrok现在已经很久没更新了，国内的可以在https:&#x2F;&#x2F;www.ngrok.cc 注册，免费用户仅能使用一个转发，由于是使用香港的服务器经常连接不上，最后">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2017-12-19T07:56:15.000Z">
+<meta property="article:modified_time" content="2026-09-15T02:20:04.153Z">
+<meta property="article:author" content="marsland">
+<meta property="article:tag" content="frp">
+<meta name="twitter:card" content="summary">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://fredliu168.github.io/2017/12/19/frp/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="代码与生活" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+
+<body class="main-center theme-blue" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/fredliu168" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">marsland</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Code &amp; Life</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit"> </button><input type="hidden" name="sitesearch" value="http://fredliu168.github.io"></form>
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-books">
+          <a href="/books">
+            
+            <i class="icon icon-book-fill"></i>
+            
+            <span class="menu-title">书单</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">友链</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/cofess" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>记录代码，也记录生活。</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/">Redis</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/c/">c#</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/iOS/">iOS</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%97%A5%E8%AE%B0/">日记</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/" rel="tag">Redis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Socket/" rel="tag">Socket</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ctf/" rel="tag">ctf</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/frp/" rel="tag">frp</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/h5/" rel="tag">h5</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iMac/" rel="tag">iMac</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/" rel="tag">iOS</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%97%A5%E8%AE%B0/" rel="tag">日记</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A0%91%E8%8E%93%E6%B4%BE/" rel="tag">树莓派</a><span class="tag-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/Redis/" style="font-size: 13px;">Redis</a> <a href="/tags/Socket/" style="font-size: 13px;">Socket</a> <a href="/tags/ctf/" style="font-size: 14px;">ctf</a> <a href="/tags/frp/" style="font-size: 13px;">frp</a> <a href="/tags/h5/" style="font-size: 13px;">h5</a> <a href="/tags/iMac/" style="font-size: 13px;">iMac</a> <a href="/tags/iOS/" style="font-size: 13.33px;">iOS</a> <a href="/tags/%E6%97%A5%E8%AE%B0/" style="font-size: 13.67px;">日记</a> <a href="/tags/%E6%A0%91%E8%8E%93%E6%B4%BE/" style="font-size: 13.33px;">树莓派</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">九月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">四月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">三月 2022</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/02/">二月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">四月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">三月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">五月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">5</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2022/09/09/Navicat-16-for-MySQL-%E4%BF%AE%E6%94%B9%E6%B3%A8%E5%86%8C%E8%A1%A8-%E6%B0%B8%E4%B9%85%E8%AF%95%E7%94%A8/" class="title">Navicat 16 for MySQL 修改注册表 永久试用</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-09-09T09:09:09.000Z" itemprop="datePublished">2022-09-09</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2022/04/14/%E5%AE%89%E5%8D%93%E5%8E%BB%E5%A3%B3%E9%80%86%E5%90%91/" class="title">安卓去壳逆向</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-04-14T02:29:00.000Z" itemprop="datePublished">2022-04-14</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2022/03/24/mac%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E6%9D%83%E9%99%90%E4%B8%BA777/" class="title">mac修改文件权限为777</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-03-24T13:57:02.000Z" itemprop="datePublished">2022-03-24</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2022/03/24/ciphey%E7%9A%84%E4%BD%BF%E7%94%A8/" class="title">ciphey的使用</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-03-24T02:15:14.000Z" itemprop="datePublished">2022-03-24</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2022/03/24/ReverseAdvanced%E8%A7%A3%E9%A2%98/" class="title">ReverseAdvanced解题</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-03-23T16:18:20.000Z" itemprop="datePublished">2022-03-24</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="imac-frp" class="article article-type-imac" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      iMac如何使用frp实现内网穿透
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2017/12/19/frp/" class="article-date">
+	  <time datetime="2017-12-19T07:56:15.000Z" itemprop="datePublished">2017-12-19</time>
+	</a>
+</span>
+        
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/frp/" rel="tag">frp</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2017/12/19/frp/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <p>有时需要把内网部署的站点映射到外网，让其别人也能访问到，例如做微信相关开发时需要把内网映射到外网，让微信服务器能访问到你的开发环境，方便开发调试。可以使用花生壳或者ngrok，前面这两种我都使用过，花生壳用起来很不稳定，花了钱还不能解决问题，ngrok现在已经很久没更新了，国内的可以在<a href="https://www.ngrok.cc/">https://www.ngrok.cc</a> 注册，免费用户仅能使用一个转发，由于是使用香港的服务器经常连接不上，最后狠下心来研究了下内网穿透，发现frp使用起来还可以，本文就介绍在iMac下如何用阿里云用frp做内网穿透，Windows的应该流程也类似。</p>
+<blockquote>
+<p>frp开源地址:<a href="https://github.com/fatedier/frp">https://github.com/fatedier/frp</a></p>
+</blockquote>
+<h3 id="一-服务器配置"><a href="#一-服务器配置" class="headerlink" title="一.服务器配置"></a>一.服务器配置</h3><h5 id="1-使用终端ssh远程连接阿里云服务器"><a href="#1-使用终端ssh远程连接阿里云服务器" class="headerlink" title="1.使用终端ssh远程连接阿里云服务器"></a>1.使用终端ssh远程连接阿里云服务器</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -t root@xxx.xxx.xxx.xxx -p 22</span><br></pre></td></tr></table></figure>
+<p>进入到&#x2F;home目录，创建文件夹</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir frp</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-下载对应的frp发布版本"><a href="#2-下载对应的frp发布版本" class="headerlink" title="2.下载对应的frp发布版本"></a>2.下载对应的frp发布版本</h5><p>先查看服务器型号</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /proc/version</span><br></pre></td></tr></table></figure>
+<p>本人服务器信息:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Linux version 4.4.0-101-generic (buildd@lcy01-amd64-006)  </span><br></pre></td></tr></table></figure>
+<p>下载frp</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo wget  https://github.com/fatedier/frp/releases/download/v0.13.0/frp_0.13.0_linux_amd64.tar.gz</span><br></pre></td></tr></table></figure>
+<p>我的阿里云服务器下载不了frp文件，就先下载文件到本地，然后用ssh远程上传到阿里云服务器。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp -r frp_0.13.0_linux_amd64.tar.gz root@xxx.xxx.xxx.xxx:/home/frp/ </span><br></pre></td></tr></table></figure>
+<h5 id="3-配置frp服务端"><a href="#3-配置frp服务端" class="headerlink" title="3.配置frp服务端"></a>3.配置frp服务端</h5><p>解压到当前目录</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo tar xvf frp_0.13.0_linux_amd64.tar.gz</span><br></pre></td></tr></table></figure>
+<p>解压之后进入目录会看到以下文件</p>
+<span id="more"></span>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># ls</span><br><span class="line">LICENSE  frpc  frpc.ini  frpc_full.ini  frps  frps.ini  frps_full.ini</span><br></pre></td></tr></table></figure>
+<p>打开frps.ini文件，配置成如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">bind_addr = xxx.xxx.xxx.xxx</span><br><span class="line">bind_port = 7000</span><br><span class="line">vhost_http_port = 80</span><br><span class="line">vhost_https_port = 443</span><br><span class="line">dashboard_port = 7500</span><br><span class="line">dashboard_user = 你的仪表盘用户名</span><br><span class="line">dashboard_pwd = 你的仪表盘密码</span><br><span class="line">privilege_token = frp</span><br></pre></td></tr></table></figure>
+<p>其中bind_port是自己设定的frp服务端端口<br>vhost_http_port是自己设定的http访问端口<br>vhost_https_port是自己设定的https访问端口<br>[ssh]部分是ssh反向代理<br>listen_port是自己设定的ssh访问端口<br>custom_domains是自定义域名，如果有自己的域名就写到这里<br>privilege_token是验证凭据，服务端和客户端的凭据必须一样才能连接，当然为了安全还是设置长一点。dashborad的三个配置是仪表盘功能的端口以及用户名和密码，为了安全也要设置的长一点。</p>
+<p>保存上面的配置后，使用以下指令启动frp服务端。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./frps -c ./frps.ini</span><br></pre></td></tr></table></figure>
+<p>查看frps.log然后应该会显示类似下面的文本，说明服务端启动成功</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Start frps success</span><br><span class="line">PrivilegeMode is enabled, you should pay more attention to security issues</span><br></pre></td></tr></table></figure>
+<h3 id="二-客户端配置"><a href="#二-客户端配置" class="headerlink" title="二.客户端配置"></a>二.客户端配置</h3><p>iMac下载对应的frp版本frp_0.13.0_darwin_amd64.tar.gz<br>解压后有对应的文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># ls</span><br><span class="line">LICENSE  frpc  frpc.ini  frpc_full.ini  frps  frps.ini  frps_full.ini</span><br></pre></td></tr></table></figure>
+<p>frpc和frpc.ini、frpc_full.ini 是客户端对应的配置文件<br>我的frpc.ini配置对应如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">[common]</span><br><span class="line">server_addr = xxx.xxx.xxx.xxx</span><br><span class="line">server_port = 7000  </span><br><span class="line"># console or real logFile path like ./frpc.log</span><br><span class="line">log_file = ./frpc.log </span><br><span class="line"># trace, debug, info, warn, error</span><br><span class="line">log_level = trace </span><br><span class="line">log_max_days = 3 </span><br><span class="line"># for authentication</span><br><span class="line">privilege_token = #######</span><br><span class="line"> </span><br><span class="line"># connections will be established in advance, default value is zero</span><br><span class="line">pool_count = 5 </span><br><span class="line"># if tcp stream multiplexing is used, default is true, it must be same with frps</span><br><span class="line">tcp_mux = true </span><br><span class="line"># your proxy name will be changed to &#123;user&#125;.&#123;proxy&#125;</span><br><span class="line">user = qzcool </span><br><span class="line"># decide if exit program when first login failed, otherwise continuous relogin to frps</span><br><span class="line"># default is true</span><br><span class="line">login_fail_exit = true </span><br><span class="line">[weixin]</span><br><span class="line">type = http</span><br><span class="line">local_ip = 127.0.0.1</span><br><span class="line">local_port = 8080</span><br><span class="line">use_encryption = false</span><br><span class="line">use_compression = false </span><br><span class="line">subdomain = weixin</span><br><span class="line">[ssh] # 远程登录ssh</span><br><span class="line">type = tcp</span><br><span class="line">local_port = 22</span><br><span class="line">remote_port = 2222</span><br></pre></td></tr></table></figure>
+<p>server_addr：对应的时阿里云的公网地址<br>server_port：服务端端口<br>privilege_token：token需要和服务端一致<br>最底下是配置站点信息<br>subdomain：子域名，假设服务器配置泛解析，子域名配置weixin，那么可以通过weixin.youdomin.com访问到你内网的8080端口</p>
+<p>启动服务 :</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">macdeiMac:frp_0.13.0_darwin_amd64 fred$ sudo ./frpc -c ./frpc.ini </span><br></pre></td></tr></table></figure>
+<p>然后使用浏览器访问weixin.youdomin.com就能访问到你的站点了。</p>
+<h3 id="三-frp开机启动和后台运行"><a href="#三-frp开机启动和后台运行" class="headerlink" title="三.frp开机启动和后台运行"></a>三.frp开机启动和后台运行</h3><p>使用systemd配置开机自启，适用于 centos7 Ubuntu 16 或 debian 8。<br>vi &#x2F;etc&#x2F;systemd&#x2F;system&#x2F;frps.service 新建此文件，并写入以下内容:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">[Unit]</span><br><span class="line"></span><br><span class="line">Description=frps daemon</span><br><span class="line"></span><br><span class="line">After=syslog.target network.target</span><br><span class="line"></span><br><span class="line">Wants=network.target</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line"></span><br><span class="line">Type=simple</span><br><span class="line"></span><br><span class="line">ExecStart=/root/frp_0.13.0_linux_amd64/frps -c /root/frp_0.13.0_linux_amd64/frps_my.ini</span><br><span class="line"></span><br><span class="line">Restart= always</span><br><span class="line"></span><br><span class="line">RestartSec=1min</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line"></span><br><span class="line">WantedBy=multi-user.target</span><br></pre></td></tr></table></figure>
+<p>启动并设为开机自启。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">systemctl start frps //启动 </span><br><span class="line">systemctl status frps //状态查询 </span><br><span class="line">systemctl enable frps //开机启动</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://fredliu168.github.io/2017/12/19/frp/" title="iMac如何使用frp实现内网穿透" target="_blank" rel="external">http://fredliu168.github.io/2017/12/19/frp/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/fredliu168" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/fredliu168" target="_blank"><span class="text-dark">marsland</span><small class="ml-1x">Code &amp; Life</small></a></h3>
+        <div>略懂一点编程，随手记录代码与生活。</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2019/10/30/%E6%8D%A2%E4%BA%86Prontera%E9%A3%8E%E6%A0%BC/" title="换了Prontera风格"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2017/08/17/csharp-connect-timeout/" title="c# 判断远程服务器端口是否可以连接 超时设置"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  
+  <div class="bar-right">
+    
+  </div>
+  </div>
+</nav>
+  
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/cofess" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+
+
+
+
+
+
+</body>
+</html>

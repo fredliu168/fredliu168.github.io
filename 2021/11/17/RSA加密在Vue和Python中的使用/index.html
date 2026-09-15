@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>RSA加密在Vue和Python中的使用 | 代码与生活</title>
+  <meta name="description" content="一.Python下使用RSA安装rsa包 pip install rsa 使用在线网站生成RSA公钥和匙钥 http:&#x2F;&#x2F;www.metools.info&#x2F;code&#x2F;c80.html 密钥格式使用PKCS#1 RsaUtil.py代码 1234567891011121314151617181920212223242526272829303132333435363738394041424344454">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RSA加密在Vue和Python中的使用">
+<meta property="og:url" content="http://fredliu168.github.io/2021/11/17/RSA%E5%8A%A0%E5%AF%86%E5%9C%A8Vue%E5%92%8CPython%E4%B8%AD%E7%9A%84%E4%BD%BF%E7%94%A8/index.html">
+<meta property="og:site_name" content="代码与生活">
+<meta property="og:description" content="一.Python下使用RSA安装rsa包 pip install rsa 使用在线网站生成RSA公钥和匙钥 http:&#x2F;&#x2F;www.metools.info&#x2F;code&#x2F;c80.html 密钥格式使用PKCS#1 RsaUtil.py代码 1234567891011121314151617181920212223242526272829303132333435363738394041424344454">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-11-17T03:08:14.000Z">
+<meta property="article:modified_time" content="2026-09-15T02:20:04.150Z">
+<meta property="article:author" content="marsland">
+<meta name="twitter:card" content="summary">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://fredliu168.github.io/2021/11/17/RSA%E5%8A%A0%E5%AF%86%E5%9C%A8Vue%E5%92%8CPython%E4%B8%AD%E7%9A%84%E4%BD%BF%E7%94%A8/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="代码与生活" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+
+<body class="main-center theme-blue" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/fredliu168" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">marsland</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Code &amp; Life</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit"> </button><input type="hidden" name="sitesearch" value="http://fredliu168.github.io"></form>
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-books">
+          <a href="/books">
+            
+            <i class="icon icon-book-fill"></i>
+            
+            <span class="menu-title">书单</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">友链</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/cofess" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>记录代码，也记录生活。</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/">Redis</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/c/">c#</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/iOS/">iOS</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%97%A5%E8%AE%B0/">日记</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/" rel="tag">Redis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Socket/" rel="tag">Socket</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ctf/" rel="tag">ctf</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/frp/" rel="tag">frp</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/h5/" rel="tag">h5</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iMac/" rel="tag">iMac</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/" rel="tag">iOS</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%97%A5%E8%AE%B0/" rel="tag">日记</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A0%91%E8%8E%93%E6%B4%BE/" rel="tag">树莓派</a><span class="tag-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/Redis/" style="font-size: 13px;">Redis</a> <a href="/tags/Socket/" style="font-size: 13px;">Socket</a> <a href="/tags/ctf/" style="font-size: 14px;">ctf</a> <a href="/tags/frp/" style="font-size: 13px;">frp</a> <a href="/tags/h5/" style="font-size: 13px;">h5</a> <a href="/tags/iMac/" style="font-size: 13px;">iMac</a> <a href="/tags/iOS/" style="font-size: 13.33px;">iOS</a> <a href="/tags/%E6%97%A5%E8%AE%B0/" style="font-size: 13.67px;">日记</a> <a href="/tags/%E6%A0%91%E8%8E%93%E6%B4%BE/" style="font-size: 13.33px;">树莓派</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">九月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">四月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">三月 2022</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/02/">二月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">四月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">三月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">五月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">5</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2022/09/09/Navicat-16-for-MySQL-%E4%BF%AE%E6%94%B9%E6%B3%A8%E5%86%8C%E8%A1%A8-%E6%B0%B8%E4%B9%85%E8%AF%95%E7%94%A8/" class="title">Navicat 16 for MySQL 修改注册表 永久试用</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-09-09T09:09:09.000Z" itemprop="datePublished">2022-09-09</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2022/04/14/%E5%AE%89%E5%8D%93%E5%8E%BB%E5%A3%B3%E9%80%86%E5%90%91/" class="title">安卓去壳逆向</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-04-14T02:29:00.000Z" itemprop="datePublished">2022-04-14</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2022/03/24/mac%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E6%9D%83%E9%99%90%E4%B8%BA777/" class="title">mac修改文件权限为777</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-03-24T13:57:02.000Z" itemprop="datePublished">2022-03-24</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2022/03/24/ciphey%E7%9A%84%E4%BD%BF%E7%94%A8/" class="title">ciphey的使用</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-03-24T02:15:14.000Z" itemprop="datePublished">2022-03-24</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2022/03/24/ReverseAdvanced%E8%A7%A3%E9%A2%98/" class="title">ReverseAdvanced解题</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-03-23T16:18:20.000Z" itemprop="datePublished">2022-03-24</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-RSA加密在Vue和Python中的使用" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      RSA加密在Vue和Python中的使用
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2021/11/17/RSA%E5%8A%A0%E5%AF%86%E5%9C%A8Vue%E5%92%8CPython%E4%B8%AD%E7%9A%84%E4%BD%BF%E7%94%A8/" class="article-date">
+	  <time datetime="2021-11-17T03:08:14.000Z" itemprop="datePublished">2021-11-17</time>
+	</a>
+</span>
+        
+        
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2021/11/17/RSA%E5%8A%A0%E5%AF%86%E5%9C%A8Vue%E5%92%8CPython%E4%B8%AD%E7%9A%84%E4%BD%BF%E7%94%A8/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h2 id="一-Python下使用RSA"><a href="#一-Python下使用RSA" class="headerlink" title="一.Python下使用RSA"></a>一.Python下使用RSA</h2><p>安装rsa包</p>
+<p><code>pip install rsa</code></p>
+<p>使用在线网站生成RSA公钥和匙钥</p>
+<p><a href="http://www.metools.info/code/c80.html">http://www.metools.info/code/c80.html</a></p>
+<p>密钥格式使用PKCS#1</p>
+<p>RsaUtil.py代码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: UTF-8 -*-</span></span><br><span class="line"><span class="comment"># ! /usr/bin/env python</span></span><br><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"><span class="keyword">import</span> rsa</span><br><span class="line"><span class="keyword">from</span> rsa <span class="keyword">import</span> common</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用 rsa库进行RSA签名和加解密</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">RsaUtil</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 初始化key</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line"></span><br><span class="line">        <span class="variable language_">self</span>.company_public_key = rsa.PublicKey.load_pkcs1(<span class="string">&quot;&quot;&quot;-----BEGIN RSA PUBLIC KEY-----\n</span></span><br><span class="line"><span class="string">MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvYXgihiiYlfPVEnEyqoR</span></span><br><span class="line"><span class="string">Vba7m5pD3Us2Nv7BDRBKyP7wMNX5egRwl9h++4HaRzVnTz8uYIXr1S27gNNbuyNn</span></span><br><span class="line"><span class="string">TtNSx9KnUBctyRTMFRVAWt68xTzT0UGsM3GKhYWU+H+b0q3pmu+xVZ0Q3xzGIiHO</span></span><br><span class="line"><span class="string">edFCZkSfbvttcEq4CbkYxZRySCgsQWfPuetWKMKWw+9D8rNVJBkvB1/6yh325fJq</span></span><br><span class="line"><span class="string">1LLcPlA4/Oc0A5Zbd5iKPpAVrdQRsLe3q12pbC0VTekxPWsPYcafhEnJVI3xWwne</span></span><br><span class="line"><span class="string">41WExxiAwo8iGB7gONkO0YsQXCYRb/aQTFQ3tmms/Vho2CUVLAyzByyMj7jMGwEl</span></span><br><span class="line"><span class="string">1QIDAQAB\n</span></span><br><span class="line"><span class="string">-----END RSA PUBLIC KEY-----</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span>)</span><br><span class="line"></span><br><span class="line">        <span class="variable language_">self</span>.company_private_key = rsa.PrivateKey.load_pkcs1(<span class="string">&quot;&quot;&quot;-----BEGIN RSA PRIVATE KEY-----\n</span></span><br><span class="line"><span class="string">MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC9heCKGKJiV89U</span></span><br><span class="line"><span class="string">ScTKqhFVtrubmkPdSzY2/sENEErI/vAw1fl6BHCX2H77gdpHNWdPPy5ghevVLbuA</span></span><br><span class="line"><span class="string">01u7I2dO01LH0qdQFy3JFMwVFUBa3rzFPNPRQawzcYqFhZT4f5vSrema77FVnRDf</span></span><br><span class="line"><span class="string">HMYiIc550UJmRJ9u+21wSrgJuRjFlHJIKCxBZ8+561YowpbD70Pys1UkGS8HX/rK</span></span><br><span class="line"><span class="string">Hfbl8mrUstw+UDj85zQDllt3mIo+kBWt1BGwt7erXalsLRVN6TE9aw9hxp+ESclU</span></span><br><span class="line"><span class="string">jfFbCd7jVYTHGIDCjyIYHuA42Q7RixBcJhFv9pBMVDe2aaz9WGjYJRUsDLMHLIyP</span></span><br><span class="line"><span class="string">uMwbASXVAgMBAAECggEAFLnST2fYQkb2DnKuybcFhEkihSa+qzGxcRw1Ane4pfhz</span></span><br><span class="line"><span class="string">TfPof3aC1ahAYsLVmxn0/U6chMPAgaSpr7Htgy6g+pbTo7SexXxzbl0O4HNdgVKA</span></span><br><span class="line"><span class="string">dFVtmKHE8i9FhcqQ+wgBg22vcVkrHIC7upqL9GmcCehfiY2RnfJzCmexbqbGVbzw</span></span><br><span class="line"><span class="string">vcllb7lYkEoQaDrZ15+qFS7HQCwjL6lpc9KRwTo+sfQV/udceent0FTRkfqpuDN4</span></span><br><span class="line"><span class="string">sQws2alzRkRGuvJqCt7OF1aDVijPVbjZVXu2bnrLhpDeD+sjMZg88dxguiPoojfk</span></span><br><span class="line"><span class="string">WjUVVkpdB5KHZqCmyycBGrcw/bjnzOvvNFvBgw00wQKBgQD0iieqxvwc2I9+RqUD</span></span><br><span class="line"><span class="string">MD7/3HIL6swuwZinCrZAhhmy8eLxmiXOVk+mxyS0WgckwBpyAf5GPxFVXu2PKo5N</span></span><br><span class="line"><span class="string">Nc2kTRrrQECggRccMmr0gVgbxtaCJ6HHcVaW+wLnMYjtOAWDtIYoxzcN0n0cyF73</span></span><br><span class="line"><span class="string">AqsignLPKsnWeErrPHpxgrHWxQKBgQDGZ6ng6nGwduSWZjtdH7CiNnFrjUNO7v7C</span></span><br><span class="line"><span class="string">ZcjiR9fdIlQv1HIFKZiGnmY55KipFGb2aguFJ3xqhi0hCPbdn2rrjdA997oFfpDU</span></span><br><span class="line"><span class="string">jji1QxgGtwoUIgvZC6j36Tu97i394DogK/wUsAum1yeeDLkKpBCZ0hiVe78J7YLc</span></span><br><span class="line"><span class="string">yYwVaeKD0QKBgQDJD/Lvgq52FUVeYT158qhJ/Xoz/Dkn1HvsFG2nfdsRe7rKRaEC</span></span><br><span class="line"><span class="string">F4tkKGcwdrla6SyVQrhMD7zzwZp31ViteSh9B/yzIuBAWAOlZnr0UIkeRY3H9Egb</span></span><br><span class="line"><span class="string">UUAN4ZMQfnUD/sTh9oM8chf9IG1IRiN221XUiQdW+Op9keifo9lVDU2ltQKBgGLY</span></span><br><span class="line"><span class="string">xLcMtqWPJmWT+2Fy52J5s1o9H9qUkZIyebnaxz4h20WVF1VhGt9+zTlspWbPhlig</span></span><br><span class="line"><span class="string">DqtBN+gufw9lUvCpevBuT+B/qksQeoGbdb9A9RhrWvca20JAX+dbaOtAXeONMghT</span></span><br><span class="line"><span class="string">QZzg9H0j1lYUyp/1i1vHY34eD9iXX0o2k7cbcMHxAoGBAJsDR0YcqOXLHsBRvOR4</span></span><br><span class="line"><span class="string">/OLdViw61DSuyvmYcuBLUE0TYsysJfq/bXDiF8ttxMu0S2XMXzTuILM8VaucteWM</span></span><br><span class="line"><span class="string">hM5f+Dci1o1Lp1C1oftLnl/VkG3so1ck0kTe2fqK5HdKE8iFrfPqkA+gFyJT6mx4</span></span><br><span class="line"><span class="string">raQC/GelBXiDOaDVf/lLYDwq\n</span></span><br><span class="line"><span class="string">-----END RSA PRIVATE KEY-----</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">get_max_length</span>(<span class="params">self, rsa_key, encrypt=<span class="literal">True</span></span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;加密内容过长时 需要分段加密 换算每一段的长度.</span></span><br><span class="line"><span class="string">            :param rsa_key: 钥匙.</span></span><br><span class="line"><span class="string">            :param encrypt: 是否是加密.</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        blocksize = common.byte_size(rsa_key.n)</span><br><span class="line">        reserve_size = <span class="number">11</span>  <span class="comment"># 预留位为11</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> encrypt:  <span class="comment"># 解密时不需要考虑预留位</span></span><br><span class="line">            reserve_size = <span class="number">0</span></span><br><span class="line">        maxlength = blocksize - reserve_size</span><br><span class="line">        <span class="keyword">return</span> maxlength</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 加密 支付方公钥</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">encrypt_by_public_key</span>(<span class="params">self, message</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;使用公钥加密.</span></span><br><span class="line"><span class="string">            :param message: 需要加密的内容.</span></span><br><span class="line"><span class="string">            加密之后需要对接过进行base64转码</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        encrypt_result = <span class="string">b&#x27;&#x27;</span></span><br><span class="line">        max_length = <span class="variable language_">self</span>.get_max_length(<span class="variable language_">self</span>.company_public_key)</span><br><span class="line">        <span class="keyword">while</span> message:</span><br><span class="line">            <span class="built_in">input</span> = message[:max_length]</span><br><span class="line">            message = message[max_length:]</span><br><span class="line">            out = rsa.encrypt(<span class="built_in">input</span>.encode(), <span class="variable language_">self</span>.company_public_key)</span><br><span class="line">            <span class="comment">#print(out)</span></span><br><span class="line">            encrypt_result += out</span><br><span class="line">            <span class="comment"># print(encrypt_result)</span></span><br><span class="line">        encrypt_result = base64.b64encode(encrypt_result)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> encrypt_result</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">decrypt_by_private_key</span>(<span class="params">self, message</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;使用私钥解密.</span></span><br><span class="line"><span class="string">            :param message: 需要加密的内容.</span></span><br><span class="line"><span class="string">            解密之后的内容直接是字符串，不需要在进行转义</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        decrypt_result = <span class="string">b&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">        max_length = <span class="variable language_">self</span>.get_max_length(<span class="variable language_">self</span>.company_private_key, <span class="literal">False</span>)</span><br><span class="line">        decrypt_message = base64.b64decode(message)</span><br><span class="line">        <span class="keyword">while</span> decrypt_message:</span><br><span class="line">            <span class="built_in">input</span> = decrypt_message[:max_length]</span><br><span class="line">            decrypt_message = decrypt_message[max_length:]</span><br><span class="line">            out = rsa.decrypt(<span class="built_in">input</span>, <span class="variable language_">self</span>.company_private_key)</span><br><span class="line">            decrypt_result += out</span><br><span class="line">        <span class="keyword">return</span> decrypt_result</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 签名 商户私钥 base64转码</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">sign_by_private_key</span>(<span class="params">self, data</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;私钥签名.</span></span><br><span class="line"><span class="string">            :param data: 需要签名的内容.</span></span><br><span class="line"><span class="string">            使用SHA-1 方法进行签名（也可以使用MD5）</span></span><br><span class="line"><span class="string">            签名之后，需要转义后输出</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        signature = rsa.sign(<span class="built_in">str</span>(data), priv_key=<span class="variable language_">self</span>.company_private_key, <span class="built_in">hash</span>=<span class="string">&#x27;SHA-1&#x27;</span>)</span><br><span class="line">        <span class="keyword">return</span> base64.b64encode(signature)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">verify_by_public_key</span>(<span class="params">self, message, signature</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;公钥验签.</span></span><br><span class="line"><span class="string">            :param message: 验签的内容.</span></span><br><span class="line"><span class="string">            :param signature: 对验签内容签名的值（签名之后，会进行b64encode转码，所以验签前也需转码）.</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        signature = base64.b64decode(signature)</span><br><span class="line">        <span class="keyword">return</span> rsa.verify(message, signature, <span class="variable language_">self</span>.company_public_key)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    message = <span class="string">&#x27;hell world&#x27;</span></span><br><span class="line">    <span class="comment"># print(&quot;明文内容：&gt;&gt;&gt; &quot;)</span></span><br><span class="line">    <span class="comment"># print(message)</span></span><br><span class="line">    rsaUtil = RsaUtil()</span><br><span class="line">    encrypy_result = rsaUtil.encrypt_by_public_key(message)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;加密结果：&gt;&gt;&gt; &quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(encrypy_result.decode())</span><br><span class="line"></span><br><span class="line">    decrypt_result = rsaUtil.decrypt_by_private_key(encrypy_result)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;解密结果：&gt;&gt;&gt; &quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(decrypt_result.decode())</span><br><span class="line"></span><br><span class="line">    <span class="comment"># key = rsa.newkeys(1024)#生成随机秘钥</span></span><br><span class="line">    <span class="comment"># privateKey = key[1]#私钥</span></span><br><span class="line">    <span class="comment"># publicKey = key[0]#公钥</span></span><br><span class="line">    <span class="comment"># print(publicKey)</span></span><br><span class="line">    <span class="comment"># print(privateKey)</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="二-Vue下使用RSA"><a href="#二-Vue下使用RSA" class="headerlink" title="二.Vue下使用RSA"></a>二.Vue下使用RSA</h2><h3 id="1-现在vue项目中安装依赖包jsencrypt"><a href="#1-现在vue项目中安装依赖包jsencrypt" class="headerlink" title="1.现在vue项目中安装依赖包jsencrypt"></a>1.现在<a href="https://so.csdn.net/so/search?from=pc_blog_highlight&q=vue">vue</a>项目中安装依赖包<strong>jsencrypt</strong></h3><p><code>npm install jsencrypt --save-dev</code></p>
+<h3 id="2-使用rsa加解密过程中会出现待加密和待解密字符串过长情况，需要用到分段加解密需要进入依赖包中修改jsencrypt-js-文件中方法，具体方法如下："><a href="#2-使用rsa加解密过程中会出现待加密和待解密字符串过长情况，需要用到分段加解密需要进入依赖包中修改jsencrypt-js-文件中方法，具体方法如下：" class="headerlink" title="2.使用rsa加解密过程中会出现待加密和待解密字符串过长情况，需要用到分段加解密需要进入依赖包中修改jsencrypt.js 文件中方法，具体方法如下："></a>2.使用rsa加解密过程中会出现待加密和待解密字符串过长情况，需要用到分段加解密需要进入依赖包中修改jsencrypt.js 文件中方法，具体方法如下：</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//任意长度RSA Key分段加密解密长字符串</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//获取RSA key 长度</span></span><br><span class="line">    <span class="title class_">JSEncrypt</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">getkeylength</span> = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> ((<span class="variable language_">this</span>.<span class="property">key</span>.<span class="property">n</span>.<span class="title function_">bitLength</span>() + <span class="number">7</span>) &gt;&gt; <span class="number">3</span>);</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 分段加密，支持中文</span></span><br><span class="line">    <span class="title class_">JSEncrypt</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">encryptUnicodeLong</span> = <span class="keyword">function</span>(<span class="params">string</span>) &#123;</span><br><span class="line">        <span class="keyword">var</span> k = <span class="variable language_">this</span>.<span class="title function_">getKey</span>();</span><br><span class="line">        <span class="comment">//根据key所能编码的最大长度来定分段长度。key size - 11：11字节随机padding使每次加密结果都不同。</span></span><br><span class="line">        <span class="keyword">var</span> maxLength = ((k.<span class="property">n</span>.<span class="title function_">bitLength</span>() + <span class="number">7</span>) &gt;&gt; <span class="number">3</span>) - <span class="number">11</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">var</span> subStr = <span class="string">&quot;&quot;</span>,</span><br><span class="line">                encryptedString = <span class="string">&quot;&quot;</span>;</span><br><span class="line">            <span class="keyword">var</span> subStart = <span class="number">0</span>,</span><br><span class="line">                subEnd = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">var</span> bitLen = <span class="number">0</span>,</span><br><span class="line">                tmpPoint = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>, len = string.<span class="property">length</span>; i &lt; len; i++) &#123;</span><br><span class="line">                <span class="comment">//js 是使用 Unicode 编码的，每个字符所占用的字节数不同</span></span><br><span class="line">                <span class="keyword">var</span> charCode = string.<span class="title function_">charCodeAt</span>(i);</span><br><span class="line">                <span class="keyword">if</span> (charCode &lt;= <span class="number">0x007f</span>) &#123;</span><br><span class="line">                    bitLen += <span class="number">1</span>;</span><br><span class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> (charCode &lt;= <span class="number">0x07ff</span>) &#123;</span><br><span class="line">                    bitLen += <span class="number">2</span>;</span><br><span class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> (charCode &lt;= <span class="number">0xffff</span>) &#123;</span><br><span class="line">                    bitLen += <span class="number">3</span>;</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    bitLen += <span class="number">4</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="comment">//字节数到达上限，获取子字符串加密并追加到总字符串后。更新下一个字符串起始位置及字节计算。</span></span><br><span class="line">                <span class="keyword">if</span> (bitLen &gt; maxLength) &#123;</span><br><span class="line">                    subStr = string.<span class="title function_">substring</span>(subStart, subEnd)</span><br><span class="line">                    encryptedString += k.<span class="title function_">encrypt</span>(subStr);</span><br><span class="line">                    subStart = subEnd;</span><br><span class="line">                    bitLen = bitLen - tmpPoint;</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    subEnd = i;</span><br><span class="line">                    tmpPoint = bitLen;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            subStr = string.<span class="title function_">substring</span>(subStart, len)</span><br><span class="line">            encryptedString += k.<span class="title function_">encrypt</span>(subStr);</span><br><span class="line">            <span class="keyword">return</span> <span class="title function_">hex2b64</span>(encryptedString);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (ex) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 分段解密，支持中文</span></span><br><span class="line">    <span class="title class_">JSEncrypt</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">decryptUnicodeLong</span> = <span class="keyword">function</span>(<span class="params">string</span>) &#123;</span><br><span class="line">        <span class="keyword">var</span> k = <span class="variable language_">this</span>.<span class="title function_">getKey</span>();</span><br><span class="line">        <span class="comment">//解密长度=key size.hex2b64结果是每字节每两字符，所以直接*2</span></span><br><span class="line">        <span class="keyword">var</span> maxLength = ((k.<span class="property">n</span>.<span class="title function_">bitLength</span>() + <span class="number">7</span>) &gt;&gt; <span class="number">3</span>) * <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">var</span> hexString = <span class="title function_">b64tohex</span>(string);</span><br><span class="line">            <span class="keyword">var</span> decryptedString = <span class="string">&quot;&quot;</span>;</span><br><span class="line">            <span class="keyword">var</span> rexStr = <span class="string">&quot;.&#123;1,&quot;</span> + maxLength + <span class="string">&quot;&#125;&quot;</span>;</span><br><span class="line">            <span class="keyword">var</span> rex = <span class="keyword">new</span> <span class="title class_">RegExp</span>(rexStr, <span class="string">&#x27;g&#x27;</span>);</span><br><span class="line">            <span class="keyword">var</span> subStrArray = hexString.<span class="title function_">match</span>(rex);</span><br><span class="line">            <span class="keyword">if</span> (subStrArray) &#123;</span><br><span class="line">                subStrArray.<span class="title function_">forEach</span>(<span class="keyword">function</span>(<span class="params">entry</span>) &#123;</span><br><span class="line">                    decryptedString += k.<span class="title function_">decrypt</span>(entry);</span><br><span class="line">                &#125;);</span><br><span class="line">                <span class="keyword">return</span> decryptedString;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (ex) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="3-main-js中引用依赖"><a href="#3-main-js中引用依赖" class="headerlink" title="3.main.js中引用依赖"></a>3.main.js中引用依赖</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">JSEncrypt</span> <span class="keyword">from</span> <span class="string">&#x27;jsencrypt&#x27;</span>;</span><br><span class="line"><span class="comment">/* eslint-disable */</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> privKey = <span class="string">`-----BEGIN RSA PRIVATE KEY-----</span></span><br><span class="line"><span class="string">..............</span></span><br><span class="line"><span class="string">-----END RSA PRIVATE KEY-----`</span>; <span class="comment">// ES6 模板字符串 引用 rsa 公钥</span></span><br><span class="line"></span><br><span class="line"><span class="title class_">Vue</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">$getRsaDescrypt</span> = <span class="keyword">function</span>(<span class="params">str</span>) &#123; <span class="comment">// 注册方法</span></span><br><span class="line">    <span class="keyword">let</span> encryptStr = <span class="keyword">new</span> <span class="title class_">JSEncrypt</span>();</span><br><span class="line">    encryptStr.<span class="title function_">setPrivateKey</span>(privKey);</span><br><span class="line">    <span class="keyword">let</span> data = encryptStr.<span class="title function_">decryptUnicodeLong</span>(str); <span class="comment">//解密</span></span><br><span class="line">    <span class="keyword">return</span> data;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title class_">Vue</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">$getRsaEncrypt</span> = <span class="keyword">function</span>(<span class="params">str</span>) &#123; <span class="comment">// 注册方法</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> encryptStr = <span class="keyword">new</span> <span class="title class_">JSEncrypt</span>();</span><br><span class="line">    encryptStr.<span class="title function_">setPrivateKey</span>(privKey);</span><br><span class="line">    <span class="keyword">let</span> data = encryptStr.<span class="title function_">encryptUnicodeLong</span>(str); <span class="comment">//加密</span></span><br><span class="line">    <span class="keyword">return</span> data;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="4、使用RSA"><a href="#4、使用RSA" class="headerlink" title="4、使用RSA"></a>4、使用RSA</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">this</span>.$getRsaEncrypt(<span class="string">&#x27;需要加密内容&#x27;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://fredliu168.github.io/2021/11/17/RSA%E5%8A%A0%E5%AF%86%E5%9C%A8Vue%E5%92%8CPython%E4%B8%AD%E7%9A%84%E4%BD%BF%E7%94%A8/" title="RSA加密在Vue和Python中的使用" target="_blank" rel="external">http://fredliu168.github.io/2021/11/17/RSA加密在Vue和Python中的使用/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/fredliu168" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/fredliu168" target="_blank"><span class="text-dark">marsland</span><small class="ml-1x">Code &amp; Life</small></a></h3>
+        <div>略懂一点编程，随手记录代码与生活。</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2022/02/24/Mac%E4%BD%BF%E7%94%A8WireShark%E5%92%8CEttercap%E6%8A%93%E5%90%8C%E4%B8%80%E5%B1%80%E5%9F%9F%E7%BD%91%E8%AE%BE%E5%A4%87%E6%95%B0%E6%8D%AE%E5%8C%85/" title="Mac使用WireShark和Ettercap抓同一局域网设备数据包"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2021/10/21/nginx%E5%AE%89%E5%85%A8%E9%85%8D%E7%BD%AE/" title="nginx安全配置"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  
+  <div class="bar-right">
+    
+  </div>
+  </div>
+</nav>
+  
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/cofess" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+
+
+
+
+
+
+</body>
+</html>

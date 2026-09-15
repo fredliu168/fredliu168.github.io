@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>显示来自远程JSON文件的SwiftUI列表 | 代码与生活</title>
+  <meta name="description" content="Displaying a List with SwiftUI from a remote JSON file 显示来自远程 JSON 文件的 SwiftUI 列表 The purpose of this tutorial is to show a simple way to fetch data from a remote JSON file and display it on a List in">
+<meta property="og:type" content="article">
+<meta property="og:title" content="显示来自远程JSON文件的SwiftUI列表">
+<meta property="og:url" content="http://fredliu168.github.io/2020/05/07/%E6%98%BE%E7%A4%BA%E6%9D%A5%E8%87%AA%E8%BF%9C%E7%A8%8BJSON%E6%96%87%E4%BB%B6%E7%9A%84SwiftUI%E5%88%97%E8%A1%A8/index.html">
+<meta property="og:site_name" content="代码与生活">
+<meta property="og:description" content="Displaying a List with SwiftUI from a remote JSON file 显示来自远程 JSON 文件的 SwiftUI 列表 The purpose of this tutorial is to show a simple way to fetch data from a remote JSON file and display it on a List in">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://fredliu168.github.io/2020/05/07/%E6%98%BE%E7%A4%BA%E6%9D%A5%E8%87%AA%E8%BF%9C%E7%A8%8BJSON%E6%96%87%E4%BB%B6%E7%9A%84SwiftUI%E5%88%97%E8%A1%A8/swift_list.png">
+<meta property="article:published_time" content="2020-05-07T02:01:40.000Z">
+<meta property="article:modified_time" content="2026-09-15T02:20:04.172Z">
+<meta property="article:author" content="marsland">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://fredliu168.github.io/2020/05/07/%E6%98%BE%E7%A4%BA%E6%9D%A5%E8%87%AA%E8%BF%9C%E7%A8%8BJSON%E6%96%87%E4%BB%B6%E7%9A%84SwiftUI%E5%88%97%E8%A1%A8/swift_list.png">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://fredliu168.github.io/2020/05/07/%E6%98%BE%E7%A4%BA%E6%9D%A5%E8%87%AA%E8%BF%9C%E7%A8%8BJSON%E6%96%87%E4%BB%B6%E7%9A%84SwiftUI%E5%88%97%E8%A1%A8/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="代码与生活" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+
+<body class="main-center theme-blue" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/fredliu168" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">marsland</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Code &amp; Life</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit"> </button><input type="hidden" name="sitesearch" value="http://fredliu168.github.io"></form>
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-books">
+          <a href="/books">
+            
+            <i class="icon icon-book-fill"></i>
+            
+            <span class="menu-title">书单</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">友链</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/cofess" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>记录代码，也记录生活。</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Redis/">Redis</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/c/">c#</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/iOS/">iOS</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%97%A5%E8%AE%B0/">日记</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Redis/" rel="tag">Redis</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Socket/" rel="tag">Socket</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ctf/" rel="tag">ctf</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/frp/" rel="tag">frp</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/h5/" rel="tag">h5</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iMac/" rel="tag">iMac</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/" rel="tag">iOS</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%97%A5%E8%AE%B0/" rel="tag">日记</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%A0%91%E8%8E%93%E6%B4%BE/" rel="tag">树莓派</a><span class="tag-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/Redis/" style="font-size: 13px;">Redis</a> <a href="/tags/Socket/" style="font-size: 13px;">Socket</a> <a href="/tags/ctf/" style="font-size: 14px;">ctf</a> <a href="/tags/frp/" style="font-size: 13px;">frp</a> <a href="/tags/h5/" style="font-size: 13px;">h5</a> <a href="/tags/iMac/" style="font-size: 13px;">iMac</a> <a href="/tags/iOS/" style="font-size: 13.33px;">iOS</a> <a href="/tags/%E6%97%A5%E8%AE%B0/" style="font-size: 13.67px;">日记</a> <a href="/tags/%E6%A0%91%E8%8E%93%E6%B4%BE/" style="font-size: 13.33px;">树莓派</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">九月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">四月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">三月 2022</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/02/">二月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">四月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">三月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">八月 2020</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">六月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">五月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/04/">四月 2020</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/03/">三月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/01/">一月 2020</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">十二月 2019</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">十一月 2019</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">十月 2019</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">八月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a><span class="archive-list-count">5</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2022/09/09/Navicat-16-for-MySQL-%E4%BF%AE%E6%94%B9%E6%B3%A8%E5%86%8C%E8%A1%A8-%E6%B0%B8%E4%B9%85%E8%AF%95%E7%94%A8/" class="title">Navicat 16 for MySQL 修改注册表 永久试用</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-09-09T09:09:09.000Z" itemprop="datePublished">2022-09-09</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2022/04/14/%E5%AE%89%E5%8D%93%E5%8E%BB%E5%A3%B3%E9%80%86%E5%90%91/" class="title">安卓去壳逆向</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-04-14T02:29:00.000Z" itemprop="datePublished">2022-04-14</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2022/03/24/mac%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E6%9D%83%E9%99%90%E4%B8%BA777/" class="title">mac修改文件权限为777</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-03-24T13:57:02.000Z" itemprop="datePublished">2022-03-24</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2022/03/24/ciphey%E7%9A%84%E4%BD%BF%E7%94%A8/" class="title">ciphey的使用</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-03-24T02:15:14.000Z" itemprop="datePublished">2022-03-24</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2022/03/24/ReverseAdvanced%E8%A7%A3%E9%A2%98/" class="title">ReverseAdvanced解题</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2022-03-23T16:18:20.000Z" itemprop="datePublished">2022-03-24</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-显示来自远程JSON文件的SwiftUI列表" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      显示来自远程JSON文件的SwiftUI列表
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2020/05/07/%E6%98%BE%E7%A4%BA%E6%9D%A5%E8%87%AA%E8%BF%9C%E7%A8%8BJSON%E6%96%87%E4%BB%B6%E7%9A%84SwiftUI%E5%88%97%E8%A1%A8/" class="article-date">
+	  <time datetime="2020-05-07T02:01:40.000Z" itemprop="datePublished">2020-05-07</time>
+	</a>
+</span>
+        
+        
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2020/05/07/%E6%98%BE%E7%A4%BA%E6%9D%A5%E8%87%AA%E8%BF%9C%E7%A8%8BJSON%E6%96%87%E4%BB%B6%E7%9A%84SwiftUI%E5%88%97%E8%A1%A8/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <p>Displaying a List with SwiftUI from a remote JSON file</p>
+<p>显示来自远程 JSON 文件的 SwiftUI 列表</p>
+<p>The purpose of this tutorial is to show a simple way to fetch data from a remote JSON file and display it on a List in SwiftUI. Apple has a tutorial with a local file, also this one teaches you how to do this, however I want to show a simpler way using a newer version of Xcode 11.0 (11A420a).</p>
+<p>本教程的目的是展示一种从远程 JSON 文件中获取数据并将其显示在 SwiftUI 的 List 中的简单方法。 苹果有一个本地文件的教程，也教你如何做到这一点，但我想显示一个更简单的方式使用新版本的 Xcode 11.0(11A420a)。</p>
+<p>Apple beta libraries are getting constantly changed before releasing the final versions, so older tutorials might not work on the latest versions of XCode</p>
+<p>在发布最终版本之前，苹果的测试版本库会不断更新，所以以前的教程可能无法在最新版本的 XCode 上工作</p>
+<p>Supposing we have this JSON file, that show an array of movie titles.</p>
+<p>假设我们有这个 JSON 文件，它显示一组电影标题。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">[</span></span><br><span class="line">  <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;id&quot;</span><span class="punctuation">:</span> <span class="number">5</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;title&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Joker&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;year&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2019&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;image&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;created_at&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2019-10-06T17:55:21.374Z&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;updated_at&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2019-10-06T17:55:21.374Z&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;id&quot;</span><span class="punctuation">:</span> <span class="number">1</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;title&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Pulp Fiction&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;year&quot;</span><span class="punctuation">:</span> <span class="string">&quot;1994&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;image&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;created_at&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2019-10-06T15:26:36.675Z&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;updated_at&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2019-10-06T18:05:31.649Z&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;id&quot;</span><span class="punctuation">:</span> <span class="number">4</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;title&quot;</span><span class="punctuation">:</span> <span class="string">&quot; The Godfather &quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;year&quot;</span><span class="punctuation">:</span> <span class="string">&quot;1972&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;image&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;created_at&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2019-10-06T15:27:38.123Z&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;updated_at&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2019-10-06T18:05:50.242Z&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;id&quot;</span><span class="punctuation">:</span> <span class="number">6</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;title&quot;</span><span class="punctuation">:</span> <span class="string">&quot;The Dark Knight &quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;year&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2008&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;image&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;created_at&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2019-10-06T18:06:12.933Z&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;updated_at&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2019-10-06T18:06:12.933Z&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;id&quot;</span><span class="punctuation">:</span> <span class="number">7</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;title&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Fight Club&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;year&quot;</span><span class="punctuation">:</span> <span class="string">&quot;1999&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;image&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;created_at&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2019-10-06T18:06:33.096Z&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;updated_at&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2019-10-06T18:06:33.096Z&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;id&quot;</span><span class="punctuation">:</span> <span class="number">8</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;title&quot;</span><span class="punctuation">:</span> <span class="string">&quot; Inception&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;year&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2010&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;image&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;created_at&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2019-10-06T18:06:52.034Z&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;updated_at&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2019-10-06T18:06:52.034Z&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;id&quot;</span><span class="punctuation">:</span> <span class="number">2</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;title&quot;</span><span class="punctuation">:</span> <span class="string">&quot;The Matrix &quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;year&quot;</span><span class="punctuation">:</span> <span class="string">&quot;1999&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;image&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;created_at&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2019-10-06T15:26:48.042Z&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;updated_at&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2019-10-06T18:08:00.902Z&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;id&quot;</span><span class="punctuation">:</span> <span class="number">3</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;title&quot;</span><span class="punctuation">:</span> <span class="string">&quot;The Shawshank Redemption &quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;year&quot;</span><span class="punctuation">:</span> <span class="string">&quot;1984&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;image&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;created_at&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2019-10-06T15:26:59.572Z&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;updated_at&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2019-10-06T18:08:47.637Z&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">]</span></span><br></pre></td></tr></table></figure>
+
+<p>And we want to display them on a SwiftUI List like this.</p>
+<p>我们希望像这样在 SwiftUI 列表中显示它们。</p>
+<img src="/2020/05/07/%E6%98%BE%E7%A4%BA%E6%9D%A5%E8%87%AA%E8%BF%9C%E7%A8%8BJSON%E6%96%87%E4%BB%B6%E7%9A%84SwiftUI%E5%88%97%E8%A1%A8/swift_list.png" class="" title="This is an image">
+
+<p>First we need to define the model for Movie in this case a struct with Decodable and Identifiable protocols. Decodable to be able to decode it from the JSON file and Identifiable to be able to be listed with List. List allows you to display a list of data from an Identifiable Collection just like a UITableViewController.</p>
+<p>首先，在这种情况下，我们需要为 Movie 定义一个具有可解码和可识别协议的结构。 可解码能够从 JSON 文件解码，可识别能够与列表一起列出。 List 允许您像 UITableViewController 一样显示可识别集合中的数据列表。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Movie</span>: <span class="title class_ inherited__">Decodable</span>, <span class="title class_ inherited__">Identifiable</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">var</span> id: <span class="type">Int</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">var</span> name: <span class="type">String</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">var</span> released: <span class="type">String</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">enum</span> <span class="title class_">CodingKeys</span>: <span class="title class_ inherited__">String</span>, <span class="title class_ inherited__">CodingKey</span> &#123;</span><br><span class="line">           <span class="keyword">case</span> id <span class="operator">=</span> <span class="string">&quot;id&quot;</span></span><br><span class="line">           <span class="keyword">case</span> name <span class="operator">=</span> <span class="string">&quot;title&quot;</span></span><br><span class="line">           <span class="keyword">case</span> released <span class="operator">=</span> <span class="string">&quot;year&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<span id="more"></span>
+
+<p>CodingKeys basically maps the JSON key names with the variable name of the Model you created. In this case instead of year I named it released just for the purpose of showing that you can use your own names in the model as long as you define it in Coding Keys.<br>Codingkeys</p>
+<p>基本上将 JSON 键名与您创建的 Model 的变量名映射在一起。 在本例中，我将其命名为 released，而不是年份，只是为了显示您可以在模型中使用自己的名称，只要您在 Coding Keys 中定义它。</p>
+<p>Next we create the fetcher class that will load the JSON file and decode it.</p>
+<p>接下来，我们创建 fetcher 类，它将加载 JSON 文件并对其进行解码。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MovieFetcher</span>: <span class="title class_ inherited__">ObservableObject</span> &#123;</span><br><span class="line">    <span class="meta">@Published</span> <span class="keyword">var</span> movies <span class="operator">=</span> [<span class="type">Movie</span>]()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">init</span>()&#123;</span><br><span class="line">        load()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">func</span> <span class="title function_">load</span>() &#123;</span><br><span class="line">        <span class="keyword">let</span> url <span class="operator">=</span> <span class="type">URL</span>(string: <span class="string">&quot;https://gist.githubusercontent.com/rbreve/60eb5f6fe49d5f019d0c39d71cb8388d/raw/f6bc27e3e637257e2f75c278520709dd20b1e089/movies.json&quot;</span>)<span class="operator">!</span></span><br><span class="line"></span><br><span class="line">        <span class="type">URLSession</span>.shared.dataTask(with: url) &#123;(data,response,error) <span class="keyword">in</span></span><br><span class="line">            <span class="keyword">do</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> <span class="keyword">let</span> d <span class="operator">=</span> data &#123;</span><br><span class="line">                    <span class="keyword">let</span> decodedLists <span class="operator">=</span> <span class="keyword">try</span> <span class="type">JSONDecoder</span>().decode([<span class="type">Movie</span>].<span class="keyword">self</span>, from: d)</span><br><span class="line">                    <span class="type">DispatchQueue</span>.main.async &#123;</span><br><span class="line">                        <span class="keyword">self</span>.movies <span class="operator">=</span> decodedLists</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                    <span class="built_in">print</span>(<span class="string">&quot;No Data&quot;</span>)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">catch</span> &#123;</span><br><span class="line">                print (<span class="string">&quot;Error&quot;</span>)</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;.resume()</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Before understanding what is happening, we need to understand the new Combine framework.</p>
+<p>在理解正在发生的事情之前，我们需要理解新的组合框架。</p>
+<p>The Combine framework provides a declarative Swift API for processing values over time. These values can represent many kinds of asynchronous events. Combine declares publishers to expose values that can change over time, and subscribers to receive those values from the publishers.</p>
+<p>组合框架提供了一个声明性的 Swift API，用于随着时间的推移处理值。 这些值可以表示多种异步事件。 组合声明发布者以公开可能随时间变化的值，订阅者从发布者处接收这些值。</p>
+<p>ObervableObject: A type of object with a publisher that emits before the object has changed. By default an ObservableObject synthesizes an objectWillChange publisher that emits the changed value before any of its @Published properties changes.<br>Obervableobject:</p>
+<p>具有发行者的对象类型，在对象更改之前发出该对象。 默认情况下，ObservableObject 合成一个 objectWillChange 发布者，该发布者在其@published 属性更改之前发出更改的值。</p>
+<p>@Published wraps the movies array and will generate events whenever it is changed.</p>
+<p>@ published 对 movies 数组进行封装，并在更改时生成事件。</p>
+<p>The load() method fetches the JSON data from the network asynchronously, once the data has been loaded we assign it to movies. When movies changes it will send an event a subscriber.</p>
+<p>Load ()方法从网络中异步获取 JSON 数据，一旦数据被加载，我们就将其分配给电影。 当电影发生变化时，它会向订阅者发送一个事件。</p>
+<p>This is the SwiftUI view, a List with the ObservedObject fetcher as parameter. Whenever movies is updated, the list will update autmatically.</p>
+<p>这是 SwiftUI 视图，一个带有 ObservedObject 提取程序作为参数的 List。 每当电影更新时，列表将自动更新。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">ContentView</span>: <span class="title class_ inherited__">View</span> &#123;</span><br><span class="line">    <span class="meta">@ObservedObject</span> <span class="keyword">var</span> fetcher <span class="operator">=</span> <span class="type">MovieFetcher</span>()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> body: <span class="keyword">some</span> <span class="type">View</span> &#123;</span><br><span class="line">        <span class="type">VStack</span> &#123;</span><br><span class="line">            <span class="type">List</span>(fetcher.movies) &#123; movie <span class="keyword">in</span></span><br><span class="line">                <span class="type">VStack</span> (alignment: .leading) &#123;</span><br><span class="line">                    <span class="type">Text</span>(movie.name)</span><br><span class="line">                    <span class="type">Text</span>(movie.released)</span><br><span class="line">                        .font(.system(size: <span class="number">11</span>))</span><br><span class="line">                        .foregroundColor(<span class="type">Color</span>.gray)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>The whole code is here.</p>
+<p>整个代码都在这里。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  FetchView.swift</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="comment">//  Created by Roberto Breve  on 4.10.2019.</span></span><br><span class="line"><span class="comment">//  Copyright © 2019 Roberto Breve . All rights reserved.</span></span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="keyword">import</span> Foundation</span><br><span class="line"><span class="keyword">import</span> SwiftUI</span><br><span class="line"><span class="keyword">import</span> Combine</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">FetchView</span>: <span class="title class_ inherited__">View</span> &#123;</span><br><span class="line">    <span class="meta">@ObservedObject</span> <span class="keyword">var</span> fetcher <span class="operator">=</span> <span class="type">MovieFetcher</span>()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> body: <span class="keyword">some</span> <span class="type">View</span> &#123;</span><br><span class="line">        <span class="type">VStack</span> &#123;</span><br><span class="line">            <span class="type">List</span>(fetcher.movies) &#123; movie <span class="keyword">in</span></span><br><span class="line">                <span class="type">VStack</span> (alignment: .leading) &#123;</span><br><span class="line">                    <span class="type">Text</span>(movie.name)</span><br><span class="line">                    <span class="type">Text</span>(movie.released)</span><br><span class="line">                        .font(.system(size: <span class="number">11</span>))</span><br><span class="line">                        .foregroundColor(<span class="type">Color</span>.gray)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MovieFetcher</span>: <span class="title class_ inherited__">ObservableObject</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Published</span> <span class="keyword">var</span> movies <span class="operator">=</span> [<span class="type">Movie</span>]()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">init</span>()&#123;</span><br><span class="line">        load()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">func</span> <span class="title function_">load</span>() &#123;</span><br><span class="line">        <span class="keyword">let</span> url <span class="operator">=</span> <span class="type">URL</span>(string: <span class="string">&quot;https://gist.githubusercontent.com/rbreve/60eb5f6fe49d5f019d0c39d71cb8388d/raw/f6bc27e3e637257e2f75c278520709dd20b1e089/movies.json&quot;</span>)<span class="operator">!</span></span><br><span class="line"></span><br><span class="line">        <span class="type">URLSession</span>.shared.dataTask(with: url) &#123;(data,response,error) <span class="keyword">in</span></span><br><span class="line">            <span class="keyword">do</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> <span class="keyword">let</span> d <span class="operator">=</span> data &#123;</span><br><span class="line">                    <span class="keyword">let</span> decodedLists <span class="operator">=</span> <span class="keyword">try</span> <span class="type">JSONDecoder</span>().decode([<span class="type">Movie</span>].<span class="keyword">self</span>, from: d)</span><br><span class="line">                    <span class="type">DispatchQueue</span>.main.async &#123;</span><br><span class="line">                        <span class="keyword">self</span>.movies <span class="operator">=</span> decodedLists</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                    <span class="built_in">print</span>(<span class="string">&quot;No Data&quot;</span>)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">catch</span> &#123;</span><br><span class="line">                print (<span class="string">&quot;Error&quot;</span>)</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;.resume()</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Movie</span>: <span class="title class_ inherited__">Codable</span>, <span class="title class_ inherited__">Identifiable</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">var</span> id: <span class="type">Int</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">var</span> name: <span class="type">String</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">var</span> released: <span class="type">String</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">enum</span> <span class="title class_">CodingKeys</span>: <span class="title class_ inherited__">String</span>, <span class="title class_ inherited__">CodingKey</span> &#123;</span><br><span class="line">           <span class="keyword">case</span> id <span class="operator">=</span> <span class="string">&quot;id&quot;</span></span><br><span class="line">           <span class="keyword">case</span> name <span class="operator">=</span> <span class="string">&quot;title&quot;</span></span><br><span class="line">           <span class="keyword">case</span> released <span class="operator">=</span> <span class="string">&quot;year&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>文章来自：<a href="https://medium.com/@rbreve/displaying-a-list-with-swiftui-from-a-remote-json-file-6b4e4280a076">https://medium.com/@rbreve/displaying-a-list-with-swiftui-from-a-remote-json-file-6b4e4280a076</a><br>WRITTEN BY 原文作者:<br>Roberto Breve 罗伯托 · 布雷夫</p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://fredliu168.github.io/2020/05/07/%E6%98%BE%E7%A4%BA%E6%9D%A5%E8%87%AA%E8%BF%9C%E7%A8%8BJSON%E6%96%87%E4%BB%B6%E7%9A%84SwiftUI%E5%88%97%E8%A1%A8/" title="显示来自远程JSON文件的SwiftUI列表" target="_blank" rel="external">http://fredliu168.github.io/2020/05/07/显示来自远程JSON文件的SwiftUI列表/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/fredliu168" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/fredliu168" target="_blank"><span class="text-dark">marsland</span><small class="ml-1x">Code &amp; Life</small></a></h3>
+        <div>略懂一点编程，随手记录代码与生活。</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    <li class="prev">
+      <a href="/2020/05/27/%E6%A0%91%E8%8E%93%E6%B4%BE%E6%90%AD%E5%BB%BANas/" title="树莓派搭建Nas"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+    </li>
+    
+    
+    <li class="next">
+      <a href="/2020/04/29/Mac%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90/" title="Mac软件推荐"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  
+  <div class="bar-right">
+    
+  </div>
+  </div>
+</nav>
+  
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/cofess" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+
+
+
+
+
+
+</body>
+</html>
