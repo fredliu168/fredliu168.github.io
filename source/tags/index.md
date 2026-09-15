@@ -1,8 +1,6 @@
 ---
-title: All tags
-date: 2016-06-19 23:42:56
-type: "tags"
+title: 标签
+layout: tags
 comments: false
+sidebar: custom
 ---
-
-
