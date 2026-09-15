@@ -62,9 +62,18 @@
       
       <div class="search" id="search-form-wrap">
 
-    <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit"> </button><input type="hidden" name="sitesearch" value="http://fredliu168.github.io"></form>
+    <form class="search-form sidebar-form" action="//google.com/search" method="get" accept-charset="UTF-8">
+        <div class="input-group">
+            <input type="text" name="q" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+        <input type="hidden" name="sitesearch" value="http://fredliu168.github.io" />
+    </form>
 
 </div>
+
       <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
@@ -339,7 +348,7 @@
 </li>
 <li><p>如果未给你的 github 账号添加过当前电脑生成的 ssh key，需要创建 ssh key 并添加到 github 账号上。（如何创建和添加 github help 就有）</p>
 </li>
-<li><p>随便一个目录下，命令行执行 git clone <a href="mailto:&#x67;&#x69;&#x74;&#64;&#103;&#105;&#x74;&#x68;&#x75;&#x62;&#46;&#99;&#111;&#x6d;">git@github.com</a>:username&#x2F;username.github.io.git 把仓库 clone 到本地。</p>
+<li><p>随便一个目录下，命令行执行 git clone <a href="mailto:&#x67;&#x69;&#116;&#64;&#x67;&#x69;&#x74;&#x68;&#x75;&#x62;&#46;&#99;&#x6f;&#x6d;">git@github.com</a>:username&#x2F;username.github.io.git 把仓库 clone 到本地。</p>
 </li>
 <li><p>显示所有隐藏文件和文件夹，进入刚才 clone 到本地的仓库，删掉除了 .git 文件夹以外的所有内容。</p>
 </li>
