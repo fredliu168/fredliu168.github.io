@@ -9216,95 +9216,43 @@ body.okayNav-loaded {
 
 /* Site banner */
 .site-banner {
-  width: 62.33333%;
-  margin: 24px 0 0 16.66667%;
-  padding: 0 30px;
+  position: relative;
+  z-index: 1100;
+  width: 100%;
+  height: 260px;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background: #111;
 }
 
 .site-banner img {
   display: block;
   width: 100%;
-  height: 260px;
+  height: 100%;
   object-fit: cover;
-  border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, .18);
+  object-position: center center;
 }
 
-body.main-right .site-banner {
-  margin-left: 37.66667%;
-}
-
-body.no-sidebar.main-left .site-banner {
-  width: 83.33333333%;
-  margin-left: 0;
-  margin-right: 16.66667%;
-}
-
-body.no-sidebar.main-center .site-banner,
-body.no-sidebar.main-right .site-banner {
-  width: 83.33333333%;
-  margin-left: 16.66667%;
-}
-
-@media (max-width: 1199px) {
-  .site-banner {
-    width: 58.33333%;
-    padding: 0 25px;
-  }
-
-  body.main-right .site-banner {
-    margin-left: 41.66667%;
-  }
-
-  body.no-sidebar.main-left .site-banner {
-    width: 83.33333333%;
-    margin-right: 16.66667%;
-  }
-
-  body.no-sidebar.main-center .site-banner,
-  body.no-sidebar.main-right .site-banner {
-    width: 83.33333333%;
-    margin-left: 16.66667%;
-  }
-}
-
-@media (max-width: 991px) {
-  .site-banner {
-    width: 62.5%;
-    margin-left: 4.16667%;
-    padding: 0 20px;
-  }
-
-  body.main-right .site-banner {
-    margin-left: 37.5%;
-  }
-
-  body.no-sidebar.main-left .site-banner {
-    width: 95.83333333%;
-    margin-left: 0;
-    margin-right: 4.16667%;
-  }
-
-  body.no-sidebar.main-center .site-banner,
-  body.no-sidebar.main-right .site-banner {
-    width: 95.83333333%;
-    margin-left: 4.16667%;
-  }
+.header,
+.sidebar {
+  top: 260px;
 }
 
 @media (max-width: 767px) {
-  .site-banner,
-  body.main-right .site-banner,
-  body.no-sidebar.main-left .site-banner,
-  body.no-sidebar.main-center .site-banner,
-  body.no-sidebar.main-right .site-banner {
-    width: 100%;
-    margin: 16px 0 0;
-    padding: 0 12px;
+  body {
+    padding-top: 0;
   }
 
-  .site-banner img {
-    height: 160px;
-    border-radius: 8px;
+  .site-banner {
+    height: 150px;
+  }
+
+  .header {
+    top: 150px;
+  }
+
+  .main {
+    margin-top: 53px;
   }
 }
