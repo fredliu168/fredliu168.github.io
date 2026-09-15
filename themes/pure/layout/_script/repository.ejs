@@ -1,0 +1,9 @@
+<% if (theme.repository) { %>
+  <% if (theme.repository.platform === 'github') { %>
+    <%- partial('_script/_repository/github', { script: true }) %>
+  <% } else if (theme.repository.platform === 'gitee') { %>
+    <%- partial('_script/_repository/gitee', { script: true }) %>
+  <% } %>
+<% } else if (theme.github) { %>
+  <%- partial('_script/_repository/legacy', { script: true }) %>
+<% } %>

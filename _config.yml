@@ -7,7 +7,7 @@ title: 代码与生活
 subtitle: 随手笔记 一个没技术含量的博客
 description: 略懂一点编程.
 author: marsland
-language: zh-Hans
+language: zh-CN
 timezone:
 
 #设置 头像
@@ -85,10 +85,8 @@ card_style:
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
 #theme: next
-theme: prontera
+theme: pure
 #theme: stellar
-
-friend_links: []
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
