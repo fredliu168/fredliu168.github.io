@@ -135,6 +135,7 @@
 
       'foot.back': '返回博客',
       'foot.copy': 'omniagent · 个人开源项目，与模型供应商无隶属关系',
+      'foot.privacy': '使用条款与隐私说明',
 
       'common.copy': '复制',
       'common.copied': '已复制 ✓',
@@ -250,6 +251,7 @@
 
       'foot.back': 'Back to blog',
       'foot.copy': 'omniagent · a personal open-source project, not affiliated with any model provider',
+      'foot.privacy': 'Terms & Privacy',
 
       'common.copy': 'Copy',
       'common.copied': 'Copied ✓',

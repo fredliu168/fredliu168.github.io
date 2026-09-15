@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#08080b">
+<title>omniagent — 使用条款与隐私说明</title>
+<meta name="description" content="omniagent（NeonAgent）浏览器扩展与本宣传页的使用条款和隐私说明：本地运行、自带密钥、无后端，说明处理哪些数据、发送到哪里、如何删除。">
+<meta name="robots" content="index, follow">
+<link rel="icon" href="../favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="../icon-192.png" sizes="192x192">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<script>
+/* Same storage keys as the landing page (omniagent-theme / omniagent-lang), so the
+   reader's choice carries across both pages. Runs before first paint: no flash. */
+(function () {
+  var root = document.documentElement;
+  try {
+    var t = window.localStorage.getItem('omniagent-theme');
+    root.setAttribute('data-theme', (t === 'light' || t === 'dark') ? t
+      : (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'));
+  } catch (e) {
+    root.setAttribute('data-theme', 'dark');
+  }
+  try {
+    var l = window.localStorage.getItem('omniagent-lang');
+    root.setAttribute('lang', (l === 'en' || l === 'zh') ? (l === 'en' ? 'en' : 'zh-CN')
+      : ((navigator.language || 'zh').toLowerCase().indexOf('zh') === 0 ? 'zh-CN' : 'en'));
+  } catch (e) { /* keep the zh-CN default */ }
+})();
+</script>
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<div class="bg-grid" aria-hidden="true"></div>
+<div class="bg-glow" aria-hidden="true"></div>
+
+<header class="nav is-stuck">
+  <div class="wrap nav-inner">
+    <a class="brand" href="../" aria-label="omniagent">
+      <span class="brand-mark" aria-hidden="true"><img src="../icon-64.png" alt="" width="28" height="28" decoding="async"></span>
+      <span class="brand-name">omniagent</span>
+    </a>
+    <nav class="nav-links" aria-label="navigation">
+      <a href="../" data-ui="back">← 返回主页</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="theme-switch" id="theme-toggle" type="button" role="switch" aria-checked="true" aria-label="切换到浅色模式">
+        <span class="ts-knob">
+          <span class="ts-knob-icon">
+            <svg class="ts-moon" viewBox="0 0 20 20" aria-hidden="true"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/></svg>
+            <svg class="ts-sun" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"/></svg>
+          </span>
+        </span>
+        <span class="ts-track-icons" aria-hidden="true">
+          <span class="ts-sun-side"><svg viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"/></svg></span>
+          <span class="ts-moon-side"><svg viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/></svg></span>
+        </span>
+      </button>
+      <button class="lang-btn" id="lang-toggle" type="button" aria-label="切换语言 / Switch language">
+        <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.4" d="M1.6 4.2h8M5.6 2.2v2M7.2 4.2c-.6 2.6-2.4 4.6-5 5.6M3.1 7.1c1 1.6 2.4 2.6 4 3.2M8.9 14.2l3-8 3 8M9.9 11.6h4"/></svg>
+        <span id="lang-label">EN</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main class="doc-wrap">
+
+  <div class="doc-head">
+    <span class="doc-zh"><span class="kicker">TERMS &amp; PRIVACY</span></span>
+    <span class="doc-en"><span class="kicker">TERMS &amp; PRIVACY</span></span>
+    <h1 id="doc-title-zh" class="doc-zh">使用条款与隐私说明</h1>
+    <h1 id="doc-title-en" class="doc-en">Terms of Use &amp; Privacy</h1>
+    <p class="doc-meta doc-zh">最后更新：2026-09-15 · 适用于 omniagent 浏览器扩展与本宣传页</p>
+    <p class="doc-meta doc-en">Last updated: 2026-09-15 · applies to the omniagent browser extension and this website</p>
+  </div>
+
+  <!-- ==================== 中文 ==================== -->
+  <div class="doc doc-zh">
+
+    <section>
+      <h2><span class="n">01</span>本文件的适用范围</h2>
+      <p>“我们”指 omniagent（仓库名 <strong>NeonAgent</strong>）这个开源项目的维护者。“本软件”指该 Chrome 浏览器扩展，“本站”指介绍它的这个静态页面。</p>
+      <p>这是一个个人开源项目，不是公司，也不提供任何托管服务。本文件说明本软件和本站<strong>实际</strong>如何处理数据，不构成法律意见；在重要场景下做出决定前，请自行评估或咨询专业人士。</p>
+    </section>
+
+    <section>
+      <h2><span class="n">02</span>开源软件：本地运行，自带密钥，没有后端</h2>
+      <p>本软件是纯客户端工具，采用「自带密钥」（BYOK）架构，<strong>本身不包含任何后端服务</strong>。我们不会通过本软件收集或传输你的任何数据，也无法访问你的浏览记录、页面内容或任务指令。</p>
+      <p>所有数据传输<strong>只发生在你的浏览器与你自行配置的模型接口之间</strong>。由哪家服务商接收数据，完全由你决定。本软件按 MIT 许可开源，代码可公开审计。</p>
+    </section>
+
+    <section>
+      <h2><span class="n">03</span>本站（宣传页）</h2>
+      <p>本站是纯静态页面，<strong>没有 Cookie、没有统计埋点、没有广告、没有第三方跟踪脚本</strong>。页面上的字体使用系统字体，不请求外部字体服务。</p>
+      <ul>
+        <li><strong>交互演示是预设内容。</strong>页面上那段「智能体帮你读页面」的动画是写死的演示数据，<strong>不会发起任何模型请求</strong>，你输入或点击也不会被上传。</li>
+        <li><strong>唯一的外部请求</strong>是向 GitHub 公开接口读取本项目的 star 数，用于显示按钮上的数字。该请求会把你的 IP 地址暴露给 GitHub，适用 <a href="https://docs.github.com/site-policy/privacy-policies/github-privacy-statement" target="_blank" rel="noopener noreferrer">GitHub 隐私声明</a>。请求失败时页面会退回显示内置的数字，不影响使用。</li>
+        <li><strong>本地存储只保存两个偏好</strong>：界面语言和明暗主题，存在你自己浏览器的 <code>localStorage</code> 里，不会发送到任何地方。清除浏览器数据即可删除。</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2><span class="n">04</span>扩展处理哪些数据，为什么</h2>
+      <p>为实现对话问答、图片解读、网页翻译和浏览器任务，扩展会处理你输入的文字、上传的图片与参考文件，以及任务涉及到的网页文字、页面地址、截图、工具调用结果和历史对话。开启站点专属功能时，也可能读取该站点的题目内容与接口返回数据。具体发送什么，取决于你使用了哪个功能。</p>
+      <p class="doc-note"><strong>请注意：</strong>页面内容在发送前会做结构精简，但这<strong>不保证</strong>能去掉其中的敏感信息（例如页面上的可见文字、表单里已填的值）。发起任务前请留意当前页面上有什么。</p>
+    </section>
+
+    <section>
+      <h2><span class="n">05</span>数据发送到哪里</h2>
+      <p>调用模型时，相关内容会发送到<strong>你自己配置的 API 地址</strong>，并使用<strong>你提供的 API Key</strong> 鉴权。我们不经手这些数据。</p>
+      <p>各模型服务商如何保存和使用这些数据，由其自身条款与隐私政策决定——请在配置前查阅。如果你用的是官方 DeepSeek、Kimi、MiniMax 等接口，请一并遵守对应服务商的使用规范。</p>
+      <p>另外注意：<strong>自动翻译</strong>、<strong>定时任务</strong>、<strong>当前页面自动解题</strong> 这类开关开启后，扩展可能在你没有逐次点击的情况下处理相关内容。这些开关默认关闭，可以随时关掉。</p>
+    </section>
+
+    <section>
+      <h2><span class="n">06</span>扩展申请的权限及用途</h2>
+      <table>
+        <thead><tr><th>权限</th><th>用途</th></tr></thead>
+        <tbody>
+          <tr><td>storage / unlimitedStorage</td><td>保存配置、密钥、会话、记忆、技能和定时任务；解除默认容量配额，避免写入失败</td></tr>
+          <tr><td>sidePanel</td><td>显示侧边栏助手界面</td></tr>
+          <tr><td>activeTab</td><td>在你操作后访问当前页面并截图</td></tr>
+          <tr><td>scripting</td><td>向页面注入工具与功能脚本</td></tr>
+          <tr><td>webNavigation</td><td>获取页面框架（iframe）信息，兼容题目嵌套的页面</td></tr>
+          <tr><td>alarms</td><td>定时任务调度与连接恢复</td></tr>
+          <tr><td>offscreen</td><td>承载脚本技能的沙箱文档</td></tr>
+          <tr><td>&lt;all_urls&gt;</td><td>跨站翻译、页面交互，以及向你配置的接口发起请求</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2><span class="n">07</span>本地保存了什么</h2>
+      <p>API 配置、密钥、对话记录、记忆、技能、定时任务等都保存在浏览器的扩展本地存储中。请注意：</p>
+      <ul>
+        <li>这<strong>不是加密的密钥保险库</strong>。API Key 以扩展本地存储的形式保存，能访问该浏览器配置的人也可能读到它。</li>
+        <li>部分会话路径可能会把<strong>图片预览随记录一起保存</strong>。不要假定所有图片都会在关闭面板后自动删除。</li>
+        <li>这些数据不会同步到任何外部服务器，也不包含任何统计或跟踪代码。</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2><span class="n">08</span>脚本技能与本地命令</h2>
+      <p><strong>脚本技能</strong>允许你或模型写入 JavaScript 代码并交由扩展执行，脚本还可以通过扩展代理访问网络。脚本的运行结果和影响取决于脚本内容本身——<strong>请只使用你信任的脚本</strong>，并在执行前确认它要做什么。</p>
+      <p>开启<strong>本地命令</strong>功能后，扩展会连接你配置的 WebSocket 地址，并与该服务交换命令和执行结果。请只连接你自己控制或信任的服务。</p>
+    </section>
+
+    <section>
+      <h2><span class="n">09</span>你的控制与删除</h2>
+      <ul>
+        <li>关闭自动翻译、定时任务、自动解题等自动处理功能。</li>
+        <li>在侧边栏中删除会话、记忆、技能和定时任务，移除保存的 API 配置。</li>
+        <li>卸载扩展即可清除该浏览器中的全部扩展本地存储。</li>
+        <li>已经从你这里发送给外部模型服务的数据，需要联系对应服务商处理，我们无法代为删除。</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2><span class="n">10</span>使用限制与你的责任</h2>
+      <ul>
+        <li><strong>AI 输出可能出错。</strong>模型给出的答案、翻译和操作决策都可能不准确。涉及考试、财务、医疗、法律等场景时，请自行核对后再采用。</li>
+        <li><strong>自动化操作由你负责。</strong>使用扩展在网站上执行点击、填写、提交等操作时，你需要遵守目标网站的服务条款、robots 规则和相关法律法规。请勿用于绕过访问控制、刷量、抢购或其他违规用途。</li>
+        <li><strong>敏感信息请谨慎。</strong>除非你已确认所配置模型服务商的数据政策可以接受，否则不要用它处理个人隐私、商业机密、财务或医疗记录等数据。</li>
+        <li><strong>第三方服务各自独立。</strong>本项目与任何模型供应商均无隶属或背书关系，你的账号、额度与合规责任由你与该服务商之间约定。</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2><span class="n">11</span>免责声明</h2>
+      <p>本软件和本站按「现状」提供，不附带任何形式的明示或暗示担保，包括但不限于对适销性、特定用途适用性和非侵权性的担保。在适用法律允许的最大范围内，维护者不对因使用或无法使用本软件而产生的任何直接、间接、附带或后果性损失承担责任，包括数据丢失、服务中断或法律后果。</p>
+      <p>本项目按 <a href="https://github.com/fredliu168/NeonAgent/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">MIT 许可</a>开源，Copyright (c) 2026 NeonAgent。</p>
+    </section>
+
+    <section>
+      <h2><span class="n">12</span>年龄要求</h2>
+      <p>本软件与本站不面向未满 13 周岁的用户，也不面向你所在司法辖区规定的最低数字同意年龄以下的用户。</p>
+    </section>
+
+    <section>
+      <h2><span class="n">13</span>变更与联系方式</h2>
+      <p>本文件可能随功能变化而更新，更新后会修改顶部的日期。功能行为的说明以扩展内的隐私说明页为准。</p>
+      <p>问题、疑问或数据相关请求，请通过 <a href="https://github.com/fredliu168/NeonAgent/issues" target="_blank" rel="noopener noreferrer">项目 Issue</a> 提出。</p>
+    </section>
+
+  </div>
+
+  <!-- ==================== English ==================== -->
+  <div class="doc doc-en">
+
+    <section>
+      <h2><span class="n">01</span>Scope</h2>
+      <p>"We" refers to the maintainers of the omniagent open-source project (repository name <strong>NeonAgent</strong>). "The software" is that Chrome extension; "this site" is the static page that introduces it.</p>
+      <p>This is a personal open-source project — not a company, and it operates no hosted service. This document describes what the software and this site <strong>actually</strong> do with data. It is not legal advice; for anything consequential, assess it yourself or consult a professional.</p>
+    </section>
+
+    <section>
+      <h2><span class="n">02</span>Open-source software: local, BYOK, no backend</h2>
+      <p>The software is a client-side–only tool with a "bring your own key" architecture and <strong>no backend of its own</strong>. We do not collect or transmit any of your data through it, and we have no access to your browsing activity, page content or task instructions.</p>
+      <p>All data transmission happens <strong>only between your browser and the model endpoint you configure</strong>. Which provider receives your data is entirely your choice. The software is open source under the MIT license and can be audited.</p>
+    </section>
+
+    <section>
+      <h2><span class="n">03</span>This website</h2>
+      <p>This site is fully static: <strong>no cookies, no analytics, no advertising, no third-party tracking scripts</strong>. It uses system fonts and requests no external font service.</p>
+      <ul>
+        <li><strong>The interactive demo is preset.</strong> The "agent reads the page for you" animation is hard-coded sample data. It <strong>makes no model request</strong>, and nothing you type or click is uploaded.</li>
+        <li><strong>The one external request</strong> is a call to GitHub's public API for this project's star count, used for the number on the button. That request exposes your IP address to GitHub and is covered by the <a href="https://docs.github.com/site-policy/privacy-policies/github-privacy-statement" target="_blank" rel="noopener noreferrer">GitHub Privacy Statement</a>. If it fails, the page falls back to a built-in number.</li>
+        <li><strong>Local storage holds two preferences only</strong> — interface language and light/dark theme — kept in your own browser's <code>localStorage</code> and never sent anywhere. Clearing your browser data removes them.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2><span class="n">04</span>What the extension processes, and why</h2>
+      <p>To provide chat, image analysis, page translation and browser tasks, the extension processes text you enter, images and reference files you upload, and the page text, URLs, screenshots, tool results and conversation history involved in a task. When site-specific features are enabled it may also read question content and API responses from that site. What is sent depends on which feature you use.</p>
+      <p class="doc-note"><strong>Please note:</strong> page content is structurally simplified before it is sent, but that <strong>does not guarantee</strong> removal of sensitive information — such as visible text or values already filled into a form. Be aware of what is on the page before you start a task.</p>
+    </section>
+
+    <section>
+      <h2><span class="n">05</span>Where data is sent</h2>
+      <p>Model requests send the relevant content to <strong>the API endpoint you configured</strong>, authenticated with <strong>the API key you provided</strong>. We never handle that data.</p>
+      <p>How each provider stores and uses it is governed by that provider's own terms and privacy policy — review them before configuring. If you use an official DeepSeek, Kimi, MiniMax or similar endpoint, their usage policies apply as well.</p>
+      <p>Also note that once switches such as <strong>automatic translation</strong>, <strong>scheduled tasks</strong> or <strong>auto-solving the current page</strong> are enabled, the extension may process content without a separate click for each request. These are off by default and can be turned off at any time.</p>
+    </section>
+
+    <section>
+      <h2><span class="n">06</span>Permissions the extension requests</h2>
+      <table>
+        <thead><tr><th>Permission</th><th>Why</th></tr></thead>
+        <tbody>
+          <tr><td>storage / unlimitedStorage</td><td>Save configuration, keys, conversations, memories, skills and scheduled tasks; lift the default quota so writes do not fail</td></tr>
+          <tr><td>sidePanel</td><td>Show the side-panel assistant UI</td></tr>
+          <tr><td>activeTab</td><td>Access and screenshot the current page after you act</td></tr>
+          <tr><td>scripting</td><td>Inject page tools and feature scripts</td></tr>
+          <tr><td>webNavigation</td><td>Read frame (iframe) information, for pages that nest content</td></tr>
+          <tr><td>alarms</td><td>Schedule tasks and recover connections</td></tr>
+          <tr><td>offscreen</td><td>Host the sandbox document for script skills</td></tr>
+          <tr><td>&lt;all_urls&gt;</td><td>Cross-site translation, page interaction, and requests to your configured endpoint</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2><span class="n">07</span>What is stored locally</h2>
+      <p>API configuration, keys, conversation records, memories, skills and scheduled tasks live in the browser's extension local storage. Note that:</p>
+      <ul>
+        <li>This is <strong>not an encrypted credential vault</strong>. API keys are kept as extension local storage, and anyone with access to that browser profile may be able to read them.</li>
+        <li>Some conversation flows may <strong>save image previews alongside records</strong>. Do not assume every image is deleted when the panel closes.</li>
+        <li>None of it is synced to an external server, and the extension includes no analytics or tracking code.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2><span class="n">08</span>Script skills and local commands</h2>
+      <p><strong>Script skills</strong> let you or the model add JavaScript that the extension executes, and scripts can reach the network through the extension's proxy. What a script does depends entirely on its content — <strong>use only scripts you trust</strong>, and check what they intend to do first.</p>
+      <p>When <strong>local commands</strong> are enabled, the extension connects to the WebSocket address you configured and exchanges commands and execution results with that service. Connect only to services you control or trust.</p>
+    </section>
+
+    <section>
+      <h2><span class="n">09</span>Your controls and deletion</h2>
+      <ul>
+        <li>Turn off automatic processing: translation, scheduled tasks, auto-solving.</li>
+        <li>Delete conversations, memories, skills and scheduled tasks from the side panel, and remove saved API configuration.</li>
+        <li>Uninstalling the extension clears all of its local storage in that browser.</li>
+        <li>Data already sent to an external model provider must be handled with that provider — we cannot delete it for you.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2><span class="n">10</span>Usage limits and your responsibility</h2>
+      <ul>
+        <li><strong>AI output can be wrong.</strong> Answers, translations and action decisions may be inaccurate. Verify before relying on them in exams, financial, medical or legal contexts.</li>
+        <li><strong>Automated actions are your responsibility.</strong> When the extension clicks, fills and submits on a website, you must comply with that site's terms of service, its robots rules and applicable law. Do not use it to bypass access controls, inflate traffic, or for other abusive purposes.</li>
+        <li><strong>Be careful with sensitive data.</strong> Unless you have accepted the data policy of the provider you configured, do not use it on personal, confidential, financial or medical information.</li>
+        <li><strong>Third parties are independent.</strong> This project is not affiliated with or endorsed by any model provider; your account, quota and compliance obligations are between you and that provider.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2><span class="n">11</span>Disclaimer</h2>
+      <p>The software and this site are provided "as is", without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose and non-infringement. To the maximum extent permitted by applicable law, the maintainers are not liable for any direct, indirect, incidental or consequential loss arising from the use of, or inability to use, the software — including data loss, service interruption or legal consequences.</p>
+      <p>The project is open source under the <a href="https://github.com/fredliu168/NeonAgent/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">MIT license</a>, Copyright (c) 2026 NeonAgent.</p>
+    </section>
+
+    <section>
+      <h2><span class="n">12</span>Age requirement</h2>
+      <p>The software and this site are not intended for anyone under 13, or under the minimum age of digital consent in your jurisdiction.</p>
+    </section>
+
+    <section>
+      <h2><span class="n">13</span>Changes and contact</h2>
+      <p>This document may be updated as the software changes; the date at the top will change with it. For how features behave, the privacy notice inside the extension is authoritative.</p>
+      <p>Questions or data-related requests: please open an <a href="https://github.com/fredliu168/NeonAgent/issues" target="_blank" rel="noopener noreferrer">issue on the project</a>.</p>
+    </section>
+
+  </div>
+
+  <div class="doc-foot">
+    <a class="line-btn" href="../" data-ui="backShort">← 返回主页</a>
+  </div>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-inner">
+    <a class="brand" href="../">
+      <span class="brand-mark" aria-hidden="true"><img src="../icon-64.png" alt="" width="28" height="28" decoding="async"></span>
+      <span class="brand-name">omniagent</span>
+    </a>
+    <nav aria-label="footer">
+      <a href="../" data-ui="backShortHtml">主页</a>
+      <a href="https://github.com/fredliu168/NeonAgent" target="_blank" rel="noopener">GitHub</a>
+    </nav>
+    <div class="foot-bottom">
+      <small>© <span id="year">2026</span> <span data-ui="copy">omniagent · 个人开源项目，与模型供应商无隶属关系</span></small>
+    </div>
+  </div>
+</footer>
+
+<script src="privacy.js"></script>
+</body>
+</html>
