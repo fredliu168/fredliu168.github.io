@@ -780,6 +780,7 @@ html[lang="en"] .doc-en { display: block; }
   font-family: var(--mono); font-size: 12px; letter-spacing: .1em;
   color: var(--accent-text); flex: none;
 }
+.doc h3 { font-size: 15.5px; margin-top: 28px; color: var(--text); }
 .doc p { margin-top: 14px; font-size: 15px; line-height: 1.85; color: var(--muted); }
 .doc ul { margin: 14px 0 0; padding-left: 22px; font-size: 15px; line-height: 1.85; color: var(--muted); }
 .doc li { margin-top: 9px; }
