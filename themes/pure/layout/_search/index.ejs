@@ -22,6 +22,14 @@
 <% } else if (theme.search.baidu) { %>
     <%- partial('_search/baidu') %>
 <% } else { %>
-    <%- search_form({ button: ' ', text: __('widget.search') }) %>
+    <form class="search-form sidebar-form" action="//google.com/search" method="get" accept-charset="UTF-8">
+        <div class="input-group">
+            <input type="text" name="q" class="search-form-input form-control" placeholder="<%= __('widget.search') %>" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+        <input type="hidden" name="sitesearch" value="<%= config.url %>" />
+    </form>
 <% } %>
 </div>
