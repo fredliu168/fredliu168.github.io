@@ -127,9 +127,23 @@
           <tr><td>webNavigation</td><td>获取页面框架（iframe）信息，兼容题目嵌套的页面</td></tr>
           <tr><td>alarms</td><td>定时任务调度与连接恢复</td></tr>
           <tr><td>offscreen</td><td>承载脚本技能的沙箱文档</td></tr>
-          <tr><td>&lt;all_urls&gt;</td><td>跨站翻译、页面交互，以及向你配置的接口发起请求</td></tr>
+          <tr><td>&lt;all_urls&gt;</td><td>在任意网站上读取页面内容、执行翻译与页面交互，以及向你配置的模型接口发起请求</td></tr>
         </tbody>
       </table>
+
+      <h3>为什么需要 &lt;all_urls&gt; 这样的全站权限</h3>
+      <p>这是一个通用工具，不是只服务某一个网站。要把它用在哪些页面上由<strong>你</strong>决定，开发者无法预先写出一份固定的域名清单，因此只能声明全站主机权限。它的用途只有三类：</p>
+      <ul>
+        <li><strong>页面读取。</strong>当你要求总结、问答、解题或分析时，扩展需要读取当前页面的文字与结构，才有内容交给模型处理。</li>
+        <li><strong>翻译。</strong>整页翻译与划词翻译的对象是「你此刻正在看的任意页面」；不能访问任意页面，跨站翻译就不成立。</li>
+        <li><strong>页面交互。</strong>智能体要替你点击、填写、滚动与提交，就需要能在任意页面上执行这些操作。</li>
+      </ul>
+      <p>还有一个原因：模型接口的域名由你自己填写（自带密钥模式），事先无法枚举，向你配置的地址发起请求同样需要宽泛的主机权限。</p>
+      <p class="doc-note"><strong>权限的边界：</strong>打开一个页面<strong>不会</strong>自动上传它的内容。<strong>只有当你发起对话、翻译或任务时，相关页面内容才会发送到你配置的接口</strong>；可能在无逐次点击的情况下运行的开关（自动翻译、定时任务、自动解题）默认关闭。开发者不接收这些数据，本项目也没有任何服务端。</p>
+
+      <h3>页面行为脚本：常驻注入，但默认休眠</h3>
+      <p>为了让「解除右键限制」这类开关<strong>在你打开的那一刻就能生效</strong>（必须早于页面自身的脚本运行），扩展会在页面加载的最早期向所有页面注入一小段脚本。在开关关闭时（默认状态），它<strong>只注册处于关闭状态的监听器，不改变页面任何行为</strong>；只有你主动打开对应开关，它才接管相关事件。这段脚本服务三项开关：解除右键与复制限制（恢复浏览器默认的右键菜单和复制粘贴）、阻止页面强制全屏、屏蔽常见的开发者工具检测信号。</p>
+      <p>另有一处站点兼容性例外：在 <code>ruankaodaren.com</code> 下会预先屏蔽该网站用于对抗调试的死循环构造，避免页面卡死；这一项不依赖开关，与考试页面支持功能相关。扩展对 <code>wangda.chinamobile.com</code> 的题目接口读取同属站点专属支持。这两处域名都写在扩展的清单文件里，可公开核查。</p>
     </section>
 
     <section>
@@ -237,9 +251,23 @@
           <tr><td>webNavigation</td><td>Read frame (iframe) information, for pages that nest content</td></tr>
           <tr><td>alarms</td><td>Schedule tasks and recover connections</td></tr>
           <tr><td>offscreen</td><td>Host the sandbox document for script skills</td></tr>
-          <tr><td>&lt;all_urls&gt;</td><td>Cross-site translation, page interaction, and requests to your configured endpoint</td></tr>
+          <tr><td>&lt;all_urls&gt;</td><td>Read page content, translate, and interact on any website, and reach the model endpoint you configure</td></tr>
         </tbody>
       </table>
+
+      <h3>Why a broad host permission such as &lt;all_urls&gt; is required</h3>
+      <p>This is a general-purpose tool, not one built for a single website. Which pages it may act on is <strong>your</strong> choice, and no fixed domain list can be written in advance — so broad host access has to be declared. There are only three uses:</p>
+      <ul>
+        <li><strong>Reading pages.</strong> When you ask it to summarize, answer a question, solve a quiz or analyse a page, it must read that page's text and structure to have anything to give the model.</li>
+        <li><strong>Translation.</strong> Full-page and selection translation act on "whatever page you are looking at right now"; without access to arbitrary pages, cross-site translation is not possible.</li>
+        <li><strong>Page interaction.</strong> For the agent to click, fill, scroll and submit on your behalf, it must perform those actions on arbitrary pages.</li>
+      </ul>
+      <p>One further reason: the model endpoint is one you enter yourself (bring-your-own-key), so its domain cannot be enumerated ahead of time — and reaching that address also requires broad host access.</p>
+      <p class="doc-note"><strong>What the permission does not do:</strong> opening a page does <strong>not</strong> upload it. <strong>Page content is sent to your configured endpoint only when you start a conversation, a translation or a task</strong>; the switches that could run without a per-request click (automatic translation, scheduled tasks, auto-solving) are off by default. We never receive that data, and this project has no server of any kind.</p>
+
+      <h3>Page-behaviour script: always injected, dormant by default</h3>
+      <p>So that switches such as "unlock right-click" take effect <strong>the moment you turn them on</strong> — which requires running before the page's own scripts — the extension injects a small script into every page at the earliest point of loading. While those switches are off (the default), it <strong>only registers listeners that are switched off and changes no page behaviour</strong>; it takes over the relevant events only after you enable a switch yourself. It serves three switches: unlocking right-click and copy restrictions (restoring the browser's default context menu and copy/paste), preventing a page from forcing fullscreen, and blocking common developer-tools detection signals.</p>
+      <p>There is one site-compatibility exception: on <code>ruankaodaren.com</code> a guard is installed up front that neutralizes the busy-loop construct that site uses against debugging, so the page does not freeze. That one does not depend on a switch and relates to exam-page support. The extension's reading of the question API on <code>wangda.chinamobile.com</code> is likewise site-specific support. Both domains appear in the extension's manifest and can be inspected publicly.</p>
     </section>
 
     <section>
