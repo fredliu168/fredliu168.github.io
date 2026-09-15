@@ -14,7 +14,7 @@
         color: #fff;
         background-color: $MAIN_COLOR;
         &:hover {
-            background-color: $MAIN_COLOR - 40;
+            background-color: darken($MAIN_COLOR, 10%);
         }
     }
 }

@@ -85,13 +85,15 @@ card_style:
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
 #theme: next
-theme: prontera2
+theme: prontera
 #theme: stellar
+
+friend_links: []
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: https://github.com/fredliu168/fredliu168.github.io.git
+  repo: git@github.com:fredliu168/fredliu168.github.io.git
   branch: master
   message:

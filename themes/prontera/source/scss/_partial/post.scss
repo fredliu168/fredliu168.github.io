@@ -59,7 +59,7 @@
         word-break: break-all;
 
         &:hover {
-            color: $MAIN_COLOR - 20;
+            color: darken($MAIN_COLOR, 5%);
         }
     }
     blockquote {
@@ -215,7 +215,7 @@ pre {
         color: #42b983;
     }
     .title {
-        color: $MAIN_COLOR + 20;
+        color: lighten($MAIN_COLOR, 5%);
     }
     .tag .value,
     .string,

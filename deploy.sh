@@ -1,7 +1,8 @@
 # 发布站点
-hexo clean 
-hexo d -g
-# 备份到git
+set -e
+./node_modules/.bin/hexo clean
+./node_modules/.bin/hexo d -g
+# 备份到 git
 git add -A
-git commit -m "--"
+git diff --cached --quiet || git commit -m "--"
 git push origin hexo

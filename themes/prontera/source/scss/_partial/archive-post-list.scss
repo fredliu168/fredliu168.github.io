@@ -13,7 +13,7 @@
         margin-left: 125px;
         color: $MAIN_COLOR;
         word-break: break-all;
-        @include animate(hover, color, $MAIN_COLOR - 80, 0.3s);
+        @include animate(hover, color, darken($MAIN_COLOR, 20%), 0.3s);
         &:hover {
             border-bottom: 0;
         }

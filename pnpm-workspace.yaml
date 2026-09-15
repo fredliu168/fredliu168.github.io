@@ -1,0 +1,5 @@
+packages:
+  - .
+
+overrides:
+  hexo-front-matter: ^1.0.0
