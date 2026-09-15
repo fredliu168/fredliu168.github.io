@@ -4,6 +4,7 @@ menu:
   Archives: archives  # 归档
   Categories: categories  # 分类
   Tags: tags  # 标签
+  OmniAgent: omniagent  # omniagent 宣传主页
   Repository: repository  # github repositories
   Books: books  # 豆瓣书单
   Links: links  # 友链
@@ -16,6 +17,7 @@ menu_icons:
   archives: icon-archives-fill
   categories: icon-folder
   tags: icon-tags
+  omniagent: icon-star-fill
   repository: icon-project
   books: icon-book-fill
   links: icon-friendship

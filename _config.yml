@@ -41,6 +41,7 @@ category_dir: categories
 code_dir: downloads/code
 i18n_dir: :lang
 skip_render:
+  - 'omniagent/**'   # omniagent 宣传主页：独立静态页，原样拷贝
 
 # Writing
 new_post_name: :title.md # File name of new posts
