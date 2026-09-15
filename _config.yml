@@ -27,7 +27,7 @@ baidu_analytics: 6ca493ead9e34275c0dc9fecbcf5ede1
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: https://blog.qzcool.xyz
+url: http://fredliu168.github.io
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
