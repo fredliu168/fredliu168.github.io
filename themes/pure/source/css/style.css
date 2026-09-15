@@ -9219,7 +9219,7 @@ body.okayNav-loaded {
   position: relative;
   z-index: 1100;
   width: 100%;
-  height: 260px;
+  height: 120px;
   margin: 0;
   padding: 0;
   overflow: hidden;
@@ -9236,7 +9236,7 @@ body.okayNav-loaded {
 
 .header,
 .sidebar {
-  top: 260px;
+  top: 120px;
 }
 
 @media (max-width: 767px) {
@@ -9245,11 +9245,11 @@ body.okayNav-loaded {
   }
 
   .site-banner {
-    height: 150px;
+    height: 120px;
   }
 
   .header {
-    top: 150px;
+    top: 120px;
   }
 
   .main {
