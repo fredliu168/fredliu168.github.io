@@ -12,10 +12,10 @@
 	bodyClass = page.sidebar === 'none' ? (bodyClass + ' no-sidebar') : bodyClass;
 %>
 <body class="<%= bodyClass %>" itemscope itemtype="http://schema.org/WebPage">
+  <%- partial('_common/header', null, {cache: !config.relative_link}) %>
   <section class="site-banner" aria-label="站点横幅">
     <img src="<%- url_for('images/banner.jpg') %>" alt="代码与生活横幅" loading="eager">
   </section>
-  <%- partial('_common/header', null, {cache: !config.relative_link}) %>
   <% if (theme.sidebar && (page.sidebar!='none' || page.sidebar!='custom')){ %>
     <%- partial('_partial/sidebar', null, {cache: !config.relative_link}) %>
   <% } %>

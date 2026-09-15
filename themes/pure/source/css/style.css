@@ -9217,10 +9217,10 @@ body.okayNav-loaded {
 /* Site banner */
 .site-banner {
   position: relative;
-  z-index: 1100;
-  width: 100%;
+  z-index: 900;
+  width: 83.33333333%;
   height: 120px;
-  margin: 0;
+  margin: 0 0 0 16.66667%;
   padding: 0;
   overflow: hidden;
   background: #111;
@@ -9234,25 +9234,37 @@ body.okayNav-loaded {
   object-position: center center;
 }
 
-.header,
 .sidebar {
   top: 120px;
 }
 
+.header {
+  top: 0;
+}
+
+@media (max-width: 991px) {
+  .site-banner {
+    width: 95.83333333%;
+    margin-left: 4.16667%;
+  }
+}
+
 @media (max-width: 767px) {
   body {
-    padding-top: 0;
+    padding-top: 53px;
   }
 
   .site-banner {
+    width: 100%;
     height: 120px;
+    margin: 0;
   }
 
   .header {
-    top: 120px;
+    top: 0;
   }
 
   .main {
-    margin-top: 53px;
+    margin-top: 0;
   }
 }
