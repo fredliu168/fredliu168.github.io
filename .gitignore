@@ -5,3 +5,5 @@ db.json
 node_modules/
 public/
 .deploy*/
+# 独立站点：The Epub AI Assistant 宣传页（自己的仓库，不进博客仓库）
+epub-ai-site/

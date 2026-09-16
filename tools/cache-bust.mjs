@@ -2,7 +2,7 @@
 /**
  * cache-bust.mjs — append a content hash to local asset URLs in the generated pages.
  *
- * Why this exists: the omniagent pages are copied verbatim by Hexo (skip_render),
+ * Why this exists: the omniagent and epub-ai pages are copied verbatim by Hexo (skip_render),
  * so every deploy reuses the same style.css / app.js URLs. GitHub Pages serves
  * them with `cache-control: max-age=600`, so anyone who loaded the site shortly
  * before a deploy keeps the previous stylesheet — and because the new markup
@@ -19,7 +19,7 @@ import { existsSync, readFileSync, readdirSync, statSync, writeFileSync } from '
 import { dirname, join, resolve } from 'node:path';
 
 const PUBLIC_DIR = resolve(process.cwd(), 'public');
-const ROOTS = ['omniagent'];
+const ROOTS = ['omniagent', 'epub-ai'];
 const EXT = 'css|js|mjs|png|ico|svg|webp|avif|jpg|jpeg|gif';
 
 /* local refs only: excludes absolute URLs (no ':' allowed) and fragments */

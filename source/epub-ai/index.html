@@ -1,0 +1,738 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f7f3ee">
+<title>The Epub AI Assistant — 把书库装进浏览器侧边栏</title>
+<meta name="description" content="The Epub AI Assistant 是一个 Chrome 侧边栏 AI 双语 EPUB 阅读器插件：本地导入书籍、段落流式双语翻译、整章摘要、划词翻译，模型配置只存在你的浏览器里，没有账号，没有后端。">
+<meta name="keywords" content="EPUB,双语翻译,AI 阅读器,Chrome 扩展,side panel,OpenAI 兼容,IndexedDB,DeepSeek,划词翻译,整章摘要">
+
+<!-- 站点地址只出现在下面这四行绝对 URL 里（canonical / og:url / og:image / JSON-LD）。
+     换域名或换仓库名时改这里即可 —— 页面内的样式、脚本、图标全是相对路径。 -->
+<link rel="canonical" href="https://fredliu168.github.io/epub-ai/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="The Epub AI Assistant — 把书库装进浏览器侧边栏">
+<meta property="og:description" content="本地书架、段落双语、整章摘要、划词翻译。自带 API Key，直连任意 OpenAI 兼容接口，书和密钥都不离开你的浏览器。">
+<meta property="og:url" content="https://fredliu168.github.io/epub-ai/">
+<meta property="og:image" content="https://fredliu168.github.io/epub-ai/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="The Epub AI Assistant — 把整个书库装进浏览器侧边栏">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://fredliu168.github.io/epub-ai/og.png">
+<link rel="icon" type="image/svg+xml" href="icon.svg">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="manifest" href="site.webmanifest">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "The Epub AI Assistant",
+  "applicationCategory": "BrowserApplication",
+  "applicationSubCategory": "EPUB reader",
+  "operatingSystem": "Chrome, Chromium",
+  "softwareVersion": "1.0.0",
+  "inLanguage": "zh-CN",
+  "url": "https://fredliu168.github.io/epub-ai/",
+  "image": "https://fredliu168.github.io/epub-ai/og.png",
+  "description": "Chrome 侧边栏 AI 双语 EPUB 阅读器插件：本地书架、段落流式双语翻译、整章摘要、划词翻译，模型配置只保存在浏览器本地。",
+  "featureList": [
+    "本地导入与 URL 导入 EPUB",
+    "IndexedDB 本地书架",
+    "段落流式双语翻译",
+    "整章摘要",
+    "划词与短语翻译",
+    "任意 OpenAI 兼容接口"
+  ],
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "CNY" }
+}
+</script>
+<!-- Pick the theme before first paint so there is no flash of the wrong colour.
+     If storage or JS is unavailable, CSS keeps the light (paper) defaults. -->
+<script>
+(function () {
+  try {
+    var saved = window.localStorage.getItem('epub-ai-theme');
+    var theme = (saved === 'light' || saved === 'dark') ? saved
+      : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+  } catch (e) {
+    document.documentElement.setAttribute('data-theme', 'light');
+  }
+})();
+</script>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="bg" aria-hidden="true">
+  <div class="bg-wash"></div>
+  <div class="bg-rules"></div>
+</div>
+
+<a class="skip" href="#main">跳到主要内容</a>
+
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="./" aria-label="The Epub AI Assistant">
+      <span class="brand-mark"><img src="icon.svg" alt="" width="26" height="26" decoding="async"></span>
+      <span class="brand-line">
+        <span class="brand-name">The Epub AI Assistant</span>
+        <span class="brand-sub" data-i18n="nav.sub">浏览器插件版，本地保存书籍与模型配置。</span>
+      </span>
+      <span class="brand-tag">v1.0.0</span>
+    </a>
+
+    <nav class="nav-links" aria-label="主导航">
+      <a href="#demo" data-i18n="nav.demo">效果演示</a>
+      <a href="#features" data-i18n="nav.features">功能</a>
+      <a href="#how" data-i18n="nav.how">工作原理</a>
+      <a href="#install" data-i18n="nav.install">安装</a>
+      <a href="#faq" data-i18n="nav.faq">常见问题</a>
+    </nav>
+
+    <div class="nav-actions">
+      <button class="theme-switch" id="theme-toggle" type="button" role="switch" aria-checked="false" aria-label="切换到深色模式" title="切换到深色模式">
+        <span class="ts-track" aria-hidden="true">
+          <span class="ts-knob"><svg class="ts-icon" viewBox="0 0 20 20" aria-hidden="true"><path class="ts-sun" d="M10 3.2a.9.9 0 0 1 .9.9v1.2a.9.9 0 0 1-1.8 0V4.1a.9.9 0 0 1 .9-.9Zm0 10.6a3.8 3.8 0 1 0 0-7.6 3.8 3.8 0 0 0 0 7.6Zm0 2.1a.9.9 0 0 1 .9.9v1.1a.9.9 0 0 1-1.8 0v-1.1a.9.9 0 0 1 .9-.9Zm6.8-5.9a.9.9 0 0 1-.9.9h-1.1a.9.9 0 0 1 0-1.8h1.1a.9.9 0 0 1 .9.9ZM5.2 10a.9.9 0 0 1-.9.9H3.2a.9.9 0 0 1 0-1.8h1.1a.9.9 0 0 1 .9.9Zm10.1-5.3a.9.9 0 0 1 0 1.3l-.8.8a.9.9 0 0 1-1.3-1.3l.8-.8a.9.9 0 0 1 1.3 0ZM6.8 13.2a.9.9 0 0 1 0 1.3l-.8.8a.9.9 0 0 1-1.3-1.3l.8-.8a.9.9 0 0 1 1.3 0Zm8.5 2.1a.9.9 0 0 1-1.3 0l-.8-.8a.9.9 0 0 1 1.3-1.3l.8.8a.9.9 0 0 1 0 1.3ZM6.8 6.8a.9.9 0 0 1-1.3 0l-.8-.8a.9.9 0 0 1 1.3-1.3l.8.8a.9.9 0 0 1 0 1.3Z"/><path class="ts-moon" d="M16.3 11.7a6 6 0 0 1-7.9-7.4.7.7 0 0 0-.9-.9 7.6 7.6 0 1 0 9.8 9.8.7.7 0 0 0-.9-.9Z"/></svg></span>
+          <span class="ts-marks"><i></i><i></i></span>
+        </span>
+      </button>
+
+      <button class="lang-btn" id="lang-toggle" type="button" aria-label="切换语言 / Switch language">
+        <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.4" d="M1.6 4.2h8M5.6 2.2v2M7.2 4.2c-.6 2.6-2.4 4.6-5 5.6M3.1 7.1c1 1.6 2.4 2.6 4 3.2M8.9 14.2l3-8 3 8M9.9 11.6h4"/></svg>
+        <span id="lang-label">EN</span>
+      </button>
+
+      <!-- TODO: 仓库发布后把这两处 profile 链接换成项目仓库地址 -->
+      <a class="ghost-btn" href="https://github.com/fredliu168" target="_blank" rel="noopener" aria-label="GitHub — The Epub AI Assistant">
+        <svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8a8 8 0 0 0 5.47 7.59c.4.07.55-.17.55-.38l-.01-1.49c-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.4 7.4 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48l-.01 2.2c0 .21.15.46.55.38A8 8 0 0 0 8 0Z"/></svg>
+        <span data-i18n="nav.github">GitHub</span>
+      </a>
+      <a class="solid-btn sm" href="#install" data-i18n="nav.cta">三步装好</a>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ============================ hero ============================ -->
+  <section class="hero wrap">
+    <div class="hero-copy">
+      <p class="pill">
+        <span class="dot" aria-hidden="true"></span>
+        <span data-i18n="hero.pill">浏览器插件版 · 无登录 · 本地优先</span>
+      </p>
+      <h1 data-i18n-html="hero.title">把 EPUB 阅读、<br>双语翻译和 AI 摘要，<br>收进<span class="mark">浏览器侧边栏</span>。</h1>
+      <p class="lede" data-i18n="hero.lede">导入本地书籍或远程 EPUB 链接，在插件内直接配置 OpenAI 兼容模型服务。书籍、API Key 和阅读记录都只保存在当前浏览器。</p>
+      <div class="cta-row">
+        <a class="solid-btn" href="#install">
+          <span data-i18n="hero.cta1">三步安装扩展</span>
+          <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" d="M3 8h9M8.4 4.4 12 8l-3.6 3.6"/></svg>
+        </a>
+        <a class="line-btn" href="#demo" data-i18n="hero.cta2">先看它怎么读一本书</a>
+      </div>
+      <ul class="hero-facts">
+        <li><b data-i18n="hero.fact1">本地</b><span data-i18n="hero.fact1k">存储</span></li>
+        <li><b data-i18n="hero.fact2">无登录</b><span data-i18n="hero.fact2k">账号体系</span></li>
+        <li><b data-i18n="hero.fact3">可自定义</b><span data-i18n="hero.fact3k">模型接入</span></li>
+        <li><b data-i18n="hero.fact4">5 种</b><span data-i18n="hero.fact4k">界面语言</span></li>
+      </ul>
+    </div>
+
+    <aside class="hero-side" aria-label="插件速览">
+      <div class="hero-card">
+        <div class="hc-head">
+          <span data-i18n="hero.card.title">模型配置</span>
+          <span class="hc-x" aria-hidden="true">×</span>
+        </div>
+        <p class="hc-sub" data-i18n="hero.card.sub">所有配置仅保存在当前浏览器本地，用于直连 OpenAI 兼容接口。</p>
+        <div class="hc-body">
+          <div class="hc-row">
+            <span class="hc-key">Provider</span>
+            <span class="hc-val f-select"><span>OpenAI</span>
+              <svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" d="M4.4 6.4 8 10l3.6-3.6"/></svg>
+            </span>
+          </div>
+          <div class="hc-row">
+            <span class="hc-key">Base URL</span>
+            <span class="hc-val mono">https://api.openai.com/v1/chat/completions</span>
+          </div>
+          <div class="hc-row">
+            <span class="hc-key">API Key</span>
+            <span class="hc-val mono">sk-••••••••••••4f2a</span>
+          </div>
+          <div class="hc-row">
+            <span class="hc-key">Model</span>
+            <span class="hc-val mono">gpt-4.1-mini</span>
+          </div>
+          <div class="hc-row">
+            <span class="hc-key" data-i18n="hero.card.prompt">翻译提示词</span>
+            <span class="hc-val hc-textarea">Translate the following text into fluent Chinese, retaining formatting.</span>
+          </div>
+        </div>
+        <div class="hc-split">
+          <span class="hc-link" data-i18n="hero.card.welcome">显示欢迎页</span>
+          <span class="hc-done" data-i18n="hero.card.done">完成</span>
+        </div>
+      </div>
+      <p class="hero-side-note" data-i18n="hero.side.note">↑ 插件里的模型配置弹窗，原样搬了过来：Provider、Base URL、API Key、Model 与提示词，全部只保存在本地。</p>
+    </aside>
+  </section>
+
+  <!-- ============================ demo stage ============================ -->
+  <section class="stage-section" id="demo">
+    <div class="wrap section-head">
+      <p class="kicker" data-i18n="demo.kicker">效果演示</p>
+      <h2 data-i18n="demo.h2">一页书，两种声音</h2>
+      <p class="sub" data-i18n="demo.sub">下面是插件的真实布局：左边是章节正文，右边是侧边栏。选择下面的场景，看它在一次阅读里做完哪些事。</p>
+    </div>
+
+    <div class="wrap">
+      <div class="stage">
+        <div class="stage-glow" aria-hidden="true"></div>
+
+        <div class="window">
+          <div class="chrome">
+            <div class="lights" aria-hidden="true"><i></i><i></i><i></i></div>
+            <div class="omnibox">
+              <span class="lock" aria-hidden="true">
+                <svg viewBox="0 0 12 12" width="11" height="11"><path fill="currentColor" d="M3.4 5V3.8a2.6 2.6 0 0 1 5.2 0V5h.3c.5 0 .9.4.9.9v3.4c0 .5-.4.9-.9.9H3.1a.9.9 0 0 1-.9-.9V5.9c0-.5.4-.9.9-.9h.3Zm1.2 0h2.8V3.8a1.4 1.4 0 0 0-2.8 0V5Z"/></svg>
+              </span>
+              <span class="omni-url">reader.local/the-art-of-reading/chapter-3</span>
+            </div>
+            <div class="chrome-actions">
+              <span class="ext-chip" aria-hidden="true">
+                <img src="icon.svg" alt="" width="14" height="14" decoding="async">
+                <i class="ext-dot"></i>
+              </span>
+            </div>
+          </div>
+
+          <div class="window-body">
+            <!-- ---------------- reading pane ---------------- -->
+            <div class="page">
+              <div class="page-bar">
+                <button class="page-tool" type="button" tabindex="-1">
+                  <svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" d="M2.5 3.6h11M2.5 7h11M2.5 10.4h7.5"/></svg>
+                  <span data-i18n="demo.page.toc">目录</span>
+                </button>
+                <span class="page-tool-static">Aa</span>
+                <span class="page-tool-static">67%</span>
+                <span class="page-spacer"></span>
+                <span class="dual-pill" id="dual-pill">
+                  <i class="dp-dot"></i>
+                  <span data-i18n="demo.page.dual">双语 关</span>
+                </span>
+              </div>
+
+              <div class="page-scroll">
+                <article class="page-content">
+                  <p class="chapter-kicker" data-i18n="demo.chapter.kicker">第三章</p>
+                  <h3 class="chapter-title" data-i18n="demo.chapter.title">注意力的代价</h3>
+                  <p class="chapter-meta"><span data-i18n="demo.chapter.meta">1,842 词 · 12 段 · 约 9 分钟</span> · <span class="mono">EPUB 3.0</span> · <span class="mono">English → 中文</span></p>
+
+                  <p class="para" data-para="1">Every book is a machine for slowing thought down. A page does not care how quickly you move through it; it only asks that you stay long enough for an idea to land.
+                    <span class="trans" data-trans="1" hidden></span>
+                  </p>
+
+                  <p class="para" data-para="2">Translation is <span class="sel" id="sel-phrase" data-sel="1">the oldest form of collaboration</span>. One mind lends its words to another, and the reader keeps both at once — the voice and its echo.
+                    <span class="trans" data-trans="2" hidden></span>
+
+                    <span class="word-pop" id="word-pop" hidden>
+                      <span class="wp-word">collaboration</span>
+                      <span class="wp-ipa">/kəˌlæbəˈreɪʃn/</span>
+                      <span class="wp-def" data-i18n="demo.word.def">n. 合作，协作；共同完成某项工作</span>
+                      <span class="wp-src" data-i18n="demo.word.src">来自你选中的短语</span>
+                    </span>
+                  </p>
+
+                  <p class="para" data-para="3">Reading in two languages is not a talent, it is a rhythm: read, pause, compare, continue. The pause is where the meaning is made.
+                    <span class="trans" data-trans="3" hidden></span>
+                  </p>
+
+                  <p class="page-foot" data-i18n="demo.page.foot">章节 HTML 经 DOMPurify 清洗后隔离渲染</p>
+                </article>
+              </div>
+            </div>
+
+            <!-- ---------------- side panel ---------------- -->
+            <aside class="panel" aria-label="扩展侧边栏">
+              <div class="panel-head">
+                <span class="panel-brand">
+                  <img src="icon.svg" alt="" width="16" height="16" decoding="async">
+                  <span>The Epub AI Assistant</span>
+                </span>
+                <span class="panel-state" id="panel-state"><i class="ps-dot"></i><span data-i18n="demo.state.idle">就绪</span></span>
+              </div>
+
+              <div class="panel-tabs" role="tablist" aria-label="侧边栏视图">
+                <button role="tab" class="ptab" data-panel="library" aria-selected="false" data-i18n="demo.tab.library">书架</button>
+                <button role="tab" class="ptab" data-panel="reader" aria-selected="true" data-i18n="demo.tab.reader">阅读</button>
+                <button role="tab" class="ptab" data-panel="settings" aria-selected="false" data-i18n="demo.tab.settings">模型配置</button>
+              </div>
+
+              <div class="panel-body">
+
+                <!-- scene: library -->
+                <div class="scene" data-scene="library" hidden>
+                  <p class="scene-note" data-i18n="demo.lib.hint">直接导入 EPUB 即可开始阅读。AI 翻译、摘要与选词功能使用你在本地设置的大模型配置。</p>
+
+                  <div class="drop" id="drop-zone">
+                    <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M12 15.5V4m0 0L8.2 7.8M12 4l3.8 3.8M4.5 15.2v2.6a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2v-2.6"/></svg>
+                    <span class="drop-title" data-i18n="demo.drop.title">拖入 .epub 或点击选择</span>
+                    <span class="drop-sub" data-i18n="demo.drop.sub">也可以粘贴一个 EPUB 链接</span>
+                    <span class="drop-bar"><i id="drop-progress"></i></span>
+                    <span class="drop-msg" id="drop-msg" hidden></span>
+                  </div>
+
+                  <div class="lib-head">
+                    <span data-i18n="demo.lib.title">本地书架</span>
+                    <span class="lib-count" id="lib-count">2</span>
+                  </div>
+
+                  <ul class="shelf" id="shelf">
+                    <li class="book">
+                      <span class="cover c3" aria-hidden="true">AS</span>
+                      <span class="book-meta">
+                        <b>Atlas of Small Things</b>
+                        <span class="book-sub" data-i18n="demo.book1.sub">EPUB 3.0 · 1.8 MB · 读到 42%</span>
+                      </span>
+                    </li>
+                    <li class="book">
+                      <span class="cover c2" aria-hidden="true">NA</span>
+                      <span class="book-meta">
+                        <b>Notes on Attention</b>
+                        <span class="book-sub" data-i18n="demo.book2.sub">EPUB 3.0 · 1.1 MB · 未开始</span>
+                      </span>
+                    </li>
+                  </ul>
+
+                  <p class="scene-note" data-i18n="demo.lib.note">图书以 Blob 形式存进 IndexedDB，关掉浏览器也还在。</p>
+                </div>
+
+                <!-- scene: reader -->
+                <div class="scene" data-scene="reader">
+                  <div class="read-actions">
+                    <button class="mini-btn" id="act-translate" type="button">
+                      <svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" d="M2 4h7M5.5 2.5V4M6.8 4c-.5 2.3-2 3.9-4.3 4.8M3.1 6.6c.9 1.4 2.1 2.3 3.4 2.8M9.4 13.6l2.6-7 2.6 7M10.3 11.4h3.4"/></svg>
+                      <span data-i18n="demo.act.translate">段落双语翻译</span>
+                    </button>
+                    <button class="mini-btn" id="act-summary" type="button">
+                      <svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" d="M3 2.6h10v10.8H3zM5.4 5.6h5.2M5.4 8h5.2M5.4 10.4h3"/></svg>
+                      <span data-i18n="demo.act.summary">整章摘要</span>
+                    </button>
+                    <button class="mini-btn" id="act-word" type="button">
+                      <svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" d="M2.4 8.2c1.7-3.2 4.4-4.8 8-4.8M3.2 11.4h5.2M10.6 9.4l3 3M13.6 9.4l-3 3"/></svg>
+                      <span data-i18n="demo.act.word">划词 / 短语翻译</span>
+                    </button>
+                  </div>
+
+                  <p class="hint" data-i18n="demo.reader.hint">在正文里选中任意词或短语，译文会浮在句子旁边。</p>
+
+                  <div class="stream" id="stream-card" hidden>
+                    <div class="stream-head">
+                      <span class="stream-title" id="stream-title">整章摘要</span>
+                      <span class="stream-badge" id="stream-badge">streaming</span>
+                    </div>
+                    <div class="stream-meta" id="stream-meta"></div>
+                    <div class="stream-body" id="stream-body"></div>
+                  </div>
+
+                  <div class="word-card" id="word-card" hidden>
+                    <div class="wc-head">
+                      <b id="wc-word">collaboration</b>
+                      <span id="wc-ipa">/kəˌlæbəˈreɪʃn/</span>
+                    </div>
+                    <p class="wc-def" id="wc-def">n. 合作，协作；共同完成某项工作</p>
+                    <p class="wc-ex" id="wc-ex">Translation is the oldest form of collaboration.</p>
+                    <p class="wc-ex-tr" id="wc-ex-tr">翻译是最古老的一种协作。</p>
+                    <button class="mini-btn ghost" type="button" tabindex="-1" data-i18n="demo.word.add">加入生词本</button>
+                  </div>
+
+                  <div class="panel-foot-inline">
+                    <span class="tok" id="tok-chip"><b>0</b> <span data-i18n="demo.tok">tokens</span></span>
+                    <span class="tok" id="lat-chip"><b>—</b> <span data-i18n="demo.lat">首字延迟</span></span>
+                  </div>
+                </div>
+
+                <!-- scene: settings -->
+                <div class="scene" data-scene="settings" hidden>
+                  <p class="scene-note" data-i18n="demo.set.note">所有配置仅保存在当前浏览器本地，用于直连 OpenAI 兼容接口。</p>
+                  <label class="field">
+                    <span class="f-label">Provider</span>
+                    <span class="f-input f-select">
+                      <span id="set-provider">openai</span>
+                      <svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" d="M4.4 6.4 8 10l3.6-3.6"/></svg>
+                    </span>
+                  </label>
+                  <label class="field">
+                    <span class="f-label">Base URL</span>
+                    <span class="f-input mono" id="set-base">https://api.openai.com/v1/chat/completions</span>
+                  </label>
+                  <label class="field">
+                    <span class="f-label">API Key</span>
+                    <span class="f-input mono" id="set-key" data-i18n="demo.set.keyEmpty">sk-…</span>
+                  </label>
+                  <label class="field">
+                    <span class="f-label">Model</span>
+                    <span class="f-input mono" id="set-model">gpt-4.1-mini</span>
+                  </label>
+                  <label class="field">
+                    <span class="f-label" data-i18n="demo.set.prompt">翻译提示词</span>
+                    <span class="f-area" id="set-prompt" data-i18n="demo.set.promptText">Translate the following text into fluent Chinese, retaining formatting.</span>
+                  </label>
+                  <label class="field">
+                    <span class="f-label" data-i18n="demo.set.prompt2">摘要提示词</span>
+                    <span class="f-area" id="set-prompt2" data-i18n="demo.set.promptText2">Please summarize the following article in Chinese. Focus on the main points, key arguments, and conclusions.</span>
+                  </label>
+                  <div class="set-actions">
+                    <span class="hc-link" data-i18n="hero.card.welcome">显示欢迎页</span>
+                    <button class="mini-btn" type="button" tabindex="-1" id="set-done" data-i18n="hero.card.done">完成</button>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="panel-input">
+                <span class="pi-text" id="panel-input-text" data-i18n="demo.input.placeholder">问这本书任何问题…</span>
+                <span class="pi-send" aria-hidden="true">
+                  <svg viewBox="0 0 16 16" width="13" height="13"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" d="M8 12.6V3.6M4.4 7.2 8 3.6l3.6 3.6"/></svg>
+                </span>
+              </div>
+            </aside>
+          </div>
+        </div>
+
+        <div class="stage-bar">
+          <div class="chips" role="tablist" aria-label="演示场景">
+            <button role="tab" class="chip" data-scenario="import" aria-selected="false" data-i18n="chip.import">① 导入书库</button>
+            <button role="tab" class="chip" data-scenario="translate" aria-selected="false" data-i18n="chip.translate">② 段落双语</button>
+            <button role="tab" class="chip" data-scenario="summary" aria-selected="false" data-i18n="chip.summary">③ 整章摘要</button>
+            <button role="tab" class="chip" data-scenario="word" aria-selected="false" data-i18n="chip.word">④ 划词翻译</button>
+            <button role="tab" class="chip" data-scenario="settings" aria-selected="false" data-i18n="chip.settings">⑤ 模型配置</button>
+          </div>
+          <p class="stage-note" data-i18n="demo.note">演示为预设内容，页面不会发起任何模型请求。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ features ============================ -->
+  <section class="section wrap" id="features">
+    <div class="section-head">
+      <p class="kicker" data-i18n="feat.kicker">功能</p>
+      <h2 data-i18n="feat.h2">一个阅读器该有的样子</h2>
+      <p class="sub" data-i18n="feat.sub">没有会员墙，没有积分，没有「额度不足」。装上就能用，能用的边界只由你自己配的模型决定。</p>
+    </div>
+
+    <div class="cards">
+      <article class="card">
+        <span class="card-ico"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M12 6.5C10.3 5 8.4 4.3 6 4.3H4v13.4h2c2.4 0 4.3.7 6 2.2 1.7-1.5 3.6-2.2 6-2.2h2V4.3h-2c-2.4 0-4.3.7-6 2.2Zm0 0v13.4"/></svg></span>
+        <h3 data-i18n="feat.1.t">两种导入</h3>
+        <p data-i18n="feat.1.d">拖拽本地 .epub 文件，或粘贴一个 EPUB 链接直接拉取。解包、解析目录、写库全部在插件里完成。</p>
+      </article>
+
+      <article class="card">
+        <span class="card-ico"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M4.5 5.5h6v13h-6zM13.5 5.5h6v13h-6zM7.5 9h0M16.5 9h0"/></svg></span>
+        <h3 data-i18n="feat.2.t">本地书架</h3>
+        <p data-i18n="feat.2.d">书籍以 Blob 存进 IndexedDB，带阅读进度。支持打开、删除、重新下载，换台设备也不影响本机书库。</p>
+      </article>
+
+      <article class="card">
+        <span class="card-ico"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M4 6h9M8.5 4v2M9.9 6c-.7 3-2.6 5.2-5.6 6.4M5.6 9.6c1.2 1.9 2.8 3 4.5 3.6M12.6 19.5l3.6-9.5 3.6 9.5M13.9 16.5h4.6"/></svg></span>
+        <h3 data-i18n="feat.3.t">段落流式双语</h3>
+        <p data-i18n="feat.3.d">按段落切分请求，译文边生成边回填到原段下方。不整章等，读到哪译到哪，随时可以停下。</p>
+      </article>
+
+      <article class="card">
+        <span class="card-ico"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M5 4.5h14v15H5zM8 8h8M8 11.5h8M8 15h5"/></svg></span>
+        <h3 data-i18n="feat.4.t">整章摘要</h3>
+        <p data-i18n="feat.4.d">一键把当前章节压成几条可带走的线索，先判断这一章值不值得细读，再决定读多深。</p>
+      </article>
+
+      <article class="card">
+        <span class="card-ico"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M4 8.5h6.5M7.2 6.5v2M8.6 8.5c-.6 2.7-2.3 4.7-5 5.8M5.2 11.6c1 1.7 2.5 2.8 4.1 3.3M20 6.5l-3 8M14.6 14.5l3-8 3 8M15.8 11.9h3.6"/></svg></span>
+        <h3 data-i18n="feat.5.t">划词即译</h3>
+        <p data-i18n="feat.5.d">选中生词或长短语，音标、释义、例句一起给出，还能顺手存进生词本。</p>
+      </article>
+
+      <article class="card">
+        <span class="card-ico"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M9.5 4.5a2 2 0 1 1 4 0V11a2 2 0 1 1-4 0V4.5ZM13.5 11.6v1.9a3.5 3.5 0 0 1-7 0v-1.4M18.5 8.5v6.9a3.5 3.5 0 0 1-3.5 3.5h-1"/></svg></span>
+        <h3 data-i18n="feat.6.t">直连任意兼容接口</h3>
+        <p data-i18n="feat.6.d">OpenAI、DeepSeek、自建中转、本地 Ollama / vLLM 都行。提示词可编辑，温度与目标语言你说了算。</p>
+      </article>
+
+      <article class="card">
+        <span class="card-ico"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M12 3.5 5 6.3v5.2c0 4 2.9 7.4 7 8.9 4.1-1.5 7-4.9 7-8.9V6.3L12 3.5ZM9.2 11.9l2.1 2.1 3.7-3.9"/></svg></span>
+        <h3 data-i18n="feat.7.t">隐私默认开启</h3>
+        <p data-i18n="feat.7.d">没有账号系统，没有业务后端。章节 HTML 先经 DOMPurify 清洗再渲染，权限只要 storage 与 sidePanel。</p>
+      </article>
+
+      <article class="card">
+        <span class="card-ico"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M12 4.2c-4.3 0-7.8 3.5-7.8 7.8s3.5 7.8 7.8 7.8 7.8-3.5 7.8-7.8S16.3 4.2 12 4.2Zm0 0c2 2.1 3.1 4.8 3.1 7.8S14 17.7 12 19.8m0-15.6C10 6.3 8.9 9 8.9 12s1.1 5.7 3.1 7.8M4.5 9.8h15M4.5 14.2h15"/></svg></span>
+        <h3 data-i18n="feat.8.t">五语界面</h3>
+        <p data-i18n="feat.8.d">中文、English、日本語、Deutsch、Français 随时切换，阅读区与设置面板一起跟着变。</p>
+      </article>
+
+      <article class="card">
+        <span class="card-ico"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M3.5 6.5h17v11h-17zM3.5 10h17M6.2 13.4h4M6.2 15.8h2.6"/></svg></span>
+        <h3 data-i18n="feat.9.t">住在侧边栏</h3>
+        <p data-i18n="feat.9.d">点一下工具栏图标，侧边栏就打开。它和你的网页并排存在，不用再来回切标签页。</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============================ how it works ============================ -->
+  <section class="section wrap" id="how">
+    <div class="section-head">
+      <p class="kicker" data-i18n="how.kicker">工作原理</p>
+      <h2 data-i18n="how.h2">四步，全在浏览器里</h2>
+      <p class="sub" data-i18n="how.sub">从拖进文件到看见译文，中间没有一台属于别人的服务器。</p>
+    </div>
+
+    <ol class="pipeline">
+      <li>
+        <span class="step-no">01</span>
+        <h3 data-i18n="how.1.t">解包</h3>
+        <p data-i18n="how.1.d">JSZip 打开 EPUB 容器，fast-xml-parser 解析 OPF 与 NCX，抽出书目信息与完整目录树。</p>
+        <span class="step-tag mono">core/parser</span>
+      </li>
+      <li>
+        <span class="step-no">02</span>
+        <h3 data-i18n="how.2.t">入库</h3>
+        <p data-i18n="how.2.d">Dexie 把书与章节写进 IndexedDB，阅读进度、生词本一同持久化，关掉浏览器也不丢。</p>
+        <span class="step-tag mono">core/db</span>
+      </li>
+      <li>
+        <span class="step-no">03</span>
+        <h3 data-i18n="how.3.t">渲染</h3>
+        <p data-i18n="how.3.d">章节 HTML 经 DOMPurify 清洗，再放进隔离容器排版。目录跳转、字号、双语开关即时生效。</p>
+        <span class="step-tag mono">components/viewer</span>
+      </li>
+      <li>
+        <span class="step-no">04</span>
+        <h3 data-i18n="how.4.t">翻译</h3>
+        <p data-i18n="how.4.d">段落切分后带上你的提示词，流式请求你配置的接口，译文逐段回填；失败自动重试，不打断阅读。</p>
+        <span class="step-tag mono">core/llm</span>
+      </li>
+    </ol>
+
+    <div class="split">
+      <article class="split-main">
+        <h3 data-i18n="how.arch.t">分层清晰，平台相关代码关在门口</h3>
+        <p data-i18n="how.arch.d">解析、模型、存储、界面各自独立，浏览器插件相关逻辑集中在适配层。今天它是侧边栏扩展，明天换一层壳，核心不用重写。</p>
+        <ul class="layers">
+          <li><span class="mono">adapters/</span><b data-i18n="how.layer.1">平台适配：扩展桥接 / Web 回退</b></li>
+          <li><span class="mono">core/</span><b data-i18n="how.layer.2">EPUB 解析 · LLM 客户端 · IndexedDB</b></li>
+          <li><span class="mono">store/</span><b data-i18n="how.layer.3">Zustand 状态：书架、阅读器、设置</b></li>
+          <li><span class="mono">i18n/</span><b data-i18n="how.layer.4">五套语言字典，键值统一</b></li>
+        </ul>
+      </article>
+
+      <aside class="split-side">
+        <h3 data-i18n="how.stack.t">技术栈</h3>
+        <ul class="stack">
+          <li>React 19</li>
+          <li>TypeScript 5.9</li>
+          <li>Vite 7</li>
+          <li>Zustand 5</li>
+          <li>Dexie 4 / IndexedDB</li>
+          <li>DOMPurify 3</li>
+          <li>JSZip</li>
+          <li>fast-xml-parser</li>
+          <li>chrome.side_panel</li>
+          <li>Manifest V3</li>
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ============================ models ============================ -->
+  <section class="section wrap" id="models">
+    <div class="section-head">
+      <p class="kicker" data-i18n="models.kicker">模型接入</p>
+      <h2 data-i18n="models.h2">你的 Key，你的服务，你的价钱</h2>
+      <p class="sub" data-i18n="models.sub">插件不绑定任何厂商。填上 Base URL 和 API Key，它就是一个纯粹的 OpenAI 兼容客户端。</p>
+    </div>
+
+    <div class="providers">
+      <article class="provider">
+        <span class="p-name">openai</span>
+        <p class="p-url mono">https://api.openai.com/v1</p>
+        <p data-i18n="models.openai">官方接口，模型列表里的 gpt 系列直接可用。</p>
+      </article>
+      <article class="provider">
+        <span class="p-name">deepseek</span>
+        <p class="p-url mono">https://api.deepseek.com/v1</p>
+        <p data-i18n="models.deepseek">中英互译性价比高，长段落也稳，适合整章翻译。</p>
+      </article>
+      <article class="provider">
+        <span class="p-name">custom</span>
+        <p class="p-url mono">http://localhost:11434/v1</p>
+        <p data-i18n="models.custom">本地 Ollama、vLLM、自建中转或任何兼容网关，写地址就行。</p>
+      </article>
+    </div>
+
+    <div class="prompt-row">
+      <div class="prompt-card">
+        <span class="pc-label" data-i18n="models.prompt.translate">翻译提示词（可编辑）</span>
+        <pre class="mono">你是专业译者。逐段翻译为 {{lang}}，
+保留原意、语气与专有名词，
+只输出译文，不要解释。</pre>
+      </div>
+      <div class="prompt-card">
+        <span class="pc-label" data-i18n="models.prompt.summary">摘要提示词（可编辑）</span>
+        <pre class="mono">用 {{lang}} 总结本章，
+输出 3 条以内的要点，
+每条不超过 30 字。</pre>
+      </div>
+      <div class="prompt-note">
+        <p data-i18n="models.note">默认模板开箱可用，也可以按你的口味改写：加术语表、要求保留原文、只翻译不解释，都写在这两段提示词里。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ install ============================ -->
+  <section class="section wrap" id="install">
+    <div class="section-head">
+      <p class="kicker" data-i18n="install.kicker">安装</p>
+      <h2 data-i18n="install.h2">三步装进 Chrome</h2>
+      <p class="sub" data-i18n="install.sub">插件以「加载已解压的扩展程序」方式安装，源码在你自己手上。</p>
+    </div>
+
+    <div class="install-grid">
+      <ol class="install-steps">
+        <li>
+          <span class="step-no">1</span>
+          <div>
+            <h3 data-i18n="install.1.t">拉取源码并安装依赖</h3>
+            <div class="code">
+              <code id="cmd-1">git clone &lt;repo&gt; &amp;&amp; cd epub_project_plus
+npm install</code>
+              <button class="copy" type="button" data-copy="cmd-1" data-i18n="common.copy">复制</button>
+            </div>
+          </div>
+        </li>
+        <li>
+          <span class="step-no">2</span>
+          <div>
+            <h3 data-i18n="install.2.t">构建插件产物</h3>
+            <div class="code">
+              <code id="cmd-2">npm run build:ext</code>
+              <button class="copy" type="button" data-copy="cmd-2" data-i18n="common.copy">复制</button>
+            </div>
+            <p class="step-note" data-i18n="install.2.d">TypeScript 编译 + Vite 打包，清单文件一并输出到 <span class="mono">dist/</span>。</p>
+          </div>
+        </li>
+        <li>
+          <span class="step-no">3</span>
+          <div>
+            <h3 data-i18n="install.3.t">加载扩展</h3>
+            <p class="step-note" data-i18n-html="install.3.d">打开 <span class="mono">chrome://extensions</span>，右上角开启「开发者模式」，点「加载已解压的扩展程序」，选择构建出来的 <span class="mono">dist/</span> 目录。</p>
+          </div>
+        </li>
+        <li>
+          <span class="step-no">4</span>
+          <div>
+            <h3 data-i18n="install.4.t">开始读第一本书</h3>
+            <p class="step-note" data-i18n="install.4.d">点击工具栏图标打开侧边栏，在设置里填入 Base URL、API Key 与模型名，然后把一个 EPUB 拖进书架。</p>
+          </div>
+        </li>
+      </ol>
+
+      <aside class="install-side">
+        <div class="perm-card">
+          <h3 data-i18n="install.perm.t">它向浏览器要了什么</h3>
+          <ul class="perm-list">
+            <li><span class="mono">storage</span><b data-i18n="install.perm.1">保存书籍、阅读进度与模型配置</b></li>
+            <li><span class="mono">sidePanel</span><b data-i18n="install.perm.2">在侧边栏里打开阅读界面</b></li>
+            <li><span class="mono">host_permissions</span><b data-i18n="install.perm.3">访问你配置的模型地址与远程 EPUB 链接</b></li>
+          </ul>
+          <p class="perm-note" data-i18n="install.perm.note">没有远程代码，没有埋点，没有账号接口。</p>
+        </div>
+        <div class="local-card">
+          <span class="lc-dot" aria-hidden="true"></span>
+          <p data-i18n-html="install.local"><b>数据流向只有一条</b>：你主动点翻译或摘要时，对应的段落文字才会发送到你填的那个接口。</p>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ============================ faq ============================ -->
+  <section class="section wrap" id="faq">
+    <div class="section-head">
+      <p class="kicker" data-i18n="faq.kicker">常见问题</p>
+      <h2 data-i18n="faq.h2">还是想问的那些事</h2>
+    </div>
+
+    <div class="faq">
+      <details open>
+        <summary data-i18n="faq.1.q">要注册账号或付费吗？</summary>
+        <p data-i18n="faq.1.a">都不需要。插件本身没有账号体系，也没有会员、积分或邀请。唯一的成本是你在自己模型服务商那里的用量费用。</p>
+      </details>
+      <details>
+        <summary data-i18n="faq.2.q">我的书和 API Key 会被上传吗？</summary>
+        <p data-i18n="faq.2.a">不会。EPUB 文件与 API Key 分别存在浏览器的 IndexedDB 与 chrome.storage.local 里。只有你主动触发翻译、摘要或划词时，相关的段落文本才会发送到你配置的那个接口。</p>
+      </details>
+      <details>
+        <summary data-i18n="faq.3.q">支持哪些大模型？</summary>
+        <p data-i18n="faq.3.a">所有 OpenAI 兼容接口：官方 OpenAI、DeepSeek，以及任何自建或第三方中转；本地跑的 Ollama、vLLM、LM Studio 只要暴露兼容端点也一样能用。</p>
+      </details>
+      <details>
+        <summary data-i18n="faq.4.q">支持哪些 EPUB 文件？</summary>
+        <p data-i18n="faq.4.a">标准 EPUB 2 与 EPUB 3 都可以，本地文件直接拖入，也可以粘贴一个可访问的 EPUB 链接让插件下载。加密或带 DRM 的文件无法解析。</p>
+      </details>
+      <details>
+        <summary data-i18n="faq.5.q">断网还能读吗？</summary>
+        <p data-i18n="faq.5.a">书库、目录、正文阅读和阅读进度完全离线可用；只有翻译与摘要需要能访问你配置的接口。用本地模型时，整条链路都可以不出内网。</p>
+      </details>
+      <details>
+        <summary data-i18n="faq.6.q">界面语言能改吗？</summary>
+        <p data-i18n="faq.6.a">可以。中文、English、日本語、Deutsch、Français 五种界面语言，随时切换，阅读区与设置面板同步生效。</p>
+      </details>
+      <details>
+        <summary data-i18n="faq.7.q">会改我的浏览器设置或读取别的网页吗？</summary>
+        <p data-i18n="faq.7.a">不会。插件只申请 storage 与 sidePanel 两个权限，不注入内容脚本，也不读取你正在浏览的网页内容。</p>
+      </details>
+    </div>
+  </section>
+
+  <!-- ============================ final ============================ -->
+  <section class="final wrap">
+    <h2 data-i18n="final.h2">把书架装进侧边栏</h2>
+    <p data-i18n="final.p">一个不打扰你的阅读器：书在本地，译文在眼前，密钥只在你的浏览器里。</p>
+    <div class="cta-row center">
+      <a class="solid-btn" href="#install">
+        <span data-i18n="final.cta1">从构建开始</span>
+        <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" d="M3 8h9M8.4 4.4 12 8l-3.6 3.6"/></svg>
+      </a>
+      <a class="line-btn" href="https://github.com/fredliu168" target="_blank" rel="noopener" data-i18n="final.cta2">看源码</a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-inner">
+    <div class="foot-brand">
+      <img src="icon.svg" alt="" width="20" height="20" decoding="async">
+      <span>The Epub AI Assistant</span>
+      <span class="foot-ver">v1.0.0 · Manifest V3</span>
+    </div>
+    <nav aria-label="页脚导航">
+      <a href="#demo" data-i18n="nav.demo">效果演示</a>
+      <a href="#features" data-i18n="nav.features">功能</a>
+      <a href="#how" data-i18n="nav.how">工作原理</a>
+      <a href="#install" data-i18n="nav.install">安装</a>
+      <a href="#faq" data-i18n="nav.faq">常见问题</a>
+    </nav>
+    <p class="foot-note" data-i18n="foot.note">本页为静态宣传页，不收集任何数据，也不发起模型请求。</p>
+  </div>
+</footer>
+
+<script src="app.js" defer></script>
+</body>
+</html>
