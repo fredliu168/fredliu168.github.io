@@ -953,7 +953,57 @@
   });
 
   /* ============================================================
-     7. 启动
+     7. GitHub Star 数
+     ------------------------------------------------------------
+     导航上的星标来自 GitHub 公开 API：先渲染 HTML 里内置的数字，
+     取到真值再替换，并按小时缓存到 localStorage —— 每个浏览器
+     最多一小时发一次请求（未鉴权额度 60 次/小时）。
+     ============================================================ */
+
+  var REPO = 'fredliu168/TheEpubAIAssistant';
+  var STAR_KEY = 'epub-ai-stars';
+  var STAR_TTL = 60 * 60 * 1000;
+
+  function formatStars(n) {
+    if (n < 1000) return String(n);
+    var k = Math.round(n / 100) / 10;
+    return (k % 1 === 0 ? k.toFixed(0) : k.toFixed(1)) + 'k';
+  }
+
+  (function refreshStars() {
+    var el = document.getElementById('gh-stars');
+    if (!el || typeof window.fetch !== 'function') return;
+
+    var cached = null;
+    try {
+      var raw = window.localStorage.getItem(STAR_KEY);
+      if (raw) cached = JSON.parse(raw);
+    } catch (e) { cached = null; }
+
+    if (cached && typeof cached.n === 'number') {
+      el.textContent = '★ ' + formatStars(cached.n);
+      if (Date.now() - cached.t < STAR_TTL) return;   // still fresh
+    }
+
+    window.fetch('https://api.github.com/repos/' + REPO, {
+      headers: { Accept: 'application/vnd.github+json' }
+    }).then(function (res) {
+      return res && res.ok ? res.json() : null;
+    }).then(function (data) {
+      if (!data || typeof data.stargazers_count !== 'number') return;
+      var n = data.stargazers_count;
+      el.textContent = '★ ' + formatStars(n);
+      el.setAttribute('title', 'GitHub Stars · ' + n);
+      try {
+        window.localStorage.setItem(STAR_KEY, JSON.stringify({ n: n, t: Date.now() }));
+      } catch (e) { /* storage blocked */ }
+    })['catch'](function () {
+      /* 离线或被限流：保留 HTML 里内置的数字 */
+    });
+  })();
+
+  /* ============================================================
+     8. 启动
      ============================================================ */
 
   captureOriginals();

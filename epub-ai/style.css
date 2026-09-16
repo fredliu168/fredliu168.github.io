@@ -1529,7 +1529,7 @@ main, header.nav, footer.foot { position: relative; z-index: 1; }
 }
 
 @media (max-width: 1180px) {
-  .ghost-btn span { display: none; }
+  .ghost-btn > span[data-i18n] { display: none; }
   .ghost-btn { padding: 0 10px; }
 }
 
@@ -1766,3 +1766,17 @@ main, header.nav, footer.foot { position: relative; z-index: 1; }
 }
 .foot nav a.foot-back::after { content: " ↗"; font-size: .9em; }
 .foot-note a { color: var(--accent); }
+
+/* 导航里的 GitHub 星标徽标（红带上的浅色胶囊） */
+.gh-stars {
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .2);
+  color: #fff;
+  font-size: 11.5px;
+  font-weight: 600;
+  line-height: 1.5;
+  font-variant-numeric: tabular-nums;   /* 数字变化时宽度不跳 */
+  transition: background .16s ease;
+}
+.ghost-btn:hover .gh-stars { background: rgba(255, 255, 255, .32); }
