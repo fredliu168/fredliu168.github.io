@@ -26,8 +26,8 @@
       desc: '本地书架、段落双语、整章摘要、划词翻译。自带 API Key，直连任意 OpenAI 兼容接口，书和密钥都不离开你的浏览器。'
     },
     en: {
-      title: 'The Epub AI Assistant — your library, in the browser side panel',
-      description: 'A Chrome side-panel AI bilingual EPUB reader: import books locally, translate paragraph by paragraph as it streams, summarize a chapter, look up a word — with the model config kept inside your browser.',
+      title: 'The Epub AI Assistant — an AI bilingual EPUB reader in one clean page',
+      description: 'A Chrome AI bilingual EPUB reader: it opens as a full page in a new tab — import books locally, translate paragraph by paragraph as it streams, summarize a chapter, look up a word, with the model config kept inside your browser.',
       desc: 'Local library, paragraph-level bilingual reading, chapter summaries and word lookups. Bring your own API key and talk to any OpenAI-compatible endpoint.'
     }
   };
@@ -44,7 +44,7 @@
 
       'nav.sub': 'Browser extension build · books and model config stay local.',
       'hero.pill': 'Browser extension · no login · local-first',
-      'hero.title': 'Read EPUB, translate bilingually and summarize with AI —<br>all inside the <span class="mark">browser side panel</span>.',
+      'hero.title': 'Read EPUB, translate bilingually and summarize with AI —<br>all inside <span class="mark">one clean reading page</span>.',
       'hero.lede': 'Import local books or remote EPUB links and configure an OpenAI-compatible model service right inside the extension. Books, API keys and reading history stay in this browser.',
       'hero.cta1': 'Three steps to install',
       'hero.cta2': 'Watch it read a book',
@@ -65,42 +65,35 @@
 
       'demo.kicker': 'Live demo',
       'demo.h2': 'One page, two voices',
-      'demo.sub': 'This is the real layout: the chapter on the left, the extension side panel on the right. Pick a scenario below to see what it does during a single reading session.',
+      'demo.sub': 'The extension opens as a full page in a new tab: red header on top, contents on the left, bilingual text on the right. Pick a scenario below to see what it does during a single reading session.',
       'demo.note': 'The demo is preset content — this page never makes a model request.',
-      'demo.page.toc': 'Contents',
-      'demo.page.dual': 'Bilingual: off',
-      'demo.chapter.kicker': 'Chapter three',
       'demo.chapter.title': 'The Cost of Attention',
       'demo.chapter.meta': '1,842 words · 12 paragraphs · about 9 min',
       'demo.page.foot': 'Chapter HTML is sanitized with DOMPurify before it is rendered',
       'demo.word.def': 'n. the act of working with someone to produce something',
       'demo.word.src': 'from the phrase you selected',
-      'demo.tab.library': 'Library',
-      'demo.tab.reader': 'Reading',
-      'demo.tab.settings': 'Model config',
+      'demo.app.sub': 'Browser extension build · books and model config stay local.',
+      'demo.btn.import': 'Import',
+      'demo.btn.config': 'Model config',
+      'demo.lang': '中文',
+      'demo.import.tile': 'Import',
+      'demo.book.added': 'Added 6/23/2026',
+      'demo.toc.hide': '◀ Hide sidebar',
+      'demo.toc.1': 'Preface · Why we read',
+      'demo.toc.2': 'Chapter one · A machine for slowing down',
+      'demo.toc.3': 'Chapter two · Two languages side by side',
+      'demo.toc.4': 'Chapter three · The cost of attention',
+      'demo.toc.5': 'Chapter four · Where the pause lives',
       'demo.state.idle': 'Ready',
       'demo.lib.hint': 'Import an EPUB to start reading. Translation, summaries and word lookup use the model config you set up locally.',
-      'demo.drop.title': 'Drop an .epub or click to choose',
-      'demo.drop.sub': 'Or paste a link to an EPUB',
-      'demo.lib.title': 'Local library',
-      'demo.book1.sub': 'EPUB 3.0 · 1.8 MB · 42% read',
-      'demo.book2.sub': 'EPUB 3.0 · 1.1 MB · not started',
-      'demo.lib.note': 'Books are stored as blobs in IndexedDB — they survive closing the browser.',
-      'demo.act.translate': 'Translate paragraphs',
-      'demo.act.summary': 'Chapter summary',
-      'demo.act.word': 'Word / phrase lookup',
-      'demo.reader.hint': 'Select any word or phrase in the text and the translation floats next to the sentence.',
-      'demo.word.add': 'Save to vocabulary',
       'demo.tok': 'tokens',
       'demo.lat': 'first token',
-      'demo.set.provider': 'Provider',
       'demo.set.prompt': 'Translation prompt',
       'demo.set.promptText': 'Translate the following text into fluent Chinese, retaining formatting.',
       'demo.set.prompt2': 'Summary prompt',
       'demo.set.promptText2': 'Please summarize the following article in Chinese. Focus on the main points, key arguments, and conclusions.',
       'demo.set.keyEmpty': 'sk-…',
       'demo.set.note': 'All settings are stored in this browser only, for talking to an OpenAI-compatible endpoint.',
-      'demo.input.placeholder': 'Ask this book anything…',
       'chip.import': '① Import a book',
       'chip.translate': '② Bilingual',
       'chip.summary': '③ Summary',
@@ -123,11 +116,11 @@
       'feat.6.t': 'Any compatible endpoint',
       'feat.6.d': 'OpenAI, DeepSeek, your own gateway, a local Ollama or vLLM. The prompts are editable and the target language is yours to pick.',
       'feat.7.t': 'Private by default',
-      'feat.7.d': 'No account system and no backend. Chapter HTML is sanitized with DOMPurify before rendering, and the extension asks only for storage and sidePanel.',
+      'feat.7.d': 'No account system and no backend. Chapter HTML is sanitized with DOMPurify before rendering, and the extension asks for a single permission: storage.',
       'feat.8.t': 'Five interface languages',
       'feat.8.d': '中文, English, 日本語, Deutsch, Français — switch at any time; the reading pane and the settings follow.',
-      'feat.9.t': 'Lives in the side panel',
-      'feat.9.d': 'Click the toolbar icon and the panel opens next to the page. No more tab juggling.',
+      'feat.9.t': 'Opens as a full page',
+      'feat.9.d': 'Click the toolbar icon and the reader opens in a new tab: contents on the left, bilingual text on the right. The whole page is your book.',
 
       'how.kicker': 'How it works',
       'how.h2': 'Four steps, all inside the browser',
@@ -167,10 +160,9 @@
       'install.3.t': 'Load the extension',
       'install.3.d': 'Open <span class="mono">chrome://extensions</span>, turn on Developer mode, click “Load unpacked” and pick the <span class="mono">dist/</span> folder the build produced.',
       'install.4.t': 'Read your first book',
-      'install.4.d': 'Click the toolbar icon to open the side panel, enter your Base URL, API key and model in settings, then drop an EPUB onto the shelf.',
+      'install.4.d': 'Click the toolbar icon and the reader opens in a new tab; fill in Base URL, API key and model under “Model config”, then drop an EPUB onto the shelf.',
       'install.perm.t': 'What it asks the browser for',
       'install.perm.1': 'Store books, reading progress and model config',
-      'install.perm.2': 'Open the reader in the side panel',
       'install.perm.3': 'Reach the model endpoint you configured and remote EPUB links',
       'install.perm.note': 'No remote code, no analytics, no account API.',
       'install.local': '<b>Data flows one way</b>: only when you trigger a translation or a summary does the matching paragraph text go to the endpoint you filled in.',
@@ -190,9 +182,9 @@
       'faq.6.q': 'Can I change the interface language?',
       'faq.6.a': 'Yes — 中文, English, 日本語, Deutsch and Français, switchable at any time, with the reading pane and settings following along.',
       'faq.7.q': 'Will it touch my browser settings or other pages?',
-      'faq.7.a': 'No. The extension requests storage and sidePanel only, injects no content scripts and does not read the pages you are browsing.',
+      'faq.7.a': 'No. The extension requests storage only (plus network access to the endpoint you configure), injects no content scripts and does not read the pages you are browsing.',
 
-      'final.h2': 'Your library, in the side panel',
+      'final.h2': 'Bilingual reading, one click away',
       'final.p': 'A reader that does not get in the way: books on your machine, the translation in front of you, the key only in your browser.',
       'final.cta1': 'Start with the build',
       'final.cta2': 'Read the source',
@@ -203,7 +195,6 @@
       'common.copy': 'Copy',
 
       /* runtime strings written by the demo engine */
-      'demo.page.dualOn': 'Bilingual: on',
       'demo.state.busy.import': 'Parsing…',
       'demo.state.busy.translate': 'Translating…',
       'demo.state.busy.summary': 'Summarizing…',
@@ -216,7 +207,6 @@
       'demo.state.done.settings': 'Saved · connected 320 ms',
       'demo.drop.parsing': 'Parsing the EPUB…',
       'demo.drop.done': 'Parsed · 12 chapters · 412 KB',
-      'demo.book.new.sub': 'EPUB 3.0 · 2.4 MB · just imported',
       'demo.summary.title': 'Chapter summary',
       'demo.summary.meta': 'The Art of Reading · chapter 3 · 12 paragraphs · 1,842 words',
       'demo.summary.b1': 'Rhythm matters more than speed — the meaning is made in the pause.',
@@ -242,7 +232,6 @@
       'demo.state.done.settings': '已保存 · 连通 320 ms',
       'demo.drop.parsing': 'EPUB 解析中…',
       'demo.drop.done': '已解析 · 12 章 · 412 KB',
-      'demo.book.new.sub': 'EPUB 3.0 · 2.4 MB · 刚导入',
       'demo.summary.title': '整章摘要',
       'demo.summary.meta': 'The Art of Reading · 第 3 章 · 12 段 · 1,842 词',
       'demo.summary.b1': '阅读的节奏比速度更重要，意义诞生在那次停顿里。',
@@ -416,46 +405,37 @@
     var $id = function (id) { return document.getElementById(id); };
 
     var el = {
-      panelState: $id('panel-state'),
-      panelInput: $id('panel-input-text'),
-      dualPill: $id('dual-pill'),
-      dualText: $('#dual-pill span[data-i18n]'),
+      screens: $$('.screen'),
+      tools: $$('.app-tools'),
+      state: $id('panel-state'),
       tok: $('#tok-chip b'),
       lat: $('#lat-chip b'),
       drop: $id('drop-zone'),
       dropBar: $id('drop-progress'),
       dropMsg: $id('drop-msg'),
       shelf: $id('shelf'),
-      libCount: $id('lib-count'),
-      streamCard: $id('stream-card'),
+      summary: $id('stream-card'),
       streamTitle: $id('stream-title'),
       streamMeta: $id('stream-meta'),
       streamBody: $id('stream-body'),
       streamBadge: $id('stream-badge'),
-      wordCard: $id('word-card'),
-      wcWord: $id('wc-word'),
-      wcIpa: $id('wc-ipa'),
-      wcDef: $id('wc-def'),
-      wcEx: $id('wc-ex'),
-      wcExTr: $id('wc-ex-tr'),
       wordPop: $id('word-pop'),
       sel: $id('sel-phrase'),
+      mask: $id('settings-mask'),
       setProvider: $id('set-provider'),
-      setSelect: $('.scene[data-scene="settings"] .f-select'),
+      setSelect: $('.modal .f-select'),
       setBase: $id('set-base'),
       setKey: $id('set-key'),
       setModel: $id('set-model'),
       setPrompt: $id('set-prompt'),
       setPrompt2: $id('set-prompt2'),
-      setFields: $$('.scene[data-scene="settings"] .f-input, .scene[data-scene="settings"] .f-area')
+      setFields: $$('.modal .f-input, .modal .f-area')
     };
 
     var SET0 = {
       provider: el.setProvider ? el.setProvider.textContent : '',
       base: el.setBase ? el.setBase.textContent : '',
-      key: el.setKey ? el.setKey.textContent : '',
-      model: el.setModel ? el.setModel.textContent : '',
-      prompt: el.setPrompt ? el.setPrompt.textContent : ''
+      model: el.setModel ? el.setModel.textContent : ''
     };
 
     var gen = 0;             // 每次运行自增，用来作废旧回调
@@ -463,10 +443,9 @@
     var tokens = 0;
     var stateKey = 'demo.state.idle';
     var stateKind = 'idle';
-    var dualOn = false;
     var current = 'translate';
     var started = false;
-    var touched = false;     // 用户点过 chip / tab 之后不再自动播放
+    var touched = false;     // 用户点过 chip 之后不再自动播放
     var autoTimer = null;
     var ORDER = ['import', 'translate', 'summary', 'word', 'settings'];
     var DURATION = { import: 5600, translate: 7000, summary: 7000, word: 6200, settings: 7000 };
@@ -493,31 +472,25 @@
     function setState(kind, key) {
       stateKind = kind;
       stateKey = key;
-      if (!el.panelState) return;
-      el.panelState.classList.toggle('is-busy', kind === 'busy');
-      el.panelState.classList.toggle('is-done', kind === 'done');
-      var span = el.panelState.querySelector('span');
+      if (!el.state) return;
+      el.state.classList.toggle('is-busy', kind === 'busy');
+      el.state.classList.toggle('is-done', kind === 'done');
+      var span = el.state.querySelector('span');
       if (span) span.textContent = t(key);
     }
 
-    function setTab(name) {
-      forEach($$('.ptab'), function (tab) {
-        tab.setAttribute('aria-selected', tab.getAttribute('data-panel') === name ? 'true' : 'false');
+    /* 书架页 / 阅读页：整屏切换，页头的工具条跟着换（和插件一致） */
+    function setScreen(name) {
+      forEach(el.screens, function (node) {
+        node.hidden = node.getAttribute('data-screen') !== name;
       });
-      forEach($$('.scene'), function (scene) {
-        scene.hidden = scene.getAttribute('data-scene') !== name;
+      forEach(el.tools, function (node) {
+        node.hidden = node.getAttribute('data-tools') !== name;
       });
-      if (el.panelInput) {
-        el.panelInput.textContent = name === 'settings'
-          ? (lang === 'zh' ? '按你的模型写提示词…' : 'Write a prompt for your model…')
-          : t('demo.input.placeholder');
-      }
     }
 
-    function setDual(on) {
-      dualOn = !!on;
-      if (el.dualPill) el.dualPill.classList.toggle('is-on', dualOn);
-      if (el.dualText) el.dualText.textContent = t(dualOn ? 'demo.page.dualOn' : 'demo.page.dual');
+    function openSettings(on) {
+      if (el.mask) el.mask.hidden = !on;
     }
 
     function addTokens(n) {
@@ -563,7 +536,8 @@
     /* ---- 复位 ---- */
 
     function reset() {
-      setDual(false);
+      setScreen('library');
+      openSettings(false);
       forEach($$('.trans'), function (node) {
         node.hidden = true;
         node.classList.remove('is-shown', 'is-typing');
@@ -574,8 +548,7 @@
         el.wordPop.classList.remove('is-shown');
         el.wordPop.hidden = true;
       }
-      if (el.wordCard) el.wordCard.hidden = true;
-      if (el.streamCard) el.streamCard.hidden = true;
+      if (el.summary) el.summary.hidden = true;
       if (el.streamBody) el.streamBody.innerHTML = '';
       if (el.streamBadge) {
         el.streamBadge.classList.remove('is-done');
@@ -584,8 +557,7 @@
       if (el.drop) el.drop.classList.remove('is-busy', 'is-done');
       if (el.dropBar) el.dropBar.style.width = '0%';
       if (el.dropMsg) { el.dropMsg.hidden = true; el.dropMsg.textContent = ''; }
-      sel('.book.is-new').forEach(function (b) { b.parentNode.removeChild(b); });
-      if (el.libCount) el.libCount.textContent = String(sel('.shelf .book').length);
+      sel('.book-card.is-new').forEach(function (card) { card.parentNode.removeChild(card); });
       tokens = 0;
       if (el.tok) el.tok.textContent = '0';
       if (el.lat) el.lat.textContent = '—';
@@ -603,9 +575,9 @@
 
     var scenarios = {
 
-      /* 导入：落一个文件 → 进度 → 上架 */
+      /* 书架页：导入一个 EPUB → 解析 → 上架 */
       import: function (g) {
-        setTab('library');
+        setScreen('library');
         setState('busy', 'demo.state.busy.import');
         if (el.drop) el.drop.classList.add('is-busy');
         if (el.dropMsg) {
@@ -625,24 +597,23 @@
           }
           if (el.dropMsg) el.dropMsg.textContent = t('demo.drop.done');
 
-          var li = document.createElement('li');
-          li.className = 'book is-new';
-          li.innerHTML = '<span class="cover c1" aria-hidden="true">AR</span>' +
-            '<span class="book-meta"><b>The Art of Reading</b>' +
-            '<span class="book-sub"></span></span>';
-          li.querySelector('.book-sub').textContent = t('demo.book.new.sub');
-          if (el.shelf) el.shelf.appendChild(li);
-          if (el.libCount) el.libCount.textContent = String(sel('.shelf .book').length);
+          var card = document.createElement('article');
+          card.className = 'book-card is-new';
+          card.innerHTML = '<span class="bc-cover c1" aria-hidden="true">AR</span>' +
+            '<b>The Art of Reading</b>' +
+            '<span class="bc-author">L. Marchetti</span>' +
+            '<span class="bc-date"></span>';
+          card.querySelector('.bc-date').textContent = t('demo.book.added');
+          if (el.shelf) el.shelf.appendChild(card);
 
           addTokens(96);
           after(320, function () { setState('done', 'demo.state.done.import'); });
         })();
       },
 
-      /* 双语：三段译文依次流入 */
+      /* 阅读页：三段译文依次流入原段下方 */
       translate: function (g) {
-        setTab('reader');
-        setDual(true);
+        setScreen('reader');
         setState('busy', 'demo.state.busy.translate');
         setLatency();
         var nodes = sel('.trans');
@@ -653,20 +624,19 @@
             setState('done', 'demo.state.done.translate');
             return;
           }
-          var node = nodes[i];
-          stream(node, DEMO_TRANS[i], g, function () {
+          stream(nodes[i], DEMO_TRANS[i], g, function () {
             i++;
             after(260, one);
           });
         })();
       },
 
-      /* 摘要：三条要点流入侧边栏 */
+      /* 阅读页：整章摘要浮卡 */
       summary: function (g) {
-        setTab('reader');
+        setScreen('reader');
         setState('busy', 'demo.state.busy.summary');
         setLatency();
-        if (el.streamCard) el.streamCard.hidden = false;
+        if (el.summary) el.summary.hidden = false;
         if (el.streamBody) el.streamBody.innerHTML = '';
         if (el.streamTitle) el.streamTitle.textContent = t('demo.summary.title');
         if (el.streamMeta) el.streamMeta.textContent = t('demo.summary.meta');
@@ -704,19 +674,13 @@
         })();
       },
 
-      /* 划词：正文高亮 + 浮动卡片 + 侧边栏词卡 */
+      /* 阅读页：划词 → 正文高亮 + 浮动词卡 */
       word: function (g) {
-        setTab('reader');
+        setScreen('reader');
         setState('busy', 'demo.state.busy.word');
         setLatency();
         if (el.sel) el.sel.classList.add('is-active');
-        if (el.wordCard) el.wordCard.hidden = false;
-        if (el.wcWord) el.wcWord.textContent = 'collaboration';
-        if (el.wcIpa) el.wcIpa.textContent = '/kəˌlæbəˈreɪʃn/';
-        if (el.wcDef) el.wcDef.textContent = t('demo.word.defFull');
-        if (el.wcEx) el.wcEx.textContent = 'Translation is the oldest form of collaboration.';
-        if (el.wcExTr) el.wcExTr.textContent = t('demo.word.exTr');
-        addTokens(58);
+        addTokens(42);
         after(420, function () {
           if (g !== gen || !el.wordPop) return;
           el.wordPop.hidden = false;
@@ -727,11 +691,12 @@
         after(1100, function () { setState('done', 'demo.state.done.word'); });
       },
 
-      /* 模型配置：从本地模型切到线上模型并测试连通 */
+      /* 模型配置：弹窗从 OpenAI 切到 DeepSeek */
       settings: function (g) {
-        setTab('settings');
+        setScreen('library');
         setState('idle', 'demo.state.idle');
-        var fields = [el.setSelect, el.setBase, el.setKey, el.setModel, el.setPrompt];
+        openSettings(true);
+        var fields = [el.setSelect, el.setBase, el.setKey, el.setModel, el.setPrompt, el.setPrompt2];
         var i = 0;
         (function one() {
           if (g !== gen) return;
@@ -786,51 +751,46 @@
       }, DURATION[current] || 6600);
     }
 
-    /* chip / tab / 按钮 */
+    /* chip 是主控；页头那两个按钮也能点（跟真的插件一样从页头进） */
     forEach($$('.chip'), function (chip) {
       chip.addEventListener('click', function () {
         touched = true;
+        started = true;      // 用户已经接管，滚动进视口时不要再抢着播第一幕
         stopAuto();
         run(chip.getAttribute('data-scenario'));
       });
     });
 
-    forEach($$('.ptab'), function (tab) {
-      tab.addEventListener('click', function () {
+    ['act-import', 'act-config'].forEach(function (id) {
+      var btn = document.getElementById(id);
+      if (!btn) return;
+      btn.addEventListener('click', function () {
         touched = true;
-        stop();
-        setTab(tab.getAttribute('data-panel'));
-        syncChips('');
-        setState('idle', 'demo.state.idle');
+        started = true;
+        stopAuto();
+        run(id === 'act-import' ? 'import' : 'settings');
       });
     });
 
-    var actions = [
-      ['act-translate', 'translate'],
-      ['act-summary', 'summary'],
-      ['act-word', 'word']
-    ];
-    forEach(actions, function (pair) {
-      var btn = document.getElementById(pair[0]);
-      if (btn) {
-        btn.addEventListener('click', function () {
-          touched = true;
-          stopAuto();
-          run(pair[1]);
-        });
-      }
-    });
+    /* 弹窗可以自己关掉 */
+    if (el.mask) {
+      el.mask.addEventListener('click', function (e) {
+        if (e.target === el.mask) openSettings(false);
+      });
+      var x = document.getElementById('settings-close');
+      if (x) x.addEventListener('click', function () { openSettings(false); });
+    }
 
     /* 进入视口后自动演示一轮 */
     if ('IntersectionObserver' in window) {
       var io = new IntersectionObserver(function (entries) {
         forEach(entries, function (entry) {
           if (entry.isIntersecting) {
-            if (!started) {
+            if (!started && !touched) {
               started = true;
               run(ORDER[0]);
             }
-            scheduleAuto();
+            scheduleAuto();     // touched 时 scheduleAuto 自己会直接返回
           } else {
             stopAuto();
           }
@@ -843,19 +803,13 @@
     }
 
     /* 初始静态状态 */
-    setTab('reader');
-    setDual(false);
+    setScreen('library');
     setState('idle', 'demo.state.idle');
 
     return {
       /* 语言切换后，把动态写入的字符串重新刷一遍 */
       syncLang: function () {
         setState(stateKind, stateKey);
-        setDual(dualOn);
-        if (el.panelInput) {
-          var active = $('.ptab[aria-selected="true"]');
-          setTab(active ? active.getAttribute('data-panel') : 'reader');
-        }
         if (started) run(current);
       },
       replay: function () { if (started) run(current); },

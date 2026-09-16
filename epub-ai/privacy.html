@@ -13,7 +13,7 @@
 <link rel="icon" type="image/svg+xml" href="icon.svg?v=7bf996ee">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=c8d63a65">
 <link rel="apple-touch-icon" href="icon-180.png?v=c1ce7694">
-<link rel="stylesheet" href="style.css?v=3fa12598">
+<link rel="stylesheet" href="style.css?v=426bf257">
 <script>
 (function () {
   try {
@@ -119,8 +119,8 @@
         <h2><span class="num">04</span>权限说明</h2>
         <ul>
           <li><code>storage</code> —— 在本地保存书籍与模型配置</li>
-          <li><code>sidePanel</code> —— 在浏览器侧边栏中打开阅读界面</li>
           <li><code>host_permissions</code>（<code>https://*/*</code> 与 <code>http://*/*</code>）—— 访问你配置的模型地址，以及你粘贴的远程 EPUB 链接</li>
+          <li>阅读页通过 <code>chrome.tabs.create</code> 在新标签页打开，不需要额外权限</li>
           <li>插件不注入内容脚本，也不读取你正在浏览的网页内容</li>
         </ul>
 
@@ -203,8 +203,8 @@
         <h2><span class="num">04</span>Permissions</h2>
         <ul>
           <li><code>storage</code> — keep books and model settings on your device</li>
-          <li><code>sidePanel</code> — open the reader in the browser side panel</li>
           <li><code>host_permissions</code> (<code>https://*/*</code>, <code>http://*/*</code>) — reach the model endpoint you configured and remote EPUB links you paste</li>
+          <li>The reader opens in a new tab via <code>chrome.tabs.create</code>, which needs no extra permission</li>
           <li>No content scripts are injected; the extension does not read the pages you browse</li>
         </ul>
 
