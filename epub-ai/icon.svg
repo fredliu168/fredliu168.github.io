@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="The Epub AI Assistant icon">
+  <defs>
+    <linearGradient id="bg" x1="18" y1="12" x2="110" y2="116" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ff6a4d"/>
+      <stop offset="0.55" stop-color="#e3120b"/>
+      <stop offset="1" stop-color="#82110d"/>
+    </linearGradient>
+    <linearGradient id="page" x1="29" y1="28" x2="82" y2="98" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fffdf8"/>
+      <stop offset="1" stop-color="#f3eadf"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="5" stdDeviation="6" flood-color="#6d120e" flood-opacity="0.28"/>
+    </filter>
+  </defs>
+
+  <rect x="8" y="8" width="112" height="112" rx="28" fill="url(#bg)"/>
+  <path d="M64 18c17 0 31 4 42 10v72c-11-6-25-10-42-10s-31 4-42 10V28c11-6 25-10 42-10Z" fill="#000" opacity=".12"/>
+
+  <g filter="url(#shadow)">
+    <path d="M64 28c14.5 0 26.8 3.2 37 8.2v56.8C90.8 88 78.5 85 64 85c-14.4 0-27.2 3.1-37 8.2V36.2C36.8 31.2 49.6 28 64 28Z" fill="url(#page)"/>
+    <path d="M64 28v57" stroke="#d5c3ae" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="M34 41.5c7.5-3.2 16-4.9 25.5-5.2" stroke="#d94b36" stroke-width="4.5" stroke-linecap="round"/>
+    <path d="M34 53c7.5-3.2 16-4.9 25.5-5.2" stroke="#d94b36" stroke-width="4.5" stroke-linecap="round" opacity=".9"/>
+    <path d="M34 64.5c7.5-3.2 16-4.9 25.5-5.2" stroke="#d94b36" stroke-width="4.5" stroke-linecap="round" opacity=".78"/>
+    <path d="M68.5 38.5c8.7.4 16.8 2.1 24.5 5" stroke="#b7ab9e" stroke-width="4" stroke-linecap="round"/>
+    <path d="M68.5 50c8.7.4 16.8 2.1 24.5 5" stroke="#b7ab9e" stroke-width="4" stroke-linecap="round" opacity=".9"/>
+    <path d="M68.5 61.5c8.7.4 16.8 2.1 24.5 5" stroke="#b7ab9e" stroke-width="4" stroke-linecap="round" opacity=".78"/>
+  </g>
+
+  <g transform="translate(88 27)">
+    <circle cx="0" cy="0" r="14" fill="#fff3cf"/>
+    <path d="M0-10 2.9-2.9 10 0 2.9 2.9 0 10 -2.9 2.9 -10 0 -2.9-2.9Z" fill="#e3120b"/>
+    <circle cx="0" cy="0" r="3.2" fill="#fff3cf"/>
+  </g>
+
+  <path d="M28 94c10-4.8 22.2-7.4 36-7.4S90 89.2 100 94" fill="none" stroke="#fff" stroke-opacity=".42" stroke-width="2.5" stroke-linecap="round"/>
+</svg>

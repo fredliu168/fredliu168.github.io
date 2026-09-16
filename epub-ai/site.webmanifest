@@ -1,0 +1,17 @@
+{
+  "name": "The Epub AI Assistant",
+  "short_name": "Epub AI",
+  "description": "Chrome 侧边栏 AI 双语 EPUB 阅读器：本地书架、段落流式双语翻译、整章摘要、划词翻译。",
+  "lang": "zh-CN",
+  "dir": "ltr",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f7f3ee",
+  "theme_color": "#f7f3ee",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
