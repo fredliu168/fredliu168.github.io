@@ -196,7 +196,10 @@
       'final.p': 'A reader that does not get in the way: books on your machine, the translation in front of you, the key only in your browser.',
       'final.cta1': 'Start with the build',
       'final.cta2': 'Read the source',
-      'foot.note': 'This is a static landing page: it collects no data and makes no model requests.',
+      'foot.terms': 'Terms of use',
+      'foot.privacy': 'Privacy',
+      'foot.blog': 'Back to the blog',
+      'foot.note': 'This is a static landing page: it collects no data and makes no model requests. Notes and other projects live on the <a href="https://fredliu168.github.io/">blog</a>.',
       'common.copy': 'Copy',
 
       /* runtime strings written by the demo engine */

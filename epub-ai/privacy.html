@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f7f3ee">
+<title>隐私说明 · The Epub AI Assistant</title>
+<meta name="description" content="The Epub AI Assistant 的隐私说明：没有账号、没有后端、没有统计埋点；书籍与模型配置只保存在浏览器本地，只有你主动触发翻译或摘要时才会把对应文字发给你自己配置的接口。">
+<link rel="canonical" href="https://fredliu168.github.io/epub-ai/privacy.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="隐私说明 · The Epub AI Assistant">
+<meta property="og:url" content="https://fredliu168.github.io/epub-ai/privacy.html">
+<link rel="icon" type="image/svg+xml" href="icon.svg?v=7bf996ee">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=c8d63a65">
+<link rel="apple-touch-icon" href="icon-180.png?v=c1ce7694">
+<link rel="stylesheet" href="style.css?v=db04edc9">
+<script>
+(function () {
+  try {
+    var saved = window.localStorage.getItem('epub-ai-theme');
+    var theme = (saved === 'light' || saved === 'dark') ? saved
+      : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+  } catch (e) {
+    document.documentElement.setAttribute('data-theme', 'light');
+  }
+})();
+</script>
+</head>
+<body>
+
+<div class="bg" aria-hidden="true">
+  <div class="bg-wash"></div>
+  <div class="bg-rules"></div>
+</div>
+
+<a class="skip" href="#main">跳到主要内容</a>
+
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="./" aria-label="The Epub AI Assistant">
+      <span class="brand-mark"><img src="icon.svg?v=7bf996ee" alt="" width="26" height="26" decoding="async"></span>
+      <span class="brand-line">
+        <span class="brand-name">The Epub AI Assistant</span>
+        <span class="brand-sub" data-zh="浏览器插件版，本地保存书籍与模型配置。" data-en="Browser extension build · books and model config stay local.">浏览器插件版，本地保存书籍与模型配置。</span>
+      </span>
+    </a>
+
+    <nav class="nav-links doc-nav" aria-label="文档导航">
+      <a href="./" data-zh="宣传首页" data-en="Home">宣传首页</a>
+      <a href="terms.html" data-zh="使用条款" data-en="Terms of use">使用条款</a>
+      <a href="privacy.html" class="is-here" data-zh="隐私说明" data-en="Privacy">隐私说明</a>
+      <a href="https://fredliu168.github.io/" data-zh="返回博客" data-en="Back to blog">返回博客</a>
+    </nav>
+
+    <div class="nav-actions">
+      <button class="theme-switch" id="theme-toggle" type="button" role="switch" aria-checked="false" aria-label="切换深色模式" title="切换深色模式">
+        <span class="ts-track" aria-hidden="true">
+          <span class="ts-knob"><svg class="ts-icon" viewBox="0 0 20 20" aria-hidden="true"><path class="ts-sun" d="M10 3.2a.9.9 0 0 1 .9.9v1.2a.9.9 0 0 1-1.8 0V4.1a.9.9 0 0 1 .9-.9Zm0 10.6a3.8 3.8 0 1 0 0-7.6 3.8 3.8 0 0 0 0 7.6Zm0 2.1a.9.9 0 0 1 .9.9v1.1a.9.9 0 0 1-1.8 0v-1.1a.9.9 0 0 1 .9-.9Zm6.8-5.9a.9.9 0 0 1-.9.9h-1.1a.9.9 0 0 1 0-1.8h1.1a.9.9 0 0 1 .9.9ZM5.2 10a.9.9 0 0 1-.9.9H3.2a.9.9 0 0 1 0-1.8h1.1a.9.9 0 0 1 .9.9Zm10.1-5.3a.9.9 0 0 1 0 1.3l-.8.8a.9.9 0 0 1-1.3-1.3l.8-.8a.9.9 0 0 1 1.3 0ZM6.8 13.2a.9.9 0 0 1 0 1.3l-.8.8a.9.9 0 0 1-1.3-1.3l.8-.8a.9.9 0 0 1 1.3 0Zm8.5 2.1a.9.9 0 0 1-1.3 0l-.8-.8a.9.9 0 0 1 1.3-1.3l.8.8a.9.9 0 0 1 0 1.3ZM6.8 6.8a.9.9 0 0 1-1.3 0l-.8-.8a.9.9 0 0 1 1.3-1.3l.8.8a.9.9 0 0 1 0 1.3Z"/><path class="ts-moon" d="M16.3 11.7a6 6 0 0 1-7.9-7.4.7.7 0 0 0-.9-.9 7.6 7.6 0 1 0 9.8 9.8.7.7 0 0 0-.9-.9Z"/></svg></span>
+          <span class="ts-marks"><i></i><i></i></span>
+        </span>
+      </button>
+
+      <button class="lang-btn" id="lang-toggle" type="button" aria-label="切换语言 / Switch language">
+        <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.4" d="M1.6 4.2h8M5.6 2.2v2M7.2 4.2c-.6 2.6-2.4 4.6-5 5.6M3.1 7.1c1 1.6 2.4 2.6 4 3.2M8.9 14.2l3-8 3 8M9.9 11.6h4"/></svg>
+        <span id="lang-label">EN</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ============================ 中文 ============================ -->
+  <div data-lang="zh" class="is-on" data-title="隐私说明 · The Epub AI Assistant">
+    <div class="wrap doc-hero">
+      <p class="kicker">隐私说明 / Privacy</p>
+      <h1>你的书，你的密钥，你的机器</h1>
+      <p class="lede">这个插件没有账号、没有业务后端，也没有任何统计埋点。书籍与模型配置都保存在你自己的浏览器里；只有当你主动点翻译、摘要或划词时，对应的那段文字才会直接发送到你自己填写的接口。</p>
+      <div class="doc-meta">
+        <span class="tag">无需登录</span>
+        <span class="tag">数据不出本机</span>
+        <span class="tag">无第三方脚本</span>
+        <span>适用于浏览器扩展与本站宣传页面 · 最后更新 2026-09-16</span>
+      </div>
+    </div>
+
+    <div class="wrap doc">
+      <div class="doc-inner">
+        <div class="note">
+          <p><strong>一句话版本：</strong>没有账号、没有后端、没有埋点。插件只在你主动触发时，把对应的那段文字发给你自己配置的模型接口，作者这一端什么都看不到。</p>
+        </div>
+
+        <h2><span class="num">01</span>我们不收集什么</h2>
+        <ul>
+          <li>不要求注册或登录，不收集账号、手机号、邮箱等任何身份信息</li>
+          <li>不收集你的书籍内容、译文、生词本或阅读记录</li>
+          <li>不接入统计、广告、崩溃上报等第三方 SDK</li>
+          <li>本站（宣传页与说明页）不写 Cookie，也不加载第三方脚本</li>
+        </ul>
+
+        <h2><span class="num">02</span>数据存在哪里</h2>
+        <ul>
+          <li><strong>书籍与章节内容</strong>：保存在浏览器本地的 IndexedDB 中</li>
+          <li><strong>模型配置</strong>（Provider、Base URL、API Key、Model、提示词）与界面偏好（主题、语言、阅读进度）：保存在浏览器本地的 localStorage 中</li>
+          <li>这些数据都在你自己的设备上，作者没有任何服务器可以访问它们</li>
+          <li>在浏览器里清除该扩展的数据、或卸载扩展，这些数据会随之删除</li>
+        </ul>
+
+        <h2><span class="num">03</span>什么会发送出去，发给谁</h2>
+        <ul>
+          <li>只有你主动触发<strong>翻译、摘要或划词</strong>时，插件才会把「对应的段落文字（或你选中的文字）」连同你的提示词，直接发送到你填写的 Base URL</li>
+          <li>接收方是你自己选择的模型服务商（OpenAI、DeepSeek、自建中转、本地部署等），其数据处理方式适用该服务商自己的隐私政策</li>
+          <li>这条链路里没有作者的服务器，也没有任何中转或代理</li>
+          <li>通过链接导入远程 EPUB 时，请求直接发往你输入的那个地址</li>
+          <li>没有配置 Base URL、API Key 或 Model 时，插件不会发起任何模型请求</li>
+        </ul>
+
+        <h2><span class="num">04</span>权限说明</h2>
+        <ul>
+          <li><code>storage</code> —— 在本地保存书籍与模型配置</li>
+          <li><code>sidePanel</code> —— 在浏览器侧边栏中打开阅读界面</li>
+          <li><code>host_permissions</code>（<code>https://*/*</code> 与 <code>http://*/*</code>）—— 访问你配置的模型地址，以及你粘贴的远程 EPUB 链接</li>
+          <li>插件不注入内容脚本，也不读取你正在浏览的网页内容</li>
+        </ul>
+
+        <h2><span class="num">05</span>第三方服务</h2>
+        <ul>
+          <li><strong>模型服务商</strong>：由你自行选择并填写，数据在你与服务商之间直接交换</li>
+          <li><strong>远程 EPUB 站点</strong>：只有你粘贴其链接时才会被访问</li>
+          <li><strong>GitHub Pages</strong>：本站宣传页托管在 GitHub Pages 上，访问日志（如 IP 地址）由 GitHub 按其隐私政策处理</li>
+        </ul>
+
+        <h2><span class="num">06</span>你的控制权</h2>
+        <ul>
+          <li>在书架里删除单本书，或清空整个书架</li>
+          <li>在设置面板里清除模型配置</li>
+          <li>卸载扩展，或在浏览器设置中清除该站点的数据</li>
+          <li>完全不配置模型也能当普通本地阅读器使用，此时不会有任何网络请求</li>
+        </ul>
+
+        <h2><span class="num">07</span>儿童</h2>
+        <p>本扩展面向一般用户，不针对 13 岁以下儿童设计，也不会主动收集儿童的任何信息。</p>
+
+        <h2><span class="num">08</span>变更与联系</h2>
+        <p>本页如有更新，会同时修改顶部的「最后更新」日期。任何疑问或与数据相关的请求，都可以通过 GitHub 或公众号联系作者。</p>
+
+        <div class="doc-foot">
+          <a href="terms.html">使用条款 →</a>
+          <a href="./">回到宣传首页 →</a>
+          <a href="https://fredliu168.github.io/">返回博客 →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================ English ============================ -->
+  <div data-lang="en" data-title="Privacy · The Epub AI Assistant">
+    <div class="wrap doc-hero">
+      <p class="kicker">Privacy</p>
+      <h1>Your books, your key, your machine</h1>
+      <p class="lede">This extension has no account system, no backend and no analytics. Books and model settings stay in your own browser; only when you explicitly trigger a translation, summary or word lookup does the corresponding text get sent straight to the endpoint you configured.</p>
+      <div class="doc-meta">
+        <span class="tag">No login</span>
+        <span class="tag">Data stays local</span>
+        <span class="tag">No third-party scripts</span>
+        <span>Applies to the browser extension and this site · Last updated 2026-09-16</span>
+      </div>
+    </div>
+
+    <div class="wrap doc">
+      <div class="doc-inner">
+        <div class="note">
+          <p><strong>In one line:</strong> no account, no backend, no tracking. The extension only sends the text you asked it to translate or summarize to the model endpoint you configured — the author sees none of it.</p>
+        </div>
+
+        <h2><span class="num">01</span>What we do not collect</h2>
+        <ul>
+          <li>No sign-up or login; no names, phone numbers, email addresses or any other identity data</li>
+          <li>No book content, translations, vocabulary or reading history</li>
+          <li>No analytics, advertising or crash-reporting SDKs</li>
+          <li>This site (landing page and these documents) sets no cookies and loads no third-party scripts</li>
+        </ul>
+
+        <h2><span class="num">02</span>Where your data lives</h2>
+        <ul>
+          <li><strong>Books and chapters</strong>: in your browser's local IndexedDB</li>
+          <li><strong>Model settings</strong> (provider, Base URL, API key, model, prompts) and interface preferences (theme, language, reading progress): in your browser's local storage</li>
+          <li>All of it sits on your own device; the author has no server that can reach it</li>
+          <li>Clearing the extension's data or uninstalling it removes this data</li>
+        </ul>
+
+        <h2><span class="num">03</span>What leaves your machine, and to whom</h2>
+        <ul>
+          <li>Only when you trigger <strong>translation, summary or word lookup</strong> does the extension send the matching paragraph (or your selection) plus your prompt directly to the Base URL you entered</li>
+          <li>The recipient is the model provider you chose (OpenAI, DeepSeek, your own gateway, a local runtime); its own privacy policy applies</li>
+          <li>There is no server of ours and no proxy in that path</li>
+          <li>When you import a remote EPUB by link, the request goes to the URL you pasted</li>
+          <li>With no Base URL, API key or model configured, no model request is made at all</li>
+        </ul>
+
+        <h2><span class="num">04</span>Permissions</h2>
+        <ul>
+          <li><code>storage</code> — keep books and model settings on your device</li>
+          <li><code>sidePanel</code> — open the reader in the browser side panel</li>
+          <li><code>host_permissions</code> (<code>https://*/*</code>, <code>http://*/*</code>) — reach the model endpoint you configured and remote EPUB links you paste</li>
+          <li>No content scripts are injected; the extension does not read the pages you browse</li>
+        </ul>
+
+        <h2><span class="num">05</span>Third parties</h2>
+        <ul>
+          <li><strong>Your model provider</strong> — chosen and configured by you; data moves directly between you and them</li>
+          <li><strong>Remote EPUB hosts</strong> — contacted only when you paste their link</li>
+          <li><strong>GitHub Pages</strong> — this site is hosted there; access logs (such as IP addresses) are handled under GitHub's privacy policy</li>
+        </ul>
+
+        <h2><span class="num">06</span>Your controls</h2>
+        <ul>
+          <li>Delete a single book, or clear the whole library</li>
+          <li>Clear the model configuration in the settings panel</li>
+          <li>Uninstall the extension, or clear its data from your browser settings</li>
+          <li>Use it purely as a local reader with no endpoint configured — then nothing is ever sent</li>
+        </ul>
+
+        <h2><span class="num">07</span>Children</h2>
+        <p>This extension is aimed at a general audience, is not designed for children under 13, and does not knowingly collect any information from them.</p>
+
+        <h2><span class="num">08</span>Changes and contact</h2>
+        <p>If this page changes, the “last updated” date above changes with it. Questions or data-related requests are welcome via GitHub or the WeChat account.</p>
+
+        <div class="doc-foot">
+          <a href="terms.html">Terms of use →</a>
+          <a href="./">Back to the landing page →</a>
+          <a href="https://fredliu168.github.io/">Back to the blog →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-inner">
+    <div class="foot-brand">
+      <img src="icon.svg?v=7bf996ee" alt="" width="20" height="20" decoding="async">
+      <span>The Epub AI Assistant</span>
+      <span class="foot-ver">v1.0.0 · Manifest V3</span>
+    </div>
+    <nav aria-label="页脚导航">
+      <a href="./" data-zh="宣传首页" data-en="Home">宣传首页</a>
+      <a href="terms.html" data-zh="使用条款" data-en="Terms of use">使用条款</a>
+      <a href="privacy.html" data-zh="隐私说明" data-en="Privacy">隐私说明</a>
+      <a href="https://github.com/fredliu168" target="_blank" rel="noopener" data-zh="GitHub" data-en="GitHub">GitHub</a>
+      <a href="https://fredliu168.github.io/" data-zh="返回博客" data-en="Back to blog">返回博客</a>
+    </nav>
+    <p class="foot-note" data-zh="本页为静态说明页，不收集任何数据，也不发起模型请求。" data-en="This is a static document page: it collects no data and makes no model requests.">本页为静态说明页，不收集任何数据，也不发起模型请求。</p>
+  </div>
+</footer>
+
+<script src="legal.js?v=5c4b933b" defer></script>
+</body>
+</html>
