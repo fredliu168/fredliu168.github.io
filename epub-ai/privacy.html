@@ -13,7 +13,7 @@
 <link rel="icon" type="image/svg+xml" href="icon.svg?v=7bf996ee">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=c8d63a65">
 <link rel="apple-touch-icon" href="icon-180.png?v=c1ce7694">
-<link rel="stylesheet" href="style.css?v=426bf257">
+<link rel="stylesheet" href="style.css?v=3fa12598">
 <script>
 (function () {
   try {
@@ -118,9 +118,9 @@
 
         <h2><span class="num">04</span>权限说明</h2>
         <ul>
-          <li><code>storage</code> —— 在本地保存书籍与模型配置</li>
-          <li><code>host_permissions</code>（<code>https://*/*</code> 与 <code>http://*/*</code>）—— 访问你配置的模型地址，以及你粘贴的远程 EPUB 链接</li>
-          <li>阅读页通过 <code>chrome.tabs.create</code> 在新标签页打开，不需要额外权限</li>
+          <li><code>sidePanel</code> —— 在浏览器侧边栏中打开阅读界面（这是唯一一项声明式权限）</li>
+          <li><code>optional_host_permissions</code> —— 访问你配置的模型接口与远程 EPUB 链接（HTTPS，以及本机 localhost / 127.0.0.1）。这一项是<strong>可选权限</strong>，只在你实际填写并连接对应地址时才申请</li>
+          <li>书籍、阅读进度与模型配置保存在浏览器本地存储中，因此<strong>不需要</strong>申请 storage 权限</li>
           <li>插件不注入内容脚本，也不读取你正在浏览的网页内容</li>
         </ul>
 
@@ -202,9 +202,9 @@
 
         <h2><span class="num">04</span>Permissions</h2>
         <ul>
-          <li><code>storage</code> — keep books and model settings on your device</li>
-          <li><code>host_permissions</code> (<code>https://*/*</code>, <code>http://*/*</code>) — reach the model endpoint you configured and remote EPUB links you paste</li>
-          <li>The reader opens in a new tab via <code>chrome.tabs.create</code>, which needs no extra permission</li>
+          <li><code>sidePanel</code> — open the reader in the browser side panel (the only declared permission)</li>
+          <li><code>optional_host_permissions</code> — reach the model endpoint you configure and remote EPUB links (HTTPS, plus localhost / 127.0.0.1). These are <strong>optional</strong> and are only requested when you actually connect to such an address</li>
+          <li>Books, reading progress and model settings live in local browser storage, so <code>storage</code> is <strong>not</strong> requested</li>
           <li>No content scripts are injected; the extension does not read the pages you browse</li>
         </ul>
 
