@@ -1,5 +1,5 @@
 /* ============================================================
-   omniagent landing page
+   NeonAgent landing page
    Colour is defined once as semantic tokens on :root (dark).
    [data-theme="light"] overrides only the tokens — no component
    rule below needs to know which theme is active.
@@ -592,6 +592,7 @@ html.theme-anim *::after {
 /* ---------- pipeline ---------- */
 .pipeline { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
 .pipeline li {
+  min-width: 0;
   position: relative; padding: 22px 20px 20px;
   border: 1px solid var(--line); border-radius: var(--radius);
   background: linear-gradient(180deg, var(--card-grad-1), var(--card-grad-2));
@@ -626,6 +627,7 @@ html.theme-anim *::after {
 /* ---------- cards ---------- */
 .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
 .card {
+  min-width: 0;
   padding: 24px 22px; border: 1px solid var(--line); border-radius: var(--radius);
   background: linear-gradient(180deg, var(--card-grad-1), var(--card-grad-2));
   transition: border-color .2s, transform .2s, background .2s;
@@ -664,11 +666,55 @@ html.theme-anim *::after {
 .models-foot { margin-top: 26px; font-size: 12.8px; color: var(--muted-2); }
 
 /* ---------- install ---------- */
-.install-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+/* path 1: Chrome Web Store card */
+.store-card {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  gap: 24px; flex-wrap: wrap;
+  padding: 26px 26px 24px;
+  border: 1px solid var(--accent-line); border-radius: var(--radius);
+  background: linear-gradient(180deg, var(--accent-soft), transparent 70%);
+}
+.store-card-main { max-width: 620px; }
+.store-badge {
+  display: inline-block; font-family: var(--mono); font-size: 10.5px;
+  letter-spacing: .12em; color: var(--accent-text);
+  border: 1px solid var(--accent-line); background: var(--accent-soft);
+  padding: 2px 8px; border-radius: 5px;
+}
+.store-card h3 { font-size: 19px; margin: 12px 0 9px; }
+.store-card p { font-size: 14px; color: var(--muted); line-height: 1.75; }
+.store-cta { margin-top: 18px; }
+.store-note { margin-top: 14px; font-size: 12.5px; color: var(--muted-2); }
+.store-aside {
+  display: flex; flex-direction: column; align-items: center; gap: 12px;
+  padding-top: 4px; align-self: center;
+}
+.store-aside img {
+  width: 76px; height: 76px; display: block; border-radius: 20px;
+  filter: drop-shadow(0 8px 22px rgba(45,212,191,.32));
+}
+.store-aside span {
+  font-family: var(--mono); font-size: 11.5px; color: var(--muted-2);
+  text-align: center; white-space: nowrap;
+}
+.install-divider {
+  display: flex; align-items: center; gap: 14px;
+  margin: 34px 0 4px;
+  font-size: 13px; color: var(--muted-2); white-space: nowrap;
+}
+.install-divider::before, .install-divider::after {
+  content: ""; flex: 1 1 auto; height: 1px; background: var(--line);
+}
+
+.install-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 22px; }
 .install-step {
+  /* grid items default to min-width:auto, which would let the code block's
+     min-content width blow column 1 out to 475px while the others stay at 303px */
+  min-width: 0;
   padding: 24px 22px; border: 1px solid var(--line); border-radius: var(--radius);
   background: linear-gradient(180deg, var(--card-grad-1), var(--card-grad-2));
 }
+.install-step .code { min-width: 0; }
 .install-step h3 { font-size: 17px; margin: 12px 0 9px; }
 .install-step > p { font-size: 13.8px; color: var(--muted); line-height: 1.72; }
 .install-step .hint { margin-top: 12px; font-size: 12.5px; color: var(--muted-2); }

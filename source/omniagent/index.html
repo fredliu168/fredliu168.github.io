@@ -4,12 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#08080b">
-<title>omniagent — 住在浏览器里的智能体</title>
-<meta name="description" content="omniagent 是一个 Chrome 侧边栏浏览器智能体：读懂当前页面，自己调用工具点击、输入、翻译、整理，把一句自然语言变成一件完成的事。">
-<meta name="keywords" content="omniagent,NeonAgent,浏览器智能体,Chrome 扩展,AI Agent,网页翻译,page agent">
+<title>NeonAgent — 住在浏览器里的智能体</title>
+<meta name="description" content="NeonAgent 是一个 Chrome 侧边栏浏览器智能体：读懂当前页面，自己调用工具点击、输入、翻译、整理，把一句自然语言变成一件完成的事。">
+<meta name="keywords" content="NeonAgent,浏览器智能体,Chrome 扩展,AI Agent,网页翻译,page agent">
 <link rel="canonical" href="http://fredliu168.github.io/omniagent/">
 <meta property="og:type" content="website">
-<meta property="og:title" content="omniagent — 住在浏览器里的智能体">
+<meta property="og:title" content="NeonAgent — 住在浏览器里的智能体">
 <meta property="og:description" content="读懂页面、拆解步骤、调用工具、回填结果。一句自然语言，换来一件完成的事。">
 <meta property="og:url" content="http://fredliu168.github.io/omniagent/">
 <link rel="icon" href="/omniagent/favicon.ico" sizes="any">
@@ -38,12 +38,12 @@
 
 <header class="nav" id="nav">
   <div class="wrap nav-inner">
-    <a class="brand" href="/omniagent/" aria-label="omniagent">
+    <a class="brand" href="/omniagent/" aria-label="NeonAgent">
       <span class="brand-mark" aria-hidden="true">
         <img src="icon-64.png" alt="" width="28" height="28" decoding="async">
       </span>
-      <span class="brand-name">omniagent</span>
-      <span class="brand-tag">v0.1.31</span>
+      <span class="brand-name">NeonAgent</span>
+      <span class="brand-tag">v0.1.32</span>
     </a>
     <nav class="nav-links" aria-label="主导航">
       <a href="#demo" data-i18n="nav.demo">在线演示</a>
@@ -69,7 +69,7 @@
         <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.4" d="M1.6 4.2h8M5.6 2.2v2M7.2 4.2c-.6 2.6-2.4 4.6-5 5.6M3.1 7.1c1 1.6 2.4 2.6 4 3.2M8.9 14.2l3-8 3 8M9.9 11.6h4"/></svg>
         <span id="lang-label">EN</span>
       </button>
-      <a class="ghost-btn" href="https://github.com/fredliu168/NeonAgent" target="_blank" rel="noopener" aria-label="GitHub — omniagent (NeonAgent)">
+      <a class="ghost-btn" href="https://github.com/fredliu168/NeonAgent" target="_blank" rel="noopener" aria-label="GitHub — NeonAgent">
         <svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8a8 8 0 0 0 5.47 7.59c.4.07.55-.17.55-.38l-.01-1.49c-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.4 7.4 0 0 1 2-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48l-.01 2.2c0 .21.15.46.55.38A8 8 0 0 0 8 0Z"/></svg>
         GitHub
         <span class="gh-stars" id="gh-stars" title="GitHub Stars">★ 10</span>
@@ -89,10 +89,10 @@
         <span data-i18n="hero.pill">Chrome Side Panel · 开源浏览器智能体</span>
       </span>
       <h1 data-i18n-html="hero.title">让浏览器<br><span class="grad">替你把事情做完</span></h1>
-      <p class="lede" data-i18n-html="hero.lede">omniagent 住在你的 Chrome 侧边栏里。它读懂当前页面，自己拆步骤、调用工具，完成点击、输入、翻译、整理与提交——<strong>一句自然语言，换来一件完成的事</strong>。</p>
+      <p class="lede" data-i18n-html="hero.lede">NeonAgent 住在你的 Chrome 侧边栏里。它读懂当前页面，自己拆步骤、调用工具，完成点击、输入、翻译、整理与提交——<strong>一句自然语言，换来一件完成的事</strong>。</p>
       <div class="cta-row">
-        <a class="solid-btn" href="#install">
-          <span data-i18n="hero.cta1">三步安装扩展</span>
+        <a class="solid-btn" href="https://chromewebstore.google.com/detail/NeonAgent/noghpoogneflgklbcfonbgpkhbmomcfh" target="_blank" rel="noopener">
+          <span data-i18n="hero.cta1">从商店安装扩展</span>
           <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M3 8h10M9 4l4 4-4 4"/></svg>
         </a>
         <a class="line-btn" href="#demo" data-i18n="hero.cta2">看它在页面上怎么干活</a>
@@ -111,7 +111,7 @@
         <div class="chrome">
           <div class="lights"><i></i><i></i><i></i></div>
           <div class="omnibox"><span class="lock">◈</span><span id="omni-url">article.example.com/deep-work</span></div>
-          <div class="chrome-actions"><span class="ext-dot" title="omniagent ready"></span></div>
+          <div class="chrome-actions"><span class="ext-dot" title="NeonAgent ready"></span></div>
         </div>
 
         <div class="window-body">
@@ -136,7 +136,7 @@
             </div>
             <div class="ghost-cursor" id="ghost-cursor" aria-hidden="true">
               <svg viewBox="0 0 16 20" width="16" height="20"><path fill="#0b0b0f" stroke="#5ef2a0" stroke-width="1.2" d="M1 1l13 8.5-5.6 1.2L6.2 17z"/></svg>
-              <span>omniagent</span>
+              <span>NeonAgent</span>
             </div>
           </div>
 
@@ -145,7 +145,7 @@
             <div class="panel-head">
               <span class="panel-brand">
                 <span class="brand-mark sm" aria-hidden="true"><img src="icon-64.png" alt="" width="20" height="20" decoding="async"></span>
-                omniagent
+                NeonAgent
               </span>
               <span class="panel-mode">Agent</span>
             </div>
@@ -285,15 +285,34 @@
   <section class="section wrap" id="install">
     <div class="section-head">
       <span class="kicker" data-i18n="install.kicker">GET STARTED</span>
-      <h2 data-i18n="install.title">三步，跑起来</h2>
-      <p data-i18n="install.desc">需要 Node.js 与支持 Side Panel API 的新版 Chrome。</p>
+      <h2 data-i18n="install.title">两种方式，装进 Chrome</h2>
+      <p data-i18n="install.desc">推荐直接从应用商店安装；需要改代码或本地开发时，也可以从源码构建。</p>
     </div>
+
+    <!-- path 1: Chrome Web Store -->
+    <div class="store-card">
+      <div class="store-card-main">
+        <span class="store-badge" data-i18n="install.store.badge">推荐</span>
+        <h3 data-i18n="install.store.title">从 Chrome 应用商店安装</h3>
+        <p data-i18n="install.store.desc">一键安装、自动更新，不需要 Node.js 和命令行。装好后在侧边栏填入你的模型接口就能用。</p>
+        <a class="solid-btn store-cta" href="https://chromewebstore.google.com/detail/NeonAgent/noghpoogneflgklbcfonbgpkhbmomcfh" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" d="M12 3v10m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+          <span data-i18n="install.store.cta">在 Chrome 应用商店安装</span>
+        </a>
+        <p class="store-note" data-i18n="install.store.note">需要支持侧边栏的新版 Chrome。装好后在设置里填入模型接口即可开始。</p>
+      </div>
+      <div class="store-aside">
+        <img src="icon-192.png" alt="" width="76" height="76" decoding="async">
+        <span data-i18n="install.store.free">免费 · 开源 · 自带密钥</span>
+      </div>
+    </div>
+
+    <div class="install-divider"><span data-i18n="install.or">或者，从源码本地安装</span></div>
 
     <div class="install-grid">
       <div class="install-step">
         <span class="step-no">01</span>
         <h3 data-i18n="install.s1t">克隆并构建</h3>
-        <p data-i18n="install.s1p">仓库目前仍沿用 NeonAgent 名称。</p>
         <div class="code">
           <div class="code-head"><span>bash</span><button class="copy" data-copy="git clone https://github.com/fredliu168/NeonAgent.git
 cd NeonAgent
@@ -340,7 +359,7 @@ npm run build</code></pre>
     <div class="faq">
       <details>
         <summary><span data-i18n="faq.q1">需要什么浏览器？</span><span class="plus">＋</span></summary>
-        <p data-i18n="faq.a1">项目基于 Chrome Side Panel API，需要支持侧边栏的新版 Chrome（或同内核浏览器）。安装方式为「加载已解压的扩展程序」，尚未上架应用商店。</p>
+        <p data-i18n="faq.a1">项目基于 Chrome Side Panel API，需要支持侧边栏的新版 Chrome（或同内核浏览器）。可以直接从 Chrome 应用商店安装，也可以从源码构建后用「加载已解压的扩展程序」在本地加载。</p>
       </details>
       <details>
         <summary><span data-i18n="faq.q2">可以用自己的模型吗？</span><span class="plus">＋</span></summary>
@@ -356,7 +375,7 @@ npm run build</code></pre>
       </details>
       <details>
         <summary><span data-i18n="faq.q5">和普通的网页 AI 侧边栏有什么区别？</span><span class="plus">＋</span></summary>
-        <p data-i18n="faq.a5">普通的侧边栏只能「说」。omniagent 拥有作用于当前页面的一组工具，能读写 DOM、模拟交互、操作表单，因此可以真的把事情做完，而不是只给出建议。</p>
+        <p data-i18n="faq.a5">普通的侧边栏只能「说」。NeonAgent 拥有作用于当前页面的一组工具，能读写 DOM、模拟交互、操作表单，因此可以真的把事情做完，而不是只给出建议。</p>
       </details>
     </div>
   </section>
@@ -377,7 +396,7 @@ npm run build</code></pre>
   <div class="wrap foot-inner">
     <a class="brand" href="/omniagent/">
       <span class="brand-mark" aria-hidden="true"><img src="icon-64.png" alt="" width="28" height="28" decoding="async"></span>
-      <span class="brand-name">omniagent</span>
+      <span class="brand-name">NeonAgent</span>
     </a>
     <nav aria-label="footer">
       <a href="#demo" data-i18n="nav.demo">演示</a>
@@ -388,7 +407,7 @@ npm run build</code></pre>
       <a href="/" data-i18n="foot.back">返回博客</a>
     </nav>
     <div class="foot-bottom">
-      <small>© <span id="year">2026</span> <span data-i18n="foot.copy">omniagent · 个人开源项目，与模型供应商无隶属关系</span></small>
+      <small>© <span id="year">2026</span> <span data-i18n="foot.copy">NeonAgent · 个人开源项目，与模型供应商无隶属关系</span></small>
       <a class="foot-legal" href="/omniagent/privacy/">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="M14 18a2 2 0 0 0-4 0"/>

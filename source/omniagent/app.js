@@ -1,5 +1,5 @@
 /* ============================================================
-   omniagent landing page — interactions + i18n
+   NeonAgent landing page — interactions + i18n
    Vanilla JS, no dependencies. All demo content is preset:
    no model request is ever made from this page.
    ============================================================ */
@@ -14,15 +14,15 @@
 
   var META = {
     zh: {
-      title: 'omniagent — 住在浏览器里的智能体',
-      description: 'omniagent 是一个 Chrome 侧边栏浏览器智能体：读懂当前页面，自己调用工具点击、输入、翻译、整理，把一句自然语言变成一件完成的事。',
-      ogTitle: 'omniagent — 住在浏览器里的智能体',
+      title: 'NeonAgent — 住在浏览器里的智能体',
+      description: 'NeonAgent 是一个 Chrome 侧边栏浏览器智能体：读懂当前页面，自己调用工具点击、输入、翻译、整理，把一句自然语言变成一件完成的事。',
+      ogTitle: 'NeonAgent — 住在浏览器里的智能体',
       ogDescription: '读懂页面、拆解步骤、调用工具、回填结果。一句自然语言，换来一件完成的事。'
     },
     en: {
-      title: 'omniagent — the browser agent that finishes the job',
-      description: 'omniagent is a Chrome side-panel browser agent: it reads the page in front of you, plans its own steps and calls tools to click, type, translate and organize — turning one sentence into a finished task.',
-      ogTitle: 'omniagent — the browser agent that finishes the job',
+      title: 'NeonAgent — the browser agent that finishes the job',
+      description: 'NeonAgent is a Chrome side-panel browser agent: it reads the page in front of you, plans its own steps and calls tools to click, type, translate and organize — turning one sentence into a finished task.',
+      ogTitle: 'NeonAgent — the browser agent that finishes the job',
       ogDescription: 'Reads the page, plans the steps, calls the tools, writes the result back. One sentence in, one finished task out.'
     }
   };
@@ -38,8 +38,8 @@
 
       'hero.pill': 'Chrome Side Panel · 开源浏览器智能体',
       'hero.title': '让浏览器<br><span class="grad">替你把事情做完</span>',
-      'hero.lede': 'omniagent 住在你的 Chrome 侧边栏里。它读懂当前页面，自己拆步骤、调用工具，完成点击、输入、翻译、整理与提交——<strong>一句自然语言，换来一件完成的事</strong>。',
-      'hero.cta1': '三步安装扩展',
+      'hero.lede': 'NeonAgent 住在你的 Chrome 侧边栏里。它读懂当前页面，自己拆步骤、调用工具，完成点击、输入、翻译、整理与提交——<strong>一句自然语言，换来一件完成的事</strong>。',
+      'hero.cta1': '从商店安装扩展',
       'hero.cta2': '看它在页面上怎么干活',
       'hero.fact1': '个页面 / 后台工具',
       'hero.fact2': '家预设模型供应商',
@@ -101,10 +101,16 @@
       'models.foot': 'API Key 保存在浏览器本地存储中，请求直接发往你填写的地址，不经过任何中间服务。',
 
       'install.kicker': 'GET STARTED',
-      'install.title': '三步，跑起来',
-      'install.desc': '需要 Node.js 与支持 Side Panel API 的新版 Chrome。',
+      'install.title': '两种方式，装进 Chrome',
+      'install.desc': '推荐直接从应用商店安装；需要改代码或本地开发时，也可以从源码构建。',
+      'install.store.badge': '推荐',
+      'install.store.title': '从 Chrome 应用商店安装',
+      'install.store.desc': '一键安装、自动更新，不需要 Node.js 和命令行。装好后在侧边栏填入你的模型接口就能用。',
+      'install.store.cta': '在 Chrome 应用商店安装',
+      'install.store.note': '需要支持侧边栏的新版 Chrome。装好后在设置里填入模型接口即可开始。',
+      'install.store.free': '免费 · 开源 · 自带密钥',
+      'install.or': '或者，从源码本地安装',
       'install.s1t': '克隆并构建',
-      'install.s1p': '仓库目前仍沿用 NeonAgent 名称。',
       'install.s2t': '加载扩展',
       'install.s2p': '打开 <code class="inline">chrome://extensions</code>，开启「开发者模式」，点击「加载已解压的扩展程序」，选择构建产物目录。',
       'install.hint2': '首次加载后，点击工具栏图标即可打开侧边栏。',
@@ -118,7 +124,7 @@
       'faq.kicker': 'FAQ',
       'faq.title': '你可能想知道',
       'faq.q1': '需要什么浏览器？',
-      'faq.a1': '项目基于 Chrome Side Panel API，需要支持侧边栏的新版 Chrome（或同内核浏览器）。安装方式为「加载已解压的扩展程序」，尚未上架应用商店。',
+      'faq.a1': '项目基于 Chrome Side Panel API，需要支持侧边栏的新版 Chrome（或同内核浏览器）。可以直接从 Chrome 应用商店安装，也可以从源码构建后用「加载已解压的扩展程序」在本地加载。',
       'faq.q2': '可以用自己的模型吗？',
       'faq.a2': '可以。设置页支持新增任意 OpenAI 兼容接口，内置 Kimi、MiniMax、DeepSeek、火山引擎、硅基流动预设。主模型、翻译模型、Temperature、Max Tokens 与思考强度都可分别调整。',
       'faq.q3': '网页内容会被发到哪里？',
@@ -126,7 +132,7 @@
       'faq.q4': '它会在我没盯着的时候乱点吗？',
       'faq.a4': '每个工具调用都会在侧边栏逐步展示，你可以随时点停止中断。定时任务与自动解题属于需要显式开启的开关，默认关闭。',
       'faq.q5': '和普通的网页 AI 侧边栏有什么区别？',
-      'faq.a5': '普通的侧边栏只能「说」。omniagent 拥有作用于当前页面的一组工具，能读写 DOM、模拟交互、操作表单，因此可以真的把事情做完，而不是只给出建议。',
+      'faq.a5': '普通的侧边栏只能「说」。NeonAgent 拥有作用于当前页面的一组工具，能读写 DOM、模拟交互、操作表单，因此可以真的把事情做完，而不是只给出建议。',
 
       'final.title': '把重复的部分交出去',
       'final.desc': '留下需要判断力的那部分给自己。',
@@ -134,7 +140,7 @@
       'final.cta2': 'GitHub ↗',
 
       'foot.back': '返回博客',
-      'foot.copy': 'omniagent · 个人开源项目，与模型供应商无隶属关系',
+      'foot.copy': 'NeonAgent · 个人开源项目，与模型供应商无隶属关系',
       'foot.privacy': '使用条款与隐私说明',
 
       'common.copy': '复制',
@@ -154,8 +160,8 @@
 
       'hero.pill': 'Chrome Side Panel · open-source browser agent',
       'hero.title': 'Let your browser<br><span class="grad">finish the job</span>',
-      'hero.lede': 'omniagent lives in your Chrome side panel. It reads the page in front of you, plans its own steps and calls tools to click, type, translate, organize and submit — <strong>one sentence in, one finished task out</strong>.',
-      'hero.cta1': 'Install in three steps',
+      'hero.lede': 'NeonAgent lives in your Chrome side panel. It reads the page in front of you, plans its own steps and calls tools to click, type, translate, organize and submit — <strong>one sentence in, one finished task out</strong>.',
+      'hero.cta1': 'Get it from the Web Store',
       'hero.cta2': 'Watch it work on a page',
       'hero.fact1': 'page & background tools',
       'hero.fact2': 'preset model providers',
@@ -217,10 +223,16 @@
       'models.foot': 'API keys stay in browser local storage, and requests go straight to the address you configured — no intermediary service.',
 
       'install.kicker': 'GET STARTED',
-      'install.title': 'Three steps to a running agent',
-      'install.desc': 'You need Node.js and a recent Chrome that supports the Side Panel API.',
+      'install.title': 'Two ways to install it',
+      'install.desc': 'The Web Store is the quick way; build from source if you want to develop on it.',
+      'install.store.badge': 'RECOMMENDED',
+      'install.store.title': 'Install from the Chrome Web Store',
+      'install.store.desc': 'One click, updates automatically — no Node.js, no command line. Open the side panel and add your model endpoint to start.',
+      'install.store.cta': 'Add to Chrome',
+      'install.store.note': 'Requires a recent Chrome that supports the side panel. Add your model endpoint in settings to begin.',
+      'install.store.free': 'Free · open source · bring your own key',
+      'install.or': 'Or install locally from source',
       'install.s1t': 'Clone and build',
-      'install.s1p': 'The repository still goes by the NeonAgent name.',
       'install.s2t': 'Load the extension',
       'install.s2p': 'Open <code class="inline">chrome://extensions</code>, turn on Developer mode, click “Load unpacked”, and select the build output directory.',
       'install.hint2': 'Once it is loaded, click the toolbar icon to open the side panel.',
@@ -234,7 +246,7 @@
       'faq.kicker': 'FAQ',
       'faq.title': 'What you might want to know',
       'faq.q1': 'Which browser do I need?',
-      'faq.a1': 'The project is built on the Chrome Side Panel API, so it needs a recent Chrome (or a Chromium-based browser) that supports the side panel. It installs as an unpacked extension and is not on the Web Store yet.',
+      'faq.a1': 'The project is built on the Chrome Side Panel API, so it needs a recent Chrome (or a Chromium-based browser) that supports the side panel. You can install it straight from the Chrome Web Store, or build from source and load it unpacked.',
       'faq.q2': 'Can I use my own model?',
       'faq.a2': 'Yes. Settings let you add any OpenAI-compatible endpoint, with presets for Kimi, MiniMax, DeepSeek, Volcano Engine and SiliconFlow. The main model, translation model, temperature, max tokens and thinking level are each configurable.',
       'faq.q3': 'Where does page content get sent?',
@@ -242,7 +254,7 @@
       'faq.q4': 'Will it click around when I am not watching?',
       'faq.a4': 'Every tool call is shown step by step in the side panel, and you can hit stop at any moment. Scheduled tasks and auto-solving are explicit switches, off by default.',
       'faq.q5': 'How is this different from an ordinary AI sidebar?',
-      'faq.a5': 'An ordinary sidebar can only talk. omniagent has a set of tools that act on the current page — reading and writing the DOM, simulating interaction, driving forms — so it can actually finish the job instead of only suggesting.',
+      'faq.a5': 'An ordinary sidebar can only talk. NeonAgent has a set of tools that act on the current page — reading and writing the DOM, simulating interaction, driving forms — so it can actually finish the job instead of only suggesting.',
 
       'final.title': 'Hand off the repetitive part',
       'final.desc': 'Keep the part that needs judgement for yourself.',
@@ -250,7 +262,7 @@
       'final.cta2': 'GitHub ↗',
 
       'foot.back': 'Back to blog',
-      'foot.copy': 'omniagent · a personal open-source project, not affiliated with any model provider',
+      'foot.copy': 'NeonAgent · a personal open-source project, not affiliated with any model provider',
       'foot.privacy': 'Terms & Privacy',
 
       'common.copy': 'Copy',
