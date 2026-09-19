@@ -1,5 +1,5 @@
 /* ============================================================
-   omniagent — terms & privacy page
+   NeonAgent — terms & privacy page
    Deliberately standalone (a few KB) rather than pulling in app.js,
    which carries the whole landing-page demo. It shares the same
    localStorage keys so preferences carry across both pages:
@@ -19,8 +19,8 @@
       back: '← 返回主页',
       backShort: '← 返回主页',
       backShortHtml: '主页',
-      copy: 'omniagent · 个人开源项目，与模型供应商无隶属关系',
-      title: 'omniagent — 使用条款与隐私说明',
+      copy: 'NeonAgent · 个人开源项目，与模型供应商无隶属关系',
+      title: 'NeonAgent — 使用条款与隐私说明',
       themeToLight: '切换到浅色模式',
       themeToDark: '切换到深色模式'
     },
@@ -28,8 +28,8 @@
       back: '← Back to home',
       backShort: '← Back to home',
       backShortHtml: 'Home',
-      copy: 'omniagent · a personal open-source project, not affiliated with any model provider',
-      title: 'omniagent — Terms of Use & Privacy',
+      copy: 'NeonAgent · a personal open-source project, not affiliated with any model provider',
+      title: 'NeonAgent — Terms of Use & Privacy',
       themeToLight: 'Switch to light mode',
       themeToDark: 'Switch to dark mode'
     }
