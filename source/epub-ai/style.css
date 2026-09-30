@@ -1778,3 +1778,8 @@ main, header.nav, footer.foot { position: relative; z-index: 1; }
 .hero-card .hc-head { display:flex; align-items:center; gap:10px; }
 .hc-brand-icon { width:28px; height:28px; border-radius:7px; }
 .brand-mark img { width:32px; height:32px; }
+
+.source-install { margin-top:24px; padding:18px 20px; border:1px solid var(--line); border-radius:16px; background:var(--surface); }
+.source-install summary { color:var(--accent); font-weight:600; }
+.source-install .install-steps { margin-top:20px; }
+.install-steps .solid-btn { margin-top:16px; }
