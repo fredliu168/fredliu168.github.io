@@ -90,6 +90,9 @@
       <h2><span class="n">02</span>开源软件：自带密钥与内置模型</h2>
       <p>扩展支持自带密钥（BYOK）和可选内置模型。自带密钥模式由浏览器连接你配置的接口；内置模型经你配置的 NeonAgent 后端中转到 DeepSeek 官方 API。</p>
       <p>后端保存邮箱、会员状态、会话凭证摘要、调用编号、时间、模型、状态与 Token 用量，用于鉴权、结算和管理员核对；数据库不保存提示词和回答正文。登录验证码通过 QQ 邮件服务发送。本项目按 MIT 许可开源。</p>
+      <p><strong>登录与邮箱信息：</strong>当你使用邮箱登录、注册、绑定邮箱或合并账号时，我们会采集并在服务器保存你提供的邮箱地址，用于发送验证码、验证身份、关联账号及提供账户服务。仅使用微信登录且未绑定邮箱时，不会通过微信自动获取你的邮箱；你后续主动绑定的邮箱会被保存。退出登录、清除浏览器数据或卸载插件不会自动删除服务器保存的邮箱信息。</p>
+<p><strong>身份验证信息：</strong>为验证身份、维持登录状态及保障账号安全，我们会处理邮箱地址、验证码校验摘要及有效期、验证尝试次数、微信授权返回的账号标识（OpenID、UnionID，若提供）和昵称，以及登录会话凭证摘要、创建时间和有效期。验证码用于校验，其摘要和相关校验状态会暂存于服务器；服务器不保存明文登录会话凭证。浏览器或插件本地会保存登录凭证以保持登录状态。微信授权及验证码邮件服务商会处理提供验证服务所需的信息。</p>
+<p><strong>付款与订单信息：</strong>当你购买会员或充值 Token 时，我们会采集并在服务器保存与账号关联的订单号、购买项目、付款金额、订单状态、创建及支付时间，以及支付平台返回的订单号和交易流水号，用于确认到账、发放会员或 Token 权益、查询订单和对账。支付服务商会依据其隐私政策处理完成付款所需的信息；NeonAgent 不采集或保存你的支付密码或银行卡完整信息。退出登录、清除浏览器数据或卸载插件不会自动删除服务器订单记录。</p>
     </section>
 
     <section>
@@ -213,6 +216,9 @@
       <h2><span class="n">02</span>Open-source software: BYOK and built-in models</h2>
       <p>The extension supports bring-your-own-key providers and an optional built-in model. Custom providers receive requests directly; built-in requests pass through your configured NeonAgent backend to the official DeepSeek API.</p>
       <p>The backend stores email, membership, hashed session credentials, request IDs, timestamps, models, statuses and token counts for authentication, accounting and administrator reconciliation. It does not store prompt or response bodies in the database. QQ mail delivers login codes. The software is open source under the MIT license.</p>
+      <p><strong>Sign-in and email information:</strong> When you sign in or register by email, bind an email address, or merge accounts, we collect and store the email address you provide on our server to send verification codes, verify your identity, link accounts and provide account services. We do not automatically obtain your email address from WeChat when you sign in with WeChat without a bound email; an email address you later choose to bind will be stored. Signing out, clearing browser data or uninstalling the extension does not automatically delete the email address stored on the server.</p>
+<p><strong>Authentication information:</strong> To verify your identity, maintain sign-in and protect accounts, we process email addresses, verification-code hashes and expiration times, verification attempt counts, account identifiers returned by WeChat authorization (OpenID and UnionID, when provided), nicknames, and login-session credential hashes, creation times and expiration times. Verification-code hashes and related verification state are temporarily stored on the server for validation; plaintext login-session credentials are not stored on the server. Your browser or extension stores login credentials locally to keep you signed in. WeChat authorization and verification-email providers process the information needed to provide their authentication services.</p>
+<p><strong>Payments and orders:</strong> When you purchase a membership or top up tokens, we collect and store account-linked order IDs, purchased products, payment amounts, order statuses, creation and payment timestamps, and order and transaction IDs returned by the payment provider. These records support payment confirmation, membership or token delivery, order inquiries and reconciliation. Payment providers process the information needed to complete payment under their own privacy policies. NeonAgent does not collect or store your payment password or full bank card details. Signing out, clearing browser data or uninstalling the extension does not automatically delete server-side order records.</p>
     </section>
 
     <section>
