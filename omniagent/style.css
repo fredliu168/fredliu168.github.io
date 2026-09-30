@@ -915,3 +915,11 @@ html[lang="en"] .doc-en { display: block; }
   html { scroll-behavior: auto; }
   .reveal { opacity: 1; transform: none; }
 }
+
+/* Latest product capabilities */
+.release-note{margin-top:48px;padding:30px;border:1px solid var(--line-strong);border-radius:18px;background:var(--raise-1)}
+.release-note h2{font-size:clamp(23px,3vw,32px);margin:12px 0;line-height:1.4}
+.release-note p{color:var(--body-dim);line-height:1.9;max-width:760px;margin:0 0 20px}
+@media(max-width:600px){.release-note{padding:22px}.hero-facts{flex-wrap:wrap}}
+
+.icp-link{font-size:12px;color:var(--body-dim);white-space:nowrap}.icp-link:hover{text-decoration:underline}

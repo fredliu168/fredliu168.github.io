@@ -7,11 +7,11 @@
 <title>NeonAgent — 住在浏览器里的智能体</title>
 <meta name="description" content="NeonAgent 是一个 Chrome 侧边栏浏览器智能体：读懂当前页面，自己调用工具点击、输入、翻译、整理，把一句自然语言变成一件完成的事。">
 <meta name="keywords" content="NeonAgent,浏览器智能体,Chrome 扩展,AI Agent,网页翻译,page agent">
-<link rel="canonical" href="http://fredliu168.github.io/omniagent/">
+<link rel="canonical" href="https://neonagent.qzdm.cn/">
 <meta property="og:type" content="website">
 <meta property="og:title" content="NeonAgent — 住在浏览器里的智能体">
 <meta property="og:description" content="读懂页面、拆解步骤、调用工具、回填结果。一句自然语言，换来一件完成的事。">
-<meta property="og:url" content="http://fredliu168.github.io/omniagent/">
+<meta property="og:url" content="https://neonagent.qzdm.cn/">
 <link rel="icon" href="/omniagent/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" href="/omniagent/icon-192.png" sizes="192x192">
 <link rel="apple-touch-icon" href="/omniagent/apple-touch-icon.png">
@@ -29,7 +29,8 @@
   }
 })();
 </script>
-<link rel="stylesheet" href="style.css?v=609752c5">
+<link rel="stylesheet" href="style.css?v=20260930-pages">
+<link rel="stylesheet" href="membership.css?v=20260930-pages">
 </head>
 <body>
 
@@ -40,7 +41,7 @@
   <div class="wrap nav-inner">
     <a class="brand" href="/omniagent/" aria-label="NeonAgent">
       <span class="brand-mark" aria-hidden="true">
-        <img src="icon-64.png?v=68a13af9" alt="" width="28" height="28" decoding="async">
+        <img src="icon-64.png" alt="" width="28" height="28" decoding="async">
       </span>
       <span class="brand-name">NeonAgent</span>
       <span class="brand-tag">v0.1.32</span>
@@ -50,7 +51,7 @@
       <a href="#how" data-i18n="nav.how">工作原理</a>
       <a href="#features" data-i18n="nav.features">能力</a>
       <a href="#install" data-i18n="nav.install">安装</a>
-      <a href="#faq" data-i18n="nav.faq">常见问题</a>
+      <a href="#pricing" data-i18n="nav.pricing">会员方案</a>
     </nav>
     <div class="nav-actions">
       <button class="theme-switch" id="theme-toggle" type="button" role="switch" aria-checked="true" aria-label="切换到浅色模式" title="切换到浅色模式">
@@ -74,7 +75,7 @@
         GitHub
         <span class="gh-stars" id="gh-stars" title="GitHub Stars">★ 10</span>
       </a>
-      <a class="solid-btn sm" href="#install" data-i18n="nav.cta">立即安装</a>
+      <a class="solid-btn sm" href="console/#/login"><span class="account-label-wide" data-i18n="account.wide">登录 / 用户中心</span><span class="account-label-small" data-i18n="account.small">用户中心</span></a>
     </div>
   </div>
 </header>
@@ -89,7 +90,7 @@
         <span data-i18n="hero.pill">Chrome Side Panel · 开源浏览器智能体</span>
       </span>
       <h1 data-i18n-html="hero.title">让浏览器<br><span class="grad">替你把事情做完</span></h1>
-      <p class="lede" data-i18n-html="hero.lede">NeonAgent 住在你的 Chrome 侧边栏里。它读懂当前页面，自己拆步骤、调用工具，完成点击、输入、翻译、整理与提交——<strong>一句自然语言，换来一件完成的事</strong>。</p>
+      <p class="lede" data-i18n-html="hero.lede">NeonAgent 住在你的 Chrome 侧边栏里。读网页、看图片、翻译资料，也能调用工具完成点击与填写。搭配页面悬浮工具，<strong>从读懂内容，到动手完成，每一步都看得见</strong>。</p>
       <div class="cta-row">
         <a class="solid-btn" href="https://chromewebstore.google.com/detail/NeonAgent/noghpoogneflgklbcfonbgpkhbmomcfh" target="_blank" rel="noopener">
           <span data-i18n="hero.cta1">从商店安装扩展</span>
@@ -98,9 +99,9 @@
         <a class="line-btn" href="#demo" data-i18n="hero.cta2">看它在页面上怎么干活</a>
       </div>
       <ul class="hero-facts">
-        <li><b>45</b> <span data-i18n="hero.fact1">个页面 / 后台工具</span></li>
+        <li><b>ask / Agent</b> <span data-i18n="hero.fact1">问答与任务执行</span></li>
         <li><b>5</b> <span data-i18n="hero.fact2">家预设模型供应商</span></li>
-        <li><b>0</b> <span data-i18n="hero.fact3">条数据离开你配置的接口</span></li>
+        <li><b>BYOK</b> <span data-i18n="hero.fact3">自带模型密钥</span></li>
       </ul>
     </div>
 
@@ -144,7 +145,7 @@
           <aside class="panel" aria-live="polite">
             <div class="panel-head">
               <span class="panel-brand">
-                <span class="brand-mark sm" aria-hidden="true"><img src="icon-64.png?v=68a13af9" alt="" width="20" height="20" decoding="async"></span>
+                <span class="brand-mark sm" aria-hidden="true"><img src="icon-64.png" alt="" width="20" height="20" decoding="async"></span>
                 NeonAgent
               </span>
               <span class="panel-mode">Agent</span>
@@ -176,6 +177,25 @@
     </div>
   </section>
 
+
+<section class="section wrap membership-section" id="pricing">
+  <div class="section-head"><span class="kicker">A LITTLE MORE POSSIBILITY</span><h2 data-i18n="pricing.title">轻松开始，让能力再进一步。</h2><p data-i18n="pricing.desc">自由选择自己的模型，或使用内置 DeepSeek。每一份额度，都有清楚的去向。</p></div>
+  <div class="membership-preview-note" data-i18n="pricing.note">价格与额度从服务端动态读取；网页登录后可查看账户，支付请在 NeonAgent 插件账户面板完成。</div>
+  <div class="member-plans">
+    <article class="member-plan"><span class="member-label">FREE</span><h3 data-i18n="pricing.free.title">免费会员</h3><div class="member-price">¥0 <small data-i18n="pricing.free.period">/ 长期免费</small></div><p data-i18n="pricing.free.desc">从日常问答与轻量翻译开始。</p><ul><li data-i18n="pricing.free.f1">基础问答、划词与双击翻译</li><li data-i18n="pricing.free.f2">支持自定义大模型接口</li><li data-i18n="pricing.free.f3">可充值内置 Token 用于基础功能</li><li data-i18n="pricing.free.f4">用量明细与支付记录</li></ul><a class="line-btn" href="console/#/login" data-i18n="pricing.free.cta">体验免费会员 →</a></article>
+    <article class="member-plan featured"><span class="member-label" data-i18n="pricing.pro.label">PRO · 更多可能</span><h3 data-i18n="pricing.pro.title">高级会员</h3><div class="member-price"><span id="public-premium-price">¥10</span> <small data-i18n="pricing.pro.period">/ 年</small></div><p><span data-i18n="pricing.pro.prefix">每个付费年度赠送 </span><strong id="public-premium-gift">1,000,000 Token</strong><span data-i18n="pricing.pro.suffix">。</span></p><ul><li data-i18n="pricing.pro.f1">包含全部免费会员功能</li><li data-i18n="pricing.pro.f2">整页自动翻译、Agent 多步操作</li><li data-i18n="pricing.pro.f3">技能复用、跨会话记忆与定时任务</li><li data-i18n="pricing.pro.f4">内置模型 / 自定义接口自由选择</li></ul><a class="solid-btn" href="console/#/membership" data-i18n="pricing.pro.cta">查看会员权益 →</a></article>
+    <article class="member-plan"><span class="member-label">PAY AS YOU GO</span><h3 data-i18n="pricing.topup.title">Token 充值</h3><div class="member-price"><span id="public-topup-price">¥5</span> <small>/ <span id="public-topup-tokens">1,000,000</span> Token</small></div><p data-i18n="pricing.topup.desc">需要时再买，让额度跟上灵感。</p><ul><li data-i18n="pricing.topup.f1">使用内置 deepseek-flash 模型</li><li data-i18n="pricing.topup.f2">输入 + 输出原始 Token 合计扣减</li><li data-i18n="pricing.topup.f3">充值长期有效，赠送按年到期</li><li data-i18n="pricing.topup.f4">免费及到期会员均可购买</li></ul><a class="line-btn" href="console/#/recharge" data-i18n="pricing.topup.cta">了解额度充值 →</a></article>
+  </div>
+  <p class="membership-fineprint" data-i18n="pricing.fineprint">主动续费，不自动扣款。充值不会解锁高级功能；自定义接口费用由模型供应商收取。页面价格和额度以服务端当前配置为准。</p>
+</section>
+
+  <section class="release-note wrap" aria-labelledby="release-title">
+    <span class="kicker" data-i18n="update.kicker">WHAT’S NEW · v0.1.32</span>
+    <h2 id="release-title" data-i18n="update.title">常用操作，现在离你更近</h2>
+    <p data-i18n="update.desc">新增页面悬浮工具、题旁答案提示与逐项填写进度。阅读、练习与执行，不必反复切换。</p>
+    <a class="line-btn" href="#features" data-i18n="update.link">看看最新能力 ↓</a>
+  </section>
+
   <!-- ================= HOW IT WORKS ================= -->
   <section class="section wrap" id="how">
     <div class="section-head">
@@ -199,7 +219,7 @@
       <li>
         <span class="step-no">03</span>
         <h3 data-i18n="how.s3t">调用工具</h3>
-        <p data-i18n="how.s3p">点击、输入、选择、滚动、等待元素、跳转——45 个工具按需加载。</p>
+        <p data-i18n="how.s3p">按任务需要调用点击、输入、选择、滚动、等待与跳转工具，并展示执行结果。</p>
         <code>click_element</code>
       </li>
       <li>
@@ -219,10 +239,25 @@
   <section class="section wrap" id="features">
     <div class="section-head">
       <span class="kicker" data-i18n="feat.kicker">CAPABILITIES</span>
-      <h2 data-i18n="feat.title">六件它真的替你做的事</h2>
-      <p data-i18n="feat.desc">不是功能清单堆砌，而是每天都会用到的几件事。</p>
+      <h2 data-i18n="feat.title">读懂、翻译、动手，都在当前页面</h2>
+      <p data-i18n="feat.desc">从日常阅读到重复操作，把常用能力放在手边。</p>
     </div>
     <div class="cards">
+      <article class="card">
+        <div class="card-icon" aria-hidden="true">↗</div>
+        <h3 data-i18n="feat.c8t">页面悬浮工具</h3>
+        <p data-i18n="feat.c8p">网页右下角悬停展开，直接启动翻译、解题与一键填写。支持锁定和关闭，常用操作随手可达。</p>
+      </article>
+      <article class="card">
+        <div class="card-icon" aria-hidden="true">◈</div>
+        <h3 data-i18n="feat.c9t">图片解读与问答</h3>
+        <p data-i18n="feat.c9p">在 ask 或 Agent 中上传图片，结合支持视觉的模型解读截图与图表。两种模式分别记住模型与思考设置。</p>
+      </article>
+      <article class="card">
+        <div class="card-icon" aria-hidden="true">✓</div>
+        <h3 data-i18n="feat.c10t">练习题辅助</h3>
+        <p data-i18n="feat.c10p">识别页面题目，在题目旁展示参考答案，查看处理进度与耗时。按需逐项回填，题目变化时跳过旧答案；答案仍需自行核对。</p>
+      </article>
       <article class="card wide">
         <div class="card-icon">⌘</div>
         <h3 data-i18n="feat.c1t">在页面上自主操作</h3>
@@ -278,7 +313,7 @@
       <span class="model" data-i18n="models.p5">硅基流动</span>
       <span class="model ghost" data-i18n="models.compat">OpenAI 兼容接口 ↗</span>
     </div>
-    <p class="models-foot" data-i18n="models.foot">API Key 保存在浏览器本地存储中，请求直接发往你填写的地址，不经过任何中间服务。</p>
+    <p class="models-foot" data-i18n="models.foot">自定义接口的 API Key 保存在浏览器本地，请求直达所配置的服务商。即将上线的内置模型经平台服务器中转并统计 Token 用量。</p>
   </section>
 
   <!-- ================= INSTALL ================= -->
@@ -302,7 +337,7 @@
         <p class="store-note" data-i18n="install.store.note">需要支持侧边栏的新版 Chrome。装好后在设置里填入模型接口即可开始。</p>
       </div>
       <div class="store-aside">
-        <img src="icon-192.png?v=6743b753" alt="" width="76" height="76" decoding="async">
+        <img src="icon-192.png" alt="" width="76" height="76" decoding="async">
         <span data-i18n="install.store.free">免费 · 开源 · 自带密钥</span>
       </div>
     </div>
@@ -367,7 +402,7 @@ npm run build</code></pre>
       </details>
       <details>
         <summary><span data-i18n="faq.q3">网页内容会被发到哪里？</span><span class="plus">＋</span></summary>
-        <p data-i18n="faq.a3">只有模型处理所需的页面内容会发送到你自己配置的接口地址。配置、会话、记忆与技能保存在浏览器本地存储中，不经过第三方服务器。请同时了解你所选模型供应商的数据政策。</p>
+        <p data-i18n="faq.a3">自定义模型模式下，所需页面内容发送到你配置的服务商；内置模型服务上线后，将经平台服务器发送至 DeepSeek 并记录用量。会话、记忆与技能保存在浏览器本地，请同时了解所选服务商的数据政策。</p>
       </details>
       <details>
         <summary><span data-i18n="faq.q4">它会在我没盯着的时候乱点吗？</span><span class="plus">＋</span></summary>
@@ -395,7 +430,7 @@ npm run build</code></pre>
 <footer class="foot">
   <div class="wrap foot-inner">
     <a class="brand" href="/omniagent/">
-      <span class="brand-mark" aria-hidden="true"><img src="icon-64.png?v=68a13af9" alt="" width="28" height="28" decoding="async"></span>
+      <span class="brand-mark" aria-hidden="true"><img src="icon-64.png" alt="" width="28" height="28" decoding="async"></span>
       <span class="brand-name">NeonAgent</span>
     </a>
     <nav aria-label="footer">
@@ -404,9 +439,10 @@ npm run build</code></pre>
       <a href="#features" data-i18n="nav.features">能力</a>
       <a href="#install" data-i18n="nav.install">安装</a>
       <a href="https://github.com/fredliu168/NeonAgent" target="_blank" rel="noopener">GitHub</a>
-      <a href="/" data-i18n="foot.back">返回博客</a>
+      <a href="https://fredliu168.github.io/" data-i18n="foot.back">返回博客</a>
     </nav>
     <div class="foot-bottom">
+      <a class="icp-link" href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">闽ICP备2023003828号-1</a>
       <small>© <span id="year">2026</span> <span data-i18n="foot.copy">NeonAgent · 个人开源项目，与模型供应商无隶属关系</span></small>
       <a class="foot-legal" href="/omniagent/privacy/">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -422,6 +458,6 @@ npm run build</code></pre>
   </div>
 </footer>
 
-<script src="app.js?v=5d020555"></script>
+<script src="app.js?v=20260930-pages"></script><script src="console/config.js?v=20260930-pages"></script><script src="pricing.js?v=20260930-pages"></script>
 </body>
 </html>
