@@ -8,7 +8,7 @@
 
   var LANG_KEY = 'epub-ai-lang';
   var THEME_KEY = 'epub-ai-theme';
-  var THEME_COLOR = { light: '#f7f3ee', dark: '#17130f' };
+  var THEME_COLOR = { light: '#f3f7f6', dark: '#101e1c' };
   var root = document.documentElement;
   var forEach = function (list, fn) { Array.prototype.forEach.call(list, fn); };
   var all = function (sel) { return document.querySelectorAll(sel); };
