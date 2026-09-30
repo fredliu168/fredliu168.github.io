@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#f7f3ee">
+<meta name="theme-color" content="#f3f7f6">
 <title>The Epub AI Assistant — 把书库装进浏览器侧边栏</title>
 <meta name="description" content="The Epub AI Assistant 是一个 Chrome 侧边栏 AI 双语 EPUB 阅读器插件：本地导入书籍、段落流式双语翻译、整章摘要、划词翻译，模型配置只存在你的浏览器里，没有账号，没有后端。">
 <meta name="keywords" content="EPUB,双语翻译,AI 阅读器,Chrome 扩展,side panel,OpenAI 兼容,IndexedDB,DeepSeek,划词翻译,整章摘要">
@@ -13,7 +13,7 @@
 <link rel="canonical" href="https://fredliu168.github.io/epub-ai/">
 <meta property="og:type" content="website">
 <meta property="og:title" content="The Epub AI Assistant — 把书库装进浏览器侧边栏">
-<meta property="og:description" content="本地书架、段落双语、整章摘要、划词翻译。自带 API Key，直连任意 OpenAI 兼容接口，书和密钥都不离开你的浏览器。">
+<meta property="og:description" content="本地书架、段落双语、整章摘要、划词翻译。自带 API Key，直连任意 OpenAI 兼容接口，书籍与配置保存在本地；启用 AI 后，相关文本和认证信息会发送至你指定的模型服务。">
 <meta property="og:url" content="https://fredliu168.github.io/epub-ai/">
 <meta property="og:image" content="https://fredliu168.github.io/epub-ai/og.png">
 <meta property="og:image:width" content="1200">
@@ -127,7 +127,7 @@
         <span data-i18n="hero.pill">浏览器插件版 · 无登录 · 本地优先</span>
       </p>
       <h1 data-i18n-html="hero.title">把 EPUB 阅读、<br>双语翻译和 AI 摘要，<br>收进<span class="mark">浏览器侧边栏</span>。</h1>
-      <p class="lede" data-i18n="hero.lede">导入本地书籍或远程 EPUB 链接，在插件内直接配置 OpenAI 兼容模型服务。书籍、API Key 和阅读记录都只保存在当前浏览器。</p>
+      <p class="lede" data-i18n="hero.lede">导入本地书籍或远程 EPUB 链接，在插件内直接配置 OpenAI 兼容模型服务。书籍与配置保存在当前浏览器；启用 AI 后，相关文本会发送到你指定的服务。</p>
       <div class="cta-row">
         <a class="solid-btn" href="#install">
           <span data-i18n="hero.cta1">三步安装扩展</span>
@@ -145,41 +145,10 @@
 
     <aside class="hero-side" aria-label="插件速览">
       <div class="hero-card">
-        <div class="hc-head">
-          <span data-i18n="hero.card.title">模型配置</span>
-          <span class="hc-x" aria-hidden="true">×</span>
-        </div>
-        <p class="hc-sub" data-i18n="hero.card.sub">所有配置仅保存在当前浏览器本地，用于直连 OpenAI 兼容接口。</p>
-        <div class="hc-body">
-          <div class="hc-row">
-            <span class="hc-key">Provider</span>
-            <span class="hc-val f-select"><span>OpenAI</span>
-              <svg viewBox="0 0 16 16" width="12" height="12" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" d="M4.4 6.4 8 10l3.6-3.6"/></svg>
-            </span>
-          </div>
-          <div class="hc-row">
-            <span class="hc-key">Base URL</span>
-            <span class="hc-val mono">https://api.openai.com/v1/chat/completions</span>
-          </div>
-          <div class="hc-row">
-            <span class="hc-key">API Key</span>
-            <span class="hc-val mono">sk-••••••••••••4f2a</span>
-          </div>
-          <div class="hc-row">
-            <span class="hc-key">Model</span>
-            <span class="hc-val mono">gpt-4.1-mini</span>
-          </div>
-          <div class="hc-row">
-            <span class="hc-key" data-i18n="hero.card.prompt">翻译提示词</span>
-            <span class="hc-val hc-textarea">Translate the following text into fluent Chinese, retaining formatting.</span>
-          </div>
-        </div>
-        <div class="hc-split">
-          <span class="hc-link" data-i18n="hero.card.welcome">显示欢迎页</span>
-          <span class="hc-done" data-i18n="hero.card.done">完成</span>
-        </div>
+        <div class="hc-head"><img class="hc-brand-icon" src="icon.svg" alt=""><span data-i18n="hero.preview.title">新版阅读界面</span></div>
+        <img class="hero-preview-image" src="reader-preview.png" alt="深青色 EPUB 阅读界面：章节目录、正文与阅读工具栏" data-i18n-alt="hero.preview.alt" width="1280" height="800">
       </div>
-      <p class="hero-side-note" data-i18n="hero.side.note">↑ 插件里的模型配置弹窗，原样搬了过来：Provider、Base URL、API Key、Model 与提示词，全部只保存在本地。</p>
+      <p class="hero-side-note" data-i18n="hero.side.note">深青色界面、独立书本图标与清晰的无衬线标题。截图使用原创示例书籍。</p>
     </aside>
   </section>
 

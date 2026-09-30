@@ -23,7 +23,7 @@
     zh: {
       title: 'The Epub AI Assistant — 把书库装进浏览器侧边栏',
       description: 'Chrome 侧边栏 AI 双语 EPUB 阅读器插件：本地导入书籍、段落流式双语翻译、整章摘要、划词翻译，模型配置只存在你的浏览器里。',
-      desc: '本地书架、段落双语、整章摘要、划词翻译。自带 API Key，直连任意 OpenAI 兼容接口，书和密钥都不离开你的浏览器。'
+      desc: '本地书架、段落双语、整章摘要、划词翻译。自带 API Key，直连任意 OpenAI 兼容接口，书籍与配置保存在本地；启用 AI 后，相关文本和认证信息会发送至你指定的模型服务。'
     },
     en: {
       title: 'The Epub AI Assistant — your library, in the browser side panel',
@@ -45,7 +45,7 @@
       'nav.sub': 'Browser extension build · books and model config stay local.',
       'hero.pill': 'Browser extension · no login · local-first',
       'hero.title': 'Read EPUB, translate bilingually and summarize with AI —<br>all inside the <span class="mark">browser side panel</span>.',
-      'hero.lede': 'Import local books or remote EPUB links and configure an OpenAI-compatible model service right inside the extension. Books, API keys and reading history stay in this browser.',
+      'hero.lede': 'Import local books or remote EPUB links and configure an OpenAI-compatible model service right inside the extension. Books and configuration are stored locally. When AI is enabled, relevant text is sent to your chosen service.',
       'hero.cta1': 'Three steps to install',
       'hero.cta2': 'Watch it read a book',
       'hero.fact1': 'Local',
@@ -56,12 +56,14 @@
       'hero.fact3k': 'Model access',
       'hero.fact4': '5',
       'hero.fact4k': 'Interface languages',
+      'hero.preview.title': 'The refreshed reader',
+      'hero.preview.alt': 'Teal EPUB reader with chapter navigation and reading tools',
       'hero.card.title': 'Model config',
       'hero.card.sub': 'Everything is stored in this browser only, for talking to an OpenAI-compatible endpoint.',
       'hero.card.prompt': 'Translation prompt',
       'hero.card.welcome': 'Show welcome page',
       'hero.card.done': 'Done',
-      'hero.side.note': '↑ The model-config dialog from the extension itself, copied 1:1 — provider, Base URL, API key, model and prompts, all stored locally.',
+      'hero.side.note': 'A calm teal interface, an independent book icon and clear sans-serif headings. Shown with an original demo book.',
 
       'demo.kicker': 'Live demo',
       'demo.h2': 'One page, two voices',
@@ -333,6 +335,9 @@
       if (!btn.classList.contains('done')) btn.textContent = t('common.copy');
     });
 
+    var previewImage = $('.hero-preview-image');
+    if (previewImage) previewImage.alt = lang === 'zh' ? '深青色 EPUB 阅读界面：章节目录、正文与阅读工具栏' : I18N.en['hero.preview.alt'];
+
     var meta = META[lang];
     document.title = meta.title;
     setMeta('name', 'description', meta.description);
@@ -363,7 +368,7 @@
      ============================================================ */
 
   var THEME_KEY = 'epub-ai-theme';
-  var THEME_COLOR = { light: '#f7f3ee', dark: '#17130f' };
+  var THEME_COLOR = { light: '#f3f7f6', dark: '#101e1c' };
   var themeToggle = $('#theme-toggle');
   var themeAnimTimer = null;
 
